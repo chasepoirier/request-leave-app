@@ -1,0 +1,49 @@
+{
+  "name": "marketplace",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm run build",
+    "start": "node ./build/bin/port.js",
+    "dev": "npm run start-server && npm run start-client",
+    "client": "cd client && npm start",
+    "server": "NODE_ENV=dev nodemon --exec babel-node -- ./server/bin/port.js",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && npm run build-server && npm run build-client",
+    "build-server": "babel -d ./build ./server -s",
+    "build-client": "cd client && npm install && npm run build",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "firebase": "^5.3.1",
+    "firebase-admin": "^6.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2"
+  },
+  "lint-staged": {
+    "*.{js, jsx, js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
