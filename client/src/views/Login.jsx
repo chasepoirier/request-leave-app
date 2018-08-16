@@ -4,17 +4,22 @@ import { Styled } from 'components'
 import GoogleLogin from 'react-google-login'
 import { auth } from 'config'
 import { connect } from 'react-redux'
-import { userOperations } from 'modules/ducks/user'
+import { userOperations } from '../modules/ducks/user'
 
 class Login extends React.Component {
   signout = () => {
     auth.signOut()
   }
 
-  handleSignRequest = googleUser => {
+  handleSubmit = googleUser => {
     const { submitLoginRequest } = this.props
-
     submitLoginRequest(googleUser)
+
+    // const provider = new firebase.auth.GoogleAuthProvider()
+
+    // provider.setCustomParameters({ prompt: 'select_account' })
+
+    // auth.signInWithRedirect(provider)
   }
 
   render() {
@@ -25,8 +30,9 @@ class Login extends React.Component {
         <GoogleLogin
           clientId="1025860778836-rp6ppospi7a9bcqut9n6jokt9n91c81s.apps.googleusercontent.com"
           buttonText="Login with Google"
-          onSuccess={this.handleSignRequest}
+          onSuccess={this.handleSubmit}
           className="google-btn"
+          prompt="select_account"
         />
         {login.errors && <div>{login.errors}</div>}
       </Styled.PageWrapper>
