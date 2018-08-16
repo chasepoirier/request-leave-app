@@ -1,5 +1,4 @@
 import React from 'react'
-import { UserInfoPTs } from 'customPTs'
 import PropTypes from 'prop-types'
 import { Switch, Redirect } from 'react-router-dom'
 import { Navbar, RouteTypes, InitialLoadingState } from 'components'
@@ -33,7 +32,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { userFetched, user } = this.props
+    const { userFetched, status, loggedIn } = this.props
 
     return (
       <section>
@@ -44,7 +43,7 @@ class App extends React.Component {
               <Switch>
                 <RouteTypes.NonAuth
                   exact
-                  user={user}
+                  loggedIn={loggedIn}
                   path={login.path}
                   render={(match, history) => (
                     <Login match={match} history={history} />
@@ -53,35 +52,40 @@ class App extends React.Component {
                 <RouteTypes.Admin
                   exact
                   path={home.path}
-                  user={user}
+                  status={status}
+                  loggedIn={loggedIn}
                   render={(match, history) => (
                     <Home match={match} history={history} />
                   )}
                 />
                 <RouteTypes.Admin
                   path={admin.path}
-                  user={user}
+                  status={status}
+                  loggedIn={loggedIn}
                   render={(match, history) => (
                     <Admin match={match} history={history} />
                   )}
                 />
                 <RouteTypes.Admin
                   path={leaveHistory.path}
-                  user={user}
+                  status={status}
+                  loggedIn={loggedIn}
                   render={(match, history) => (
                     <LeaveHistory match={match} history={history} />
                   )}
                 />
                 <RouteTypes.Admin
                   path={requestLeave.path}
-                  user={user}
+                  status={status}
+                  loggedIn={loggedIn}
                   render={(match, history) => (
                     <RequestLeave match={match} history={history} />
                   )}
                 />
                 <RouteTypes.Admin
                   path={requestStatus.path}
-                  user={user}
+                  status={status}
+                  loggedIn={loggedIn}
                   render={(match, history) => (
                     <RequestStatus match={match} history={history} />
                   )}
@@ -98,19 +102,22 @@ class App extends React.Component {
   }
 }
 
-App.defaultProps = {
-  user: null
-}
+const { shape, func, bool } = PropTypes
 
 App.propTypes = {
-  fetchCurrentUser: PropTypes.func.isRequired,
-  userFetched: PropTypes.bool.isRequired,
-  user: UserInfoPTs
+  fetchCurrentUser: func.isRequired,
+  userFetched: bool.isRequired,
+  status: shape({
+    admin: bool,
+    supervisor: bool
+  }).isRequired,
+  loggedIn: bool.isRequired
 }
 
 const mapStateToProps = state => ({
   userFetched: state.user.userFetched,
-  user: state.user.info
+  status: state.user.info.status,
+  loggedIn: state.user.login.loggedIn
 })
 
 export default connect(

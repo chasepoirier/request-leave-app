@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-const AdminRoute = ({ user, render, ...rest }) => {
+const AdminRoute = ({ status, loggedIn, render, ...rest }) => {
   const renderDestination = (match, history) => {
-    if (user) {
-      if (user.admin) {
+    if (loggedIn) {
+      if (status.admin) {
         return render(match, history)
       }
       return <Redirect to="/" />

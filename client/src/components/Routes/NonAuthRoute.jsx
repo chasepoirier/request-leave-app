@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-const NonAuthRoute = ({ user, render, ...rest }) => (
+const NonAuthRoute = ({ loggedIn, render, ...rest }) => (
   <Route
     {...rest}
     render={({ match, history }) =>
-      !user ? render(match, history) : <Redirect to="/" />
+      !loggedIn ? render(match, history) : <Redirect to="/" />
     }
   />
 )

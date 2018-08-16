@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
-import { NavContainer, StyledLink, LinkContainer, Btn } from '../Styled'
+import { NavContainer, StyledLink, LinkContainer, Button } from '../Styled'
 
 const NonUserBar = ({ routes }) => (
   <NavContainer>
@@ -10,7 +10,7 @@ const NonUserBar = ({ routes }) => (
       <NavItem text={routes.home.text} path={routes.home.path} />
       <LinkContainer>
         <NavLink to={routes.login.path}>
-          <Btn>{routes.login.text}</Btn>
+          <Button>{routes.login.text}</Button>
         </NavLink>
       </LinkContainer>
     </PageWrapper>

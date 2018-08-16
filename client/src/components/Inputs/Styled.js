@@ -1,7 +1,15 @@
 import styled from 'styled-components'
+import Colors from '../../design/Colors'
 
 const InputWrapper = styled.div`
-  width: 100%;
+  width: ${props => (props.short ? 'calc(50% - 25px)' : '100%')};
+`
+
+const CheckboxWrapper = styled.div`
+  width: calc(50% - 25px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `
 
 const Input = styled.input`
@@ -25,4 +33,17 @@ const Input = styled.input`
   }
 `
 
-export { InputWrapper, Input }
+const Check = styled.input`
+  display: block;
+  margin-top: -2px;
+  cursor: pointer;
+`
+
+const InputLabel = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${Colors.Black200};
+  margin-right: 15px;
+`
+
+export { Check, InputWrapper, Input, InputLabel, CheckboxWrapper }

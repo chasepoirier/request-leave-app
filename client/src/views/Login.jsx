@@ -14,12 +14,6 @@ class Login extends React.Component {
   handleSubmit = googleUser => {
     const { submitLoginRequest } = this.props
     submitLoginRequest(googleUser)
-
-    // const provider = new firebase.auth.GoogleAuthProvider()
-
-    // provider.setCustomParameters({ prompt: 'select_account' })
-
-    // auth.signInWithRedirect(provider)
   }
 
   render() {

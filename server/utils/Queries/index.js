@@ -1,3 +1,3 @@
-import * as User from './UserQueries'
+import * as user from './UserQueries'
 
-export { User }
+export { user }

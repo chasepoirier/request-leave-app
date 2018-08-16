@@ -1,3 +1,4 @@
 import TextInput from './TextInput'
+import Checkbox from './Checkbox'
 
-export { TextInput }
+export { TextInput, Checkbox }

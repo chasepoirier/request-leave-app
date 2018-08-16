@@ -6,9 +6,13 @@ export const UserInfoPTs = shape({
   id: string,
   uid: string,
   email: string,
-  fname: string,
-  lname: string,
-  admin: bool,
-  super: bool,
+  name: shape({
+    fname: string,
+    lname: string
+  }),
+  status: shape({
+    admin: bool,
+    supervisor: bool
+  }),
   token: string
 })

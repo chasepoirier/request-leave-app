@@ -1,4 +1,4 @@
-import { db } from '../../firebase'
+import { db, firebase } from '../../firebase'
 
 const getOneUser = (query, value) =>
   new Promise((resolve, reject) => {
@@ -10,11 +10,9 @@ const getOneUser = (query, value) =>
           resolve({
             id: user.docs[0].id,
             email: user.docs[0].data().email,
-            fname: user.docs[0].data().fname,
             uid: user.docs[0].data().uid,
-            lname: user.docs[0].data().lname,
-            admin: user.docs[0].data().admin,
-            super: user.docs[0].data().super
+            name: user.docs[0].data().name,
+            status: user.docs[0].data().status
           })
         } else {
           reject()
@@ -25,19 +23,33 @@ const getOneUser = (query, value) =>
 
 const createNewUser = user =>
   new Promise((resolve, reject) => {
-    const { email, fname, lname, uid } = user
+    const { email, name, status, uid } = user
     db.collection('users')
       .add({
         uid,
         email,
-        fname,
-        lname,
+        name,
+        status,
         createdAt: Date.now()
       })
       .then(ref => {
-        resolve({ id: ref.id, email, fname, lname })
+        resolve({ id: ref.id, email, name, status, uid })
       })
       .catch(err => reject(err))
   })
 
-export { getOneUser, createNewUser }
+const signUserIn = credentials =>
+  new Promise((resolve, reject) => {
+    const { email, password } = credentials
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(ref => {
+        resolve(ref)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+
+export { getOneUser, createNewUser, signUserIn }

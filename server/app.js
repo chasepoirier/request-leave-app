@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 
 import index from './routes/index'
 import user from './routes/user'
+import supervisor from './routes/supervisor'
 
 dotenv.config()
 
@@ -29,6 +30,7 @@ app.use(cookieParser())
 
 app.use('/api', index)
 app.use('/api/user', user)
+app.use('/api/supervisor', supervisor)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

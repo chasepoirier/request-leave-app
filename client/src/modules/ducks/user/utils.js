@@ -16,7 +16,8 @@ export const logUserIn = googleUser => {
           uid: ref.user.uid
         })
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err)
         reject()
       })
   )

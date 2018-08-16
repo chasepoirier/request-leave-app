@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-const SuperRoute = ({ user, render, ...rest }) => {
+const SuperRoute = ({ status, loggedIn, render, ...rest }) => {
   const renderDestination = (match, history) => {
-    if (user) {
-      if (user.super) {
+    if (loggedIn) {
+      if (status.supervisor) {
         return render(match, history)
       }
       return <Redirect to="/" />

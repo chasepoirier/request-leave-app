@@ -1,5 +1,5 @@
 {
-  "name": "leave-request-app",
+  "name": "request-leave-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,5 +24,10 @@
     "build": "NODE_PATH=./src react-scripts build",
     "test": "react-scripts test --env=jsdom"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:8080",
+      "changeOrigin": true
+    }
+  }
 }

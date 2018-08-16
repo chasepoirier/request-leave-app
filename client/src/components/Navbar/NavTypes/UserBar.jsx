@@ -4,12 +4,12 @@ import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
 import { connect } from 'react-redux'
 import { userOperations } from 'modules/ducks/user'
-import { StyledLink, LinkContainer, Btn } from '../Styled'
+import { StyledLink, LinkContainer, Button, WelcomeText } from '../Styled'
 
-const UserBar = ({ logUserOut, routes }) => (
+const UserBar = ({ logUserOut, routes, name }) => (
   <PageWrapper flex>
-    <NavItem text={routes.home.text} path={routes.home.path} />
     <LinkContainer>
+      <NavItem text={routes.home.text} path={routes.home.path} />
       <NavItem
         text={routes.requestLeave.text}
         path={routes.requestLeave.path}
@@ -22,9 +22,10 @@ const UserBar = ({ logUserOut, routes }) => (
         text={routes.leaveHistory.text}
         path={routes.leaveHistory.path}
       />
-      <Btn type="submit" onClick={logUserOut}>
-        Log Out
-      </Btn>
+    </LinkContainer>
+    <LinkContainer>
+      <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
+      <Button onClick={logUserOut}>Log Out</Button>
     </LinkContainer>
   </PageWrapper>
 )
@@ -42,9 +43,14 @@ NavItem.propTypes = {
   path: string.isRequired
 }
 
+UserBar.defaultProps = {
+  name: ''
+}
+
 UserBar.propTypes = {
   routes: objectOf(objectOf(string)).isRequired,
-  logUserOut: func.isRequired
+  logUserOut: func.isRequired,
+  name: string
 }
 
 export default connect(

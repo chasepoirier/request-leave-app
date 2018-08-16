@@ -1,11 +1,21 @@
 import * as types from './types'
 
 const initialState = {
-  info: null,
+  info: {
+    name: {
+      fname: null,
+      lname: null
+    },
+    status: {
+      supervisor: false,
+      admin: false
+    }
+  },
   loading: false,
   login: {
     errors: null,
-    success: false
+    success: false,
+    loggedIn: false
   },
   userFetched: false
 }
@@ -28,9 +38,9 @@ const user = (state = initialState, action = {}) => {
     case types.USER_LOGIN_SUCCESS: {
       return {
         ...state,
-        info: action.payload.user,
+        info: { ...state.info, ...action.payload.user },
         loading: false,
-        login: { ...state.login, errors: null, success: true }
+        login: { ...state.login, errors: null, success: true, loggedIn: true }
       }
     }
     case types.USER_LOGIN_FAIL: {
@@ -43,7 +53,7 @@ const user = (state = initialState, action = {}) => {
     case types.LOG_USER_OUT: {
       return {
         ...state,
-        info: null
+        info: initialState.info
       }
     }
     case types.SET_CURRENT_USER: {
@@ -51,15 +61,16 @@ const user = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         info: action.payload.user,
-        userFetched: true
+        userFetched: true,
+        login: { ...state.login, loggedIn: true }
       }
     }
     case types.NO_CURRENT_USER: {
       return {
         ...state,
         loading: false,
-        info: null,
-        userFetched: true
+        userFetched: true,
+        login: { ...state.login, loggedIn: false }
       }
     }
     default: {

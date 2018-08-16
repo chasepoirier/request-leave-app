@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
 import { connect } from 'react-redux'
 import { userOperations } from 'modules/ducks/user'
-import { StyledLink, LinkContainer, WelcomeText, Btn } from '../Styled'
+import { StyledLink, LinkContainer, WelcomeText, Button } from '../Styled'
 
 const AdminBar = ({ logUserOut, routes, name }) => (
   <PageWrapper flex>
@@ -26,7 +26,7 @@ const AdminBar = ({ logUserOut, routes, name }) => (
     </LinkContainer>
     <LinkContainer>
       <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
-      <Btn onClick={logUserOut}>Log Out</Btn>
+      <Button onClick={logUserOut}>Log Out</Button>
     </LinkContainer>
   </PageWrapper>
 )
@@ -44,10 +44,14 @@ NavItem.propTypes = {
   path: string.isRequired
 }
 
+AdminBar.defaultProps = {
+  name: ''
+}
+
 AdminBar.propTypes = {
   routes: objectOf(objectOf(string)).isRequired,
   logUserOut: func.isRequired,
-  name: string.isRequired
+  name: string
 }
 
 export default connect(

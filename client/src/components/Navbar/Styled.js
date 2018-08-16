@@ -44,7 +44,7 @@ const Logo = styled.div`
   border-radius: 50%;
 `
 
-const Btn = styled.div`
+const Button = styled.div`
   padding: 7px 15px 4px;
   background-color: ${Colors.blue500};
   color: ${Colors.White1000};
@@ -60,4 +60,4 @@ const Btn = styled.div`
   }
 `
 
-export { NavContainer, StyledLink, Logo, LinkContainer, WelcomeText, Btn }
+export { NavContainer, StyledLink, Logo, LinkContainer, WelcomeText, Button }

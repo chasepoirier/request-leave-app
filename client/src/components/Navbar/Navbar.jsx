@@ -3,18 +3,17 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { userOperations } from 'modules/ducks/user'
 import { NavContainer } from './Styled'
-
 import { AdminBar, UserBar, NonUserBar } from './NavTypes'
 
 class Navbar extends React.Component {
   renderNavType = () => {
-    const { routes, user } = this.props
+    const { routes, status, name, loggedIn } = this.props
 
-    if (user) {
-      if (user.super || user.admin) {
-        return <AdminBar routes={routes} name={user.fname} />
+    if (loggedIn) {
+      if (status.supervisor || status.admin) {
+        return <AdminBar routes={routes} name={name.fname} />
       }
-      return <UserBar routes={routes} name={user.fname} />
+      return <UserBar routes={routes} name={name.fname} />
     }
     return <NonUserBar routes={routes} />
   }
@@ -25,27 +24,25 @@ class Navbar extends React.Component {
 }
 
 Navbar.defaultProps = {
-  user: null
+  name: ''
 }
 
-const { objectOf, bool, string, shape } = PropTypes
+const { objectOf, string, shape, bool, oneOfType } = PropTypes
 
 Navbar.propTypes = {
   routes: objectOf(objectOf(string)).isRequired,
-  user: shape({
-    id: string,
-    uid: string,
-    email: string,
-    fname: string,
-    lname: string,
+  name: oneOfType([objectOf(string), string]),
+  status: shape({
     admin: bool,
-    super: bool,
-    token: string
-  })
+    supervisor: bool
+  }).isRequired,
+  loggedIn: bool.isRequired
 }
 
 const mapStateToProps = state => ({
-  user: state.user.info
+  status: state.user.info.status,
+  loggedIn: state.user.login.loggedIn,
+  name: state.user.info.name
 })
 
 export default connect(

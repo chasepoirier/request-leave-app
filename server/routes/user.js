@@ -10,7 +10,8 @@ router.post('/login', (req, res) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(ref => {
-      Queries.User.getOneUser('uid', ref.user.uid)
+      Queries.user
+        .getOneUser('uid', ref.user.uid)
         .then(user => res.json({ user: toAuthJSON(user) }))
         .catch(() => {
           res.json({ error: { message: 'User not correct' } })
@@ -22,13 +23,15 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/get_user_by_email', (req, res) => {
-  Queries.User.getOneUser('email', req.body.email)
+  Queries.user
+    .getOneUser('email', req.body.email)
     .then(user => res.json({ user }))
     .catch(() => res.json({ user: null }))
 })
 
 router.post('/get_user_by_uid', (req, res) => {
-  Queries.User.getOneUser('uid', req.body.uid)
+  Queries.user
+    .getOneUser('uid', req.body.uid)
     .then(user => res.json({ user: toAuthJSON(user) }))
     .catch(() => res.json({ user: null }))
 })
@@ -40,14 +43,16 @@ router.post('/create_user', (req, res) => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(ref => {
-      Queries.User.createNewUser({
-        email,
-        fname,
-        lname,
-        uid: ref.user.uid
-      }).then(user => {
-        res.json({ user: toAuthJSON(user) })
-      })
+      Queries.user
+        .createNewUser({
+          email,
+          fname,
+          lname,
+          uid: ref.user.uid
+        })
+        .then(user => {
+          res.json({ user: toAuthJSON(user) })
+        })
     })
     .catch(err => {
       res.json({ errors: { code: err.code, message: err.message } })
