@@ -11,7 +11,7 @@ router.post('/get_user_by_uid', (req, res) => {
 })
 
 router.post('/add_user', (req, res) => {
-  const { email, fname, lname, status } = req.body.user
+  const { email, fname, lname, status, team } = req.body.user
   const password = 'test1234'
 
   Queries.user
@@ -28,10 +28,12 @@ router.post('/add_user', (req, res) => {
                 fname,
                 lname
               },
+              team,
               status,
               uid: ref.user.uid
             })
             .then(user => {
+              Queries.team.addUserToTeam(user.team, user)
               res.json({ user: toAuthJSON(user) })
             })
         })

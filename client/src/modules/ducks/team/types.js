@@ -1,0 +1,3 @@
+export const REQUEST_ALL_TEAMS = '@@team/REQUEST_ALL_TEAMS'
+export const FETCH_ALL_TEAMS_SUCCESS = '@@team/FETCH_ALL_TEAMS_SUCCESS'
+export const FETCH_ALL_TEAMS_FAIL = '@@team/FETCH_ALL_TEAMS_FAIL'

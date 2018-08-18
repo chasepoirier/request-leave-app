@@ -9,7 +9,7 @@ const initialState = {
   allUsers: []
 }
 
-const user = (state = initialState, action = {}) => {
+const supervisor = (state = initialState, action = {}) => {
   switch (action.type) {
     case types.REQUEST_ADD_USER: {
       return {
@@ -29,7 +29,7 @@ const user = (state = initialState, action = {}) => {
         ...state,
         addUser: {
           ...state.addUser,
-          submitting: true,
+          submitting: false,
           errors: action.payload.error
         }
       }
@@ -40,4 +40,4 @@ const user = (state = initialState, action = {}) => {
   }
 }
 
-export default user
+export default supervisor

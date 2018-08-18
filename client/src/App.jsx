@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Redirect } from 'react-router-dom'
-import { Navbar, RouteTypes, InitialLoadingState } from 'components'
+import { Navbar, RouteTypes, InitialLoadingState, StatusBar } from 'components'
 import { userOperations } from 'modules/ducks/user'
 import { connect } from 'react-redux'
 
@@ -38,6 +38,7 @@ class App extends React.Component {
       <section>
         {userFetched ? (
           <div>
+            <StatusBar />
             <Navbar routes={Routes.primary} />
             <section>
               <Switch>

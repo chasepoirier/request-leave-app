@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { history as historyProps } from 'react-router-prop-types'
 import { supervisorOperations } from 'modules/ducks/supervisor'
-import { Checkbox, TextInput, Styled } from '../../components'
+import { viewOperations } from 'modules/ducks/view'
+import { teamOperations } from 'modules/ducks/team'
+import { Checkbox, TextInput, Styled, Dropdown } from '../../components'
 import { FormContainer, InputContainer, FormHeader } from './Styled'
 
 class CreateUser extends React.Component {
@@ -14,16 +18,55 @@ class CreateUser extends React.Component {
         admin: false,
         supervisor: false
       },
-      email: ''
+      email: '',
+      team: null
     }
   }
+
+  componentWillMount() {
+    const { fetchAllTeams } = this.props
+
+    fetchAllTeams()
+  }
+
+  renderStatusMessage = user =>
+    `${user.name.fname} was added with the email address: ${user.email}.`
 
   handleSubmit = e => {
     e.preventDefault()
     const { user } = this.state
-    const { submitAddUser } = this.props
+    const { submitAddUser, showStatusBar, history } = this.props
 
     submitAddUser(user)
+      .then(res => {
+        if (res.payload.user) {
+          showStatusBar(this.renderStatusMessage(res.payload.user))
+          history.push('/admin')
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
+  handleSelectChange = e => {
+    if (e.target.value) {
+      const { teams } = this.props
+      const { user } = this.state
+      /* eslint-disable no-param-reassign */
+      const teamID = teams.reduce((prev, current) => {
+        if (current.name === e.target.value) {
+          prev = current.id
+        }
+        return prev
+      }, {})
+      /* eslint-enable no-param-reassign */
+
+      this.setState({
+        user: {
+          ...user,
+          team: teamID
+        }
+      })
+    }
   }
 
   handleTextChange = e => {
@@ -45,8 +88,8 @@ class CreateUser extends React.Component {
 
   render() {
     const { user } = this.state
-    const { error } = this.props
-
+    const { error, submitting, teams } = this.props
+    console.log(user.team)
     return (
       <FormContainer onSubmit={this.handleSubmit}>
         <FormHeader>Register a new User</FormHeader>
@@ -81,6 +124,15 @@ class CreateUser extends React.Component {
           />
         </InputContainer>
         <InputContainer>
+          <Dropdown
+            options={teams.map(team => team.name)}
+            label="Select a team"
+            required
+            name="team"
+            onSelectChange={this.handleSelectChange}
+          />
+        </InputContainer>
+        <InputContainer>
           <Checkbox
             value={user.status.admin}
             label="Admin"
@@ -95,26 +147,45 @@ class CreateUser extends React.Component {
           />
         </InputContainer>
         {error && <InputContainer>{error}</InputContainer>}
-        <Styled.SubmitButton type="submit" value="Add User" />
+        <Styled.SubmitButton
+          type="submit"
+          value={submitting ? 'Creating user...' : 'Add User'}
+        />
       </FormContainer>
     )
   }
 }
 
 CreateUser.defaultProps = {
-  error: null
+  error: null,
+  teams: []
 }
 
+const { func, string, bool, shape, arrayOf } = PropTypes
+
 CreateUser.propTypes = {
-  submitAddUser: PropTypes.func.isRequired,
-  error: PropTypes.string
+  submitAddUser: func.isRequired,
+  showStatusBar: func.isRequired,
+  error: string,
+  submitting: bool.isRequired,
+  history: historyProps.isRequired,
+  fetchAllTeams: func.isRequired,
+  teams: arrayOf(shape({ name: string, id: string }))
 }
 
 const mapStateToProps = state => ({
-  error: state.supervisor.addUser.errors
+  error: state.supervisor.addUser.errors,
+  submitting: state.supervisor.addUser.submitting,
+  teams: state.team.teams.all
 })
 
-export default connect(
-  mapStateToProps,
-  { submitAddUser: supervisorOperations.submitAddUser }
-)(CreateUser)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      submitAddUser: supervisorOperations.submitAddUser,
+      showStatusBar: viewOperations.showStatusBar,
+      fetchAllTeams: teamOperations.fetchAllTeams
+    }
+  )(CreateUser)
+)

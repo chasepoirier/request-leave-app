@@ -46,4 +46,24 @@ const InputLabel = styled.div`
   margin-right: 15px;
 `
 
-export { Check, InputWrapper, Input, InputLabel, CheckboxWrapper }
+const SelectContainer = styled.div`
+  width: 100%;
+`
+
+const Select = styled.select`
+  width: 100%;
+  margin-top: 8px;
+`
+
+const Option = styled.option``
+
+export {
+  Check,
+  InputWrapper,
+  Input,
+  InputLabel,
+  CheckboxWrapper,
+  SelectContainer,
+  Select,
+  Option
+}
