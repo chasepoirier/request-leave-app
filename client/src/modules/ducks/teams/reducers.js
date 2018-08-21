@@ -1,18 +1,19 @@
-import { combineReducers } from 'redux'
+// import { combineReducers } from 'redux'
 import * as types from './types'
 
-const allTeamsInitialState = {
+const teamsInitialState = {
   loading: false,
   error: null,
   all: [
     {
       name: '',
-      id: ''
+      id: '',
+      users: []
     }
   ]
 }
 
-const allTeams = (state = allTeamsInitialState, action = {}) => {
+const teams = (state = teamsInitialState, action = {}) => {
   switch (action.type) {
     case types.REQUEST_ALL_TEAMS: {
       return {
@@ -41,4 +42,4 @@ const allTeams = (state = allTeamsInitialState, action = {}) => {
   }
 }
 
-export default combineReducers({ teams: allTeams })
+export default teams

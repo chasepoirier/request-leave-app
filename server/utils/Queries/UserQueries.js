@@ -12,7 +12,8 @@ const getOneUser = (query, value) =>
             email: user.docs[0].data().email,
             uid: user.docs[0].data().uid,
             name: user.docs[0].data().name,
-            status: user.docs[0].data().status
+            status: user.docs[0].data().status,
+            team: user.docs[0].data().team
           })
         } else {
           reject()

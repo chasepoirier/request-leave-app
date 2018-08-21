@@ -6,6 +6,10 @@ const initialState = {
     submitting: false,
     errors: null
   },
+  deleteUser: {
+    submitting: false,
+    errors: null
+  },
   allUsers: []
 }
 
@@ -32,6 +36,18 @@ const supervisor = (state = initialState, action = {}) => {
           submitting: false,
           errors: action.payload.error
         }
+      }
+    }
+    case types.REQUEST_DELETE_USER: {
+      return { ...state, deleteUser: { ...state.deleteUser, submitting: true } }
+    }
+    case types.DELETE_USER_SUCCESS: {
+      return { ...state, deleteUser: { submitting: false, errors: null } }
+    }
+    case types.DELETE_USER_FAIL: {
+      return {
+        ...state,
+        deleteUser: { submitting: false, errors: action.payload.error }
       }
     }
     default: {

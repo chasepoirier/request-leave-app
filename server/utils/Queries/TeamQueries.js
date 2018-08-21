@@ -1,18 +1,31 @@
 import { db } from '../../firebase'
 
+const getUsersFromTeam = team =>
+  new Promise(resolve =>
+    db
+      .collection('teams')
+      .doc(team.id)
+      .collection('users')
+      .get()
+      .then(userSnap => {
+        const users = []
+        userSnap.forEach(user => users.push(user.data()))
+        resolve({
+          name: team.data().name,
+          id: team.id,
+          users
+        })
+      })
+  )
+
 const getAllTeams = () =>
   new Promise((resolve, reject) => {
     db.collection('teams')
       .get()
-      .then(snap => {
+      .then(teamSnap => {
         const teams = []
-        snap.forEach(team =>
-          teams.push({
-            name: team.data().name,
-            id: team.id
-          })
-        )
-        resolve(teams)
+        teamSnap.forEach(team => teams.push(getUsersFromTeam(team)))
+        Promise.all(teams).then(res => resolve(res))
       })
       .catch(err => reject(err))
   })

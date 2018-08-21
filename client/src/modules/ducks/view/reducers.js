@@ -28,4 +28,31 @@ const statusbar = (state = barInitialState, action = {}) => {
   }
 }
 
-export default combineReducers({ statusbar })
+const popupInitialState = {
+  visible: false,
+  type: '',
+  content: {
+    title: '',
+    desc: '',
+    handleSubmit: null
+  }
+}
+
+const popup = (state = popupInitialState, action = {}) => {
+  switch (action.type) {
+    case types.SHOW_POPUP:
+      return {
+        ...state,
+        visible: true,
+        content: action.payload.content,
+        type: action.payload.type
+      }
+    case types.HIDE_POPUP: {
+      return { ...state, ...popupInitialState }
+    }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ statusbar, popup })

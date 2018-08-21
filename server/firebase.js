@@ -35,7 +35,8 @@ admin.initializeApp({
 })
 
 const db = admin.firestore()
+const auth = admin.auth()
 const settings = { timestampsInSnapshots: true }
 db.settings(settings)
 
-export { firebase, db }
+export { firebase, db, auth }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { apiBase } from 'config'
 
-const SupervisorEndpoints = {
+const TeamEndpoints = {
   getAllTeams: () =>
     axios.get(`${apiBase}/team/get_all_teams`).then(res => {
       if (res.data.teams) {
@@ -11,4 +11,4 @@ const SupervisorEndpoints = {
     })
 }
 
-export default SupervisorEndpoints
+export default TeamEndpoints

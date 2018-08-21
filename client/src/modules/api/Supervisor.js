@@ -8,6 +8,13 @@ const SupervisorEndpoints = {
         return res.data.user
       }
       throw new Error()
+    }),
+  deleteUserFromDB: id =>
+    axios.post(`${apiBase}/supervisor/delete_user`, { id }).then(res => {
+      if (res.data.success) {
+        return true
+      }
+      throw new Error()
     })
 }
 

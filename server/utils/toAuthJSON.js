@@ -15,6 +15,7 @@ const toAuthJSON = user => ({
   email: user.email,
   name: user.name,
   status: user.status,
+  team: user.team,
   token: generateJWT(user)
 })
 

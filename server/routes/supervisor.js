@@ -1,5 +1,6 @@
 import express from 'express'
 import { toAuthJSON, Queries } from '../utils'
+import { db, auth } from '../firebase'
 
 const router = express.Router()
 
@@ -40,6 +41,26 @@ router.post('/add_user', (req, res) => {
         .catch(err => {
           res.json({ errors: { code: err.code, message: err.message } })
         })
+    })
+})
+
+router.post('/delete_user', (req, res) => {
+  db.collection('users')
+    .doc(req.body.id)
+    .get()
+    .then(user => {
+      user.ref.delete()
+      return user.data()
+    })
+    .then(user => {
+      auth.deleteUser(user.uid)
+      db.collection('teams')
+        .doc(user.team)
+        .collection('users')
+        .where('id', '==', req.body.id)
+        .get()
+        .then(snap => snap.forEach(ref => ref.ref.delete()))
+        .then(() => res.json({ success: true }))
     })
 })
 

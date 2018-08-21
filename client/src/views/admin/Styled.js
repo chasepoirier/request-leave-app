@@ -7,10 +7,14 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
 `
 
 const StyledLink = styled.div`
-  mergin-right: 15px;
+  margin-right: 45px;
+  color: ${Colors.blue200};
+  font-weight: 500;
 `
 
 const LinkContainer = styled.div`
@@ -20,35 +24,4 @@ const LinkContainer = styled.div`
   height: 100%;
 `
 
-const FormContainer = styled.form`
-  width: 95%;
-  margin: 50px auto;
-  padding: 50px 0;
-  max-width: 620px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-  background-color: ${Colors.White1000};
-  border-radius: 4px;
-`
-
-const FormHeader = styled.h2`
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 25px;
-`
-
-const InputContainer = styled.div`
-  width: 80%;
-  margin: 50px auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-export {
-  NavContainer,
-  StyledLink,
-  LinkContainer,
-  FormContainer,
-  InputContainer,
-  FormHeader
-}
+export { NavContainer, LinkContainer, StyledLink }

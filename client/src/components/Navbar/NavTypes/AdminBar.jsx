@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
+import Link from 'react-router-dom/Link'
 import { connect } from 'react-redux'
 import { userOperations } from 'modules/ducks/user'
 import { StyledLink, LinkContainer, WelcomeText, Button } from '../Styled'
@@ -11,10 +12,6 @@ const AdminBar = ({ logUserOut, routes, name }) => (
     <LinkContainer>
       <NavItem text={routes.home.text} path={routes.home.path} />
       <NavItem
-        text={routes.requestLeave.text}
-        path={routes.requestLeave.path}
-      />
-      <NavItem
         text={routes.requestStatus.text}
         path={routes.requestStatus.path}
       />
@@ -23,10 +20,13 @@ const AdminBar = ({ logUserOut, routes, name }) => (
         path={routes.leaveHistory.path}
       />
       <NavItem text={routes.admin.text} path={routes.admin.path} />
+      <StyledLink onClick={logUserOut}>Logout</StyledLink>
     </LinkContainer>
     <LinkContainer>
       <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
-      <Button onClick={logUserOut}>Log Out</Button>
+      <Link to={routes.requestLeave.path} style={{ marginRight: 20 }}>
+        <Button>Request Leave</Button>
+      </Link>
     </LinkContainer>
   </PageWrapper>
 )

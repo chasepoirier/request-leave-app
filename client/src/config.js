@@ -2,6 +2,10 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
+// ----------- MOMENT CONFIG --------------
+
+// ----------- FIREBASE CONFIG --------------
+
 const config = {
   apiKey: 'AIzaSyAAXDkzQt7ifmiPcgN0Yo698DElFMps22A',
   authDomain: 'manager-9eaf5.firebaseapp.com',

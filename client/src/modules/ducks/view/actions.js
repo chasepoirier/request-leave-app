@@ -10,3 +10,15 @@ export const showStatusBar = content => ({
     content
   }
 })
+
+export const hidePopup = () => ({
+  type: types.HIDE_POPUP
+})
+
+export const showPopup = data => ({
+  type: types.SHOW_POPUP,
+  payload: {
+    content: data.content,
+    type: data.type
+  }
+})

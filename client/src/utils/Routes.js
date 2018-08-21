@@ -14,7 +14,7 @@ const Routes = {
     },
     requestStatus: {
       path: '/request-status',
-      text: 'Request Status'
+      text: 'Status'
     },
     login: {
       path: '/login',
@@ -29,6 +29,14 @@ const Routes = {
     addUser: {
       path: '/add-user',
       text: 'Add A User'
+    },
+    allTeams: {
+      path: '/all-teams',
+      text: 'Manage Teams'
+    },
+    approval: {
+      path: '/pending-approvals',
+      text: 'Pending Approvals'
     }
   }
 }

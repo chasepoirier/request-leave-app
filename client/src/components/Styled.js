@@ -17,8 +17,42 @@ const PageWrapper = styled.div`
 const Header = styled.h1`
   font-size: 28px;
   margin: 0;
-  margin-top: 50px;
   padding: 0;
+`
+
+const ButtonOutline = styled.div`
+  padding: 10px 55px;
+  color: ${Colors.blue500};
+  font-size: 15px;
+  text-align: center;
+  border-radius: 4px;
+  border: 2px solid ${Colors.blue500};
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: translateY(2px);
+  }
+  margin: 0px auto;
+  display: block;
+  padding-top: 12px;
+`
+
+const ButtonFilled = styled.div`
+  padding: 10px 55px;
+  background-color: ${Colors.blue500}
+  color: ${Colors.White1000};
+  font-size: 15px;
+  text-align: center;
+  border-radius: 4px;
+  border-bottom: 2px solid ${Colors.blue200};
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: translateY(2px);
+  }
+  margin: 0px auto;
+  display: block;
+  padding-top: 12px;
 `
 
 const SubmitButton = styled.input`
@@ -41,4 +75,18 @@ const SubmitButton = styled.input`
   display: block;
 `
 
-export { PageWrapper, Header, SubmitButton }
+const SubLabel = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  ${props => props.color && `color: ${props.color}`};
+`
+
+export {
+  PageWrapper,
+  Header,
+  SubmitButton,
+  ButtonOutline,
+  ButtonFilled,
+  SubLabel
+}

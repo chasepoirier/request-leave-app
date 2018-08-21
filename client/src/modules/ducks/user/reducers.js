@@ -17,6 +17,10 @@ const initialState = {
     success: false,
     loggedIn: false
   },
+  addRequest: {
+    submitting: false,
+    errors: null
+  },
   userFetched: false
 }
 

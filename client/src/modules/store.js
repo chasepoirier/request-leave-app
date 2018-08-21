@@ -6,13 +6,8 @@ import * as reducers from './ducks'
 
 const middleware =
   process.env.NODE_ENV === 'development'
-    ? applyMiddleware(thunk, logger)
+    ? composeWithDevTools(applyMiddleware(thunk, logger))
     : applyMiddleware(thunk)
 const rootReducer = combineReducers(reducers)
 
-export default createStore(
-  rootReducer,
-  process.env.NODE_ENV === 'development'
-    ? composeWithDevTools(middleware)
-    : middleware
-)
+export default createStore(rootReducer, middleware)

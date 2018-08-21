@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { TeamPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { history as historyProps } from 'react-router-prop-types'
 import { supervisorOperations } from 'modules/ducks/supervisor'
+import { teamOperations } from 'modules/ducks/teams'
 import { viewOperations } from 'modules/ducks/view'
-import { teamOperations } from 'modules/ducks/team'
-import { Checkbox, TextInput, Styled, Dropdown } from '../../components'
+import { Checkbox, TextInput, Styled, Dropdown } from '../../../components'
 import { FormContainer, InputContainer, FormHeader } from './Styled'
 
-class CreateUser extends React.Component {
+class CreateUserPage extends React.Component {
   state = {
     user: {
       fname: '',
@@ -23,25 +24,20 @@ class CreateUser extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const { fetchAllTeams } = this.props
-
-    fetchAllTeams()
-  }
-
   renderStatusMessage = user =>
     `${user.name.fname} was added with the email address: ${user.email}.`
 
   handleSubmit = e => {
     e.preventDefault()
     const { user } = this.state
-    const { submitAddUser, showStatusBar, history } = this.props
+    const { submitAddUser, showStatusBar, history, fetchAllTeams } = this.props
 
     submitAddUser(user)
       .then(res => {
         if (res.payload.user) {
           showStatusBar(this.renderStatusMessage(res.payload.user))
-          history.push('/admin')
+          fetchAllTeams()
+          history.push('/admin/all-teams')
         }
       })
       .catch(err => console.log(err))
@@ -89,7 +85,7 @@ class CreateUser extends React.Component {
   render() {
     const { user } = this.state
     const { error, submitting, teams } = this.props
-    console.log(user.team)
+
     return (
       <FormContainer onSubmit={this.handleSubmit}>
         <FormHeader>Register a new User</FormHeader>
@@ -156,27 +152,27 @@ class CreateUser extends React.Component {
   }
 }
 
-CreateUser.defaultProps = {
+CreateUserPage.defaultProps = {
   error: null,
   teams: []
 }
 
-const { func, string, bool, shape, arrayOf } = PropTypes
+const { func, string, bool, arrayOf } = PropTypes
 
-CreateUser.propTypes = {
+CreateUserPage.propTypes = {
   submitAddUser: func.isRequired,
   showStatusBar: func.isRequired,
   error: string,
   submitting: bool.isRequired,
   history: historyProps.isRequired,
-  fetchAllTeams: func.isRequired,
-  teams: arrayOf(shape({ name: string, id: string }))
+  teams: arrayOf(TeamPT),
+  fetchAllTeams: func.isRequired
 }
 
 const mapStateToProps = state => ({
   error: state.supervisor.addUser.errors,
   submitting: state.supervisor.addUser.submitting,
-  teams: state.team.teams.all
+  teams: state.teams.all
 })
 
 export default withRouter(
@@ -187,5 +183,5 @@ export default withRouter(
       showStatusBar: viewOperations.showStatusBar,
       fetchAllTeams: teamOperations.fetchAllTeams
     }
-  )(CreateUser)
+  )(CreateUserPage)
 )

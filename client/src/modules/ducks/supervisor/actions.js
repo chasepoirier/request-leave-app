@@ -17,3 +17,18 @@ export const addUserFail = error => ({
     error
   }
 })
+
+export const requestDeleteUser = () => ({
+  type: types.REQUEST_DELETE_USER
+})
+
+export const deleteUserSuccess = () => ({
+  type: types.DELETE_USER_SUCCESS
+})
+
+export const deleteUserFail = error => ({
+  type: types.DELETE_USER_FAIL,
+  payload: {
+    error
+  }
+})

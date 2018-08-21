@@ -15,6 +15,7 @@ import {
 } from 'views'
 
 import Routes from './utils/Routes'
+import DangerPopup from './components/Popups/DangerPopup'
 
 const {
   login,
@@ -31,14 +32,27 @@ class App extends React.Component {
     fetchCurrentUser()
   }
 
+  renderPopup = (type, visible) => {
+    if (visible) {
+      switch (type) {
+        case 'danger':
+          return <DangerPopup />
+        default:
+          return null
+      }
+    }
+    return null
+  }
+
   render() {
-    const { userFetched, status, loggedIn } = this.props
+    const { userFetched, status, loggedIn, popup } = this.props
 
     return (
       <section>
         {userFetched ? (
           <div>
             <StatusBar />
+            {this.renderPopup(popup.type, popup.visible)}
             <Navbar routes={Routes.primary} />
             <section>
               <Switch>
@@ -103,7 +117,7 @@ class App extends React.Component {
   }
 }
 
-const { shape, func, bool } = PropTypes
+const { shape, func, bool, string } = PropTypes
 
 App.propTypes = {
   fetchCurrentUser: func.isRequired,
@@ -112,13 +126,18 @@ App.propTypes = {
     admin: bool,
     supervisor: bool
   }).isRequired,
-  loggedIn: bool.isRequired
+  loggedIn: bool.isRequired,
+  popup: shape({
+    visible: bool,
+    type: string
+  }).isRequired
 }
 
 const mapStateToProps = state => ({
   userFetched: state.user.userFetched,
   status: state.user.info.status,
-  loggedIn: state.user.login.loggedIn
+  loggedIn: state.user.login.loggedIn,
+  popup: state.view.popup
 })
 
 export default connect(
