@@ -3,7 +3,7 @@ import { Styled } from 'components'
 
 const Home = () => (
   <Styled.PageWrapper>
-    <Styled.Header>Home Page</Styled.Header>
+    <Styled.Header style={{ marginTop: 50 }}>Home Page</Styled.Header>
   </Styled.PageWrapper>
 )
 

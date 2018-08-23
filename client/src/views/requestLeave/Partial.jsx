@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { momentObj } from 'react-moment-proptypes'
-import { FormSecondary, SubHeader, SubLabel } from './Styled'
+import { FormSecondary, SubHeader } from './Styled'
 import { DatePickerUI } from '../../components'
 
 const Partial = ({ startDate, handleDateChange }) => (

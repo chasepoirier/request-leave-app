@@ -20,7 +20,7 @@ class Login extends React.Component {
     const { login } = this.props
     return (
       <Styled.PageWrapper>
-        <Styled.Header>Login Page</Styled.Header>
+        <Styled.Header style={{ marginTop: 50 }}>Login Page</Styled.Header>
         <GoogleLogin
           clientId="1025860778836-rp6ppospi7a9bcqut9n6jokt9n91c81s.apps.googleusercontent.com"
           buttonText="Login with Google"
