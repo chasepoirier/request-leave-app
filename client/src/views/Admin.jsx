@@ -8,6 +8,7 @@ import Routes from 'utils/Routes'
 import { teamOperations } from 'modules/ducks/teams'
 import AdminNav from './admin/AdminNav'
 import * as Pages from './admin/'
+import SupervisorNav from './admin/SupervisorNav'
 
 const { addUser, allTeams, approval } = Routes.adminRoutes
 
@@ -22,9 +23,13 @@ class Admin extends React.Component {
     const { match, status, loggedIn } = this.props
     return (
       <Styled.PageWrapper>
-        <AdminNav routes={Routes.adminRoutes} matchUrl={match.url} />
+        {status.supervisor ? (
+          <SupervisorNav routes={Routes.adminRoutes} matchUrl={match.url} />
+        ) : (
+          <AdminNav routes={Routes.adminRoutes} matchUrl={match.url} />
+        )}
         <Switch>
-          <RouteTypes.Supervisor
+          <RouteTypes.Admin
             status={status}
             loggedIn={loggedIn}
             path={match.url + approval.path}

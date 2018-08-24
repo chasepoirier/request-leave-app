@@ -33,3 +33,18 @@ export const userRequestsFail = error => ({
     error
   }
 })
+
+export const deleteRequestSubmit = () => ({
+  type: types.DELETE_REQUEST_SUBMIT
+})
+
+export const deleteRequestSuccess = () => ({
+  type: types.DELETE_REQUEST_SUCCESS
+})
+
+export const deleteRequestFail = error => ({
+  type: types.DELETE_REQUEST_FAIL,
+  payload: {
+    error
+  }
+})

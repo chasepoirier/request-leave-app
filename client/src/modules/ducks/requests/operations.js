@@ -27,9 +27,22 @@ export const submitRequestForUserRequests = id => dispatch => {
   dispatch(requestUserRequests())
   return api.requests
     .fetchAllUserRequests(id)
-    .then(requests => {
-      console.log(requests)
-      dispatch(userRequestsSuccess({ id, requests }))
-    })
+    .then(requests => dispatch(userRequestsSuccess({ id, requests })))
     .catch(error => dispatch(userRequetsFail(error)))
+}
+
+export const deleteRequestSubmit = () => actions.deleteRequestSubmit()
+export const deleteRequestFail = error => actions.deleteRequestFail(error)
+export const deleteRequestSuccess = () => actions.deleteRequestSuccess()
+
+export const submitRequestToDeleteRequest = ({
+  userID,
+  requestID,
+  teamID
+}) => dispatch => {
+  dispatch(deleteRequestSuccess())
+  return api.requests
+    .deleteRequest({ userID, requestID, teamID })
+    .then(() => dispatch(deleteRequestSuccess()))
+    .catch(() => dispatch(deleteRequestFail('Error deleting request')))
 }

@@ -5,3 +5,9 @@ export const ADD_USER_FAIL = '@@supervisor/ADD_USER_FAIL'
 export const REQUEST_DELETE_USER = '@@supervisor/REQUEST_DELETE_USER'
 export const DELETE_USER_SUCCESS = '@@supervisor/DELETE_USER_SUCCESS'
 export const DELETE_USER_FAIL = '@@supervisor/DELETE_USER_FAIL'
+
+export const PENDING_APPROVALS_REQUEST =
+  '@@supervisor/PENDING_APPROVALS_REQUEST'
+export const PENDING_APPROVALS_SUCCESS =
+  '@@supervisor/PENDING_APPROVALS_SUCCESS'
+export const PENDING_APPROVALS_FAIL = '@@supervisor/PENDING_APPROVALS_FAIL'

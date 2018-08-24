@@ -17,6 +17,14 @@ class Navbar extends React.Component {
             text={routes.approval.text}
             path={matchUrl + routes.approval.path}
           />
+          <NavItem
+            text={routes.allTeams.text}
+            path={matchUrl + routes.allTeams.path}
+          />
+          <NavItem
+            text={routes.addUser.text}
+            path={matchUrl + routes.addUser.path}
+          />
         </LinkContainer>
       </NavContainer>
     )

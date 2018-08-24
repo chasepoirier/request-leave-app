@@ -3,7 +3,6 @@ import * as utils from './utils'
 import api from '../../api'
 
 export const requestAddUser = () => actions.requestAddUser()
-
 export const requestDeleteUser = () => actions.requestDeleteUser()
 
 export const submitAddUser = user => dispatch => {
@@ -23,4 +22,17 @@ export const submitDeleteUser = id => dispatch => {
       return res
     })
     .catch(() => dispatch(actions.deleteUserFail('error deleting user')))
+}
+
+export const pendingApprovalsRequest = () => actions.pendingApprovalsRequest()
+export const pendingApprovalsFail = error => actions.pendingApprovalsFail(error)
+export const pendingApprovalsSuccess = requests =>
+  actions.pendingApprovalsSuccess(requests)
+
+export const fetchPendingApprovals = () => dispatch => {
+  dispatch(pendingApprovalsRequest())
+  return api.supervisor
+    .getPendingApprovals()
+    .then(requests => dispatch(pendingApprovalsSuccess(requests)))
+    .catch(() => dispatch(pendingApprovalsFail(utils.errors.unknown)))
 }

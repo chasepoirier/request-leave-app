@@ -10,6 +10,7 @@ import user from './routes/user'
 import supervisor from './routes/supervisor'
 import team from './routes/team'
 import requests from './routes/requests'
+import admin from './routes/admin'
 
 dotenv.config()
 
@@ -35,6 +36,7 @@ app.use('/api/user', user)
 app.use('/api/supervisor', supervisor)
 app.use('/api/team', team)
 app.use('/api/requests', requests)
+app.use('/api/admin', admin)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

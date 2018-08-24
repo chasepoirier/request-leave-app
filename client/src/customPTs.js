@@ -35,7 +35,7 @@ export const RequestPT = shape({
   timestamp: string,
   types: arrayOf(
     shape({
-      amount: number,
+      amount: string,
       id: string,
       type: string
     })

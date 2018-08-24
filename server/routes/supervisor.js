@@ -4,13 +4,6 @@ import { db, auth } from '../firebase'
 
 const router = express.Router()
 
-router.post('/get_user_by_uid', (req, res) => {
-  Queries.user
-    .getOneUser('uid', req.body.uid)
-    .then(user => res.json({ user: toAuthJSON(user) }))
-    .catch(() => res.json({ user: null }))
-})
-
 router.post('/add_user', (req, res) => {
   const { email, fname, lname, status, team } = req.body.user
   const password = 'test1234'

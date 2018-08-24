@@ -11,6 +11,10 @@ const initialState = {
     errors: null,
     id: '',
     all: []
+  },
+  deleteRequest: {
+    submitting: false,
+    errors: null
   }
 }
 
@@ -23,6 +27,27 @@ const addRequest = (state = initialState.addRequest, action = {}) => {
       return { ...state, submitting: false, errors: null }
     }
     case types.LEAVE_REQUEST_FAIL: {
+      return {
+        ...state,
+        submitting: false,
+        errors: action.payload.error
+      }
+    }
+    default: {
+      return state
+    }
+  }
+}
+
+const deleteRequest = (state = initialState.deleteRequest, action = {}) => {
+  switch (action.type) {
+    case types.DELETE_REQUEST_SUBMIT: {
+      return { ...state, submitting: true, errors: null }
+    }
+    case types.DELETE_REQUEST_SUCCESS: {
+      return { ...state, submitting: false, errors: null }
+    }
+    case types.DELETE_REQUEST_FAIL: {
       return {
         ...state,
         submitting: false,
@@ -64,4 +89,4 @@ const userRequests = (state = initialState.userRequests, action = {}) => {
   }
 }
 
-export default combineReducers({ addRequest, userRequests })
+export default combineReducers({ addRequest, deleteRequest, userRequests })

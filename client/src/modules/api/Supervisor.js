@@ -15,6 +15,13 @@ const SupervisorEndpoints = {
         return true
       }
       throw new Error()
+    }),
+  getPendingApprovals: () =>
+    axios.get(`${apiBase}/supervisor/get_pending_approvals`).then(res => {
+      if (res.data.requests) {
+        return res.data.requests
+      }
+      throw new Error()
     })
 }
 

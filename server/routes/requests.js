@@ -7,31 +7,36 @@ const router = express.Router()
 router.post('/add_new_request', (req, res) => {
   const { id, team } = req.body.user
 
-  const requestsRef = db
+  const logsRef = db
     .collection('users')
     .doc(id)
-    .collection('requests')
+    .collection('logs')
 
   const teamUsersRef = db
     .collection('teams')
     .doc(team)
     .collection('users')
 
-  requestsRef.add(req.body.request).then(ref => {
-    teamUsersRef
-      .where('id', '==', id)
-      .get()
-      .then(snap => {
-        const ids = []
-        snap.forEach(doc => ids.push(doc.id))
-        teamUsersRef
-          .doc(ids[0])
-          .collection('requests')
-          .doc(ref.id)
-          .set(req.body.request)
-          .then(() => res.json({ success: true }))
-      })
-  })
+  db.collection('users')
+    .doc(id)
+    .collection('requests')
+    .add(req.body.request)
+    .then(ref => {
+      logsRef.add(req.body.request)
+      teamUsersRef
+        .where('id', '==', id)
+        .get()
+        .then(snap => {
+          const ids = []
+          snap.forEach(doc => ids.push(doc.id))
+          teamUsersRef
+            .doc(ids[0])
+            .collection('requests')
+            .doc(ref.id)
+            .set(req.body.request)
+            .then(() => res.json({ success: true }))
+        })
+    })
 })
 
 router.post('/fetch_all_requests', (req, res) => {
@@ -41,8 +46,38 @@ router.post('/fetch_all_requests', (req, res) => {
     .get()
     .then(snap => {
       const requests = []
-      snap.forEach(request => requests.push(request.data()))
+      snap.forEach(request =>
+        requests.push({ ...request.data(), id: request.id })
+      )
       res.json({ requests })
+    })
+})
+
+router.post('/delete_request', (req, res) => {
+  const teamRef = db
+    .collection('teams')
+    .doc(req.body.teamID)
+    .collection('users')
+
+  db.collection('users')
+    .doc(req.body.userID)
+    .collection('requests')
+    .doc(req.body.requestID)
+    .delete()
+
+  teamRef
+    .where('id', '==', req.body.userID)
+    .get()
+    .then(ref => {
+      const user = []
+      ref.forEach(el => user.push(el.id))
+      teamRef
+        .doc(user[0])
+        .collection('requests')
+        .doc(req.body.requestID)
+        .delete()
+        .then(() => res.json({ success: true }))
+        .catch(() => res.json({ success: false }))
     })
 })
 
