@@ -9,3 +9,5 @@ export const USER_REQUESTS_FAIL = '@@requests/USER_REQUESTS_FAIL'
 export const DELETE_REQUEST_SUBMIT = '@@requests/DELETE_REQUEST_SUBMIT'
 export const DELETE_REQUEST_SUCCESS = '@@requests/DELETE_REQUEST_SUCCESS'
 export const DELETE_REQUEST_FAIL = '@@requests/DELETE_REQUEST_FAIL'
+
+export const SET_CURRENT_REQUEST = '@@requests/SET_CURRENT_REQUEST'

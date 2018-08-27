@@ -11,8 +11,15 @@ const Table = styled.table`
   margin: 25px 0 50px;
 `
 
+const LoadingState = styled.div`
+  width: 100%;
+  margin: 25px 0 50px;
+  text-align: center;
+  margin-top: 100px;
+`
+
 const TrashIcon = styled.i`
-  color: ${Colors.Red200};
+  color: ${Colors.Green200};
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -93,5 +100,6 @@ export {
   TableHeader,
   TeamHeader,
   TrashIcon,
-  TablePositioner
+  TablePositioner,
+  LoadingState
 }

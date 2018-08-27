@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Colors from '../../design/Colors'
 
-const DangerContainer = styled.div`
+const PopupWrapper = styled.div`
   width: 90%;
   max-width: 620px;
   height: 80%;
@@ -14,6 +14,23 @@ const DangerContainer = styled.div`
   align-items: center;
   z-index: 2;
   border-radius: 4px;
+  position: relative;
+`
+
+const CloseIcon = styled.i`
+  width: 25px;
+  height: 25px;
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: ${Colors.Black400};
+  opacity: 1;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.6;
+  }
 `
 
 const ContentContainer = styled.div`
@@ -30,6 +47,7 @@ const Header = styled.header`
   font-size: 24px;
   text-align: center;
   font-weight: 600;
+  margin-bottom: 25px;
 `
 
 const SubHeader = styled.header`
@@ -62,11 +80,37 @@ const CloseContainer = styled.div`
   z-index: 1;
 `
 
+const FlexContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+`
+
+const FlexItem = styled.div`
+  width: calc(50% - 10px);
+`
+
+const LabelText = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+`
+
+const ValueText = styled.div`
+  font-size: 16px;
+`
+
 export {
-  DangerContainer,
+  PopupWrapper,
   PopupContainer,
   ContentContainer,
   CloseContainer,
   SubHeader,
-  Header
+  Header,
+  CloseIcon,
+  FlexContainer,
+  LabelText,
+  ValueText,
+  FlexItem
 }

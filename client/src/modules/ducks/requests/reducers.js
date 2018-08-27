@@ -15,7 +15,8 @@ const initialState = {
   deleteRequest: {
     submitting: false,
     errors: null
-  }
+  },
+  currentRequest: null
 }
 
 const addRequest = (state = initialState.addRequest, action = {}) => {
@@ -89,4 +90,19 @@ const userRequests = (state = initialState.userRequests, action = {}) => {
   }
 }
 
-export default combineReducers({ addRequest, deleteRequest, userRequests })
+const currentRequest = (state = initialState.currentRequest, action = {}) => {
+  switch (action.type) {
+    case types.SET_CURRENT_REQUEST: {
+      return { ...action.payload.request }
+    }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  addRequest,
+  deleteRequest,
+  userRequests,
+  currentRequest
+})

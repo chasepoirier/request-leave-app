@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { viewOperations } from '../../modules/ducks/view'
 import { ButtonOutline, ButtonFilled } from '../Styled'
 import {
-  DangerContainer,
+  PopupWrapper,
   PopupContainer,
   ContentContainer,
   CloseContainer,
@@ -15,7 +15,7 @@ import Colors from '../../design/Colors'
 
 const DangerPopup = ({ handleSubmit, title, desc, closePopup }) => (
   <PopupContainer>
-    <DangerContainer>
+    <PopupWrapper>
       <ContentContainer>
         <Header>{title}</Header>
         <SubHeader>{desc}</SubHeader>
@@ -41,7 +41,7 @@ const DangerPopup = ({ handleSubmit, title, desc, closePopup }) => (
           Delete User
         </ButtonFilled>
       </ContentContainer>
-    </DangerContainer>
+    </PopupWrapper>
     <CloseContainer onClick={closePopup} />
   </PopupContainer>
 )

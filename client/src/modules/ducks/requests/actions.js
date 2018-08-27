@@ -48,3 +48,10 @@ export const deleteRequestFail = error => ({
     error
   }
 })
+
+export const currentRequest = request => ({
+  type: types.SET_CURRENT_REQUEST,
+  payload: {
+    request
+  }
+})

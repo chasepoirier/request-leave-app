@@ -19,7 +19,8 @@ const getPendingApprovalsByteam = teamRef =>
                     allRequests.push({
                       ...snap.data(),
                       uid: userRef.id,
-                      name: user.data().name
+                      name: user.data().name,
+                      id: snap.id
                     })
                   })
                   return allRequests

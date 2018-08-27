@@ -15,7 +15,7 @@ const FullTableRow = ({
   handleApprove,
   id
 }) => (
-  <TableRow>
+  <TableRow id={id} onClick={() => handleApprove(id, false)}>
     <TableCell>{`${name.lname}, ${name.fname}`}</TableCell>
     <TableCell>
       {types.map(
@@ -28,7 +28,7 @@ const FullTableRow = ({
     <TableCell>{totalTime}</TableCell>
     <TableCell>
       <TablePositioner>
-        <TrashIcon onClick={handleApprove} className="fas fa-trash" id={id} />
+        <TrashIcon className="fas fa-check-circle" id={id} />
         {!reason ? 'No reason provided..' : reason}
       </TablePositioner>
     </TableCell>
@@ -41,7 +41,7 @@ FullTableRow.propTypes = {
   name: objectOf(string).isRequired,
   startDate: string.isRequired,
   endDate: string.isRequired,
-  types: arrayOf(string).isRequired,
+  types: arrayOf(objectOf(string)).isRequired,
   totalTime: number.isRequired,
   reason: string.isRequired,
   id: string.isRequired,

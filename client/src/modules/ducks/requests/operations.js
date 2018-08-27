@@ -1,5 +1,6 @@
 import * as actions from './actions'
 import api from '../../api'
+import { getOneRequest } from './selectors'
 
 export const requestLeaveSubmit = () => actions.leaveRequestSubmit()
 export const requestLeaveSuccess = () => actions.leaveRequestSuccess()
@@ -45,4 +46,8 @@ export const submitRequestToDeleteRequest = ({
     .deleteRequest({ userID, requestID, teamID })
     .then(() => dispatch(deleteRequestSuccess()))
     .catch(() => dispatch(deleteRequestFail('Error deleting request')))
+}
+
+export const setCurrentRequest = (id, requests) => dispatch => {
+  dispatch(actions.currentRequest(getOneRequest(id, requests)))
 }

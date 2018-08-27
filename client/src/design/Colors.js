@@ -8,7 +8,7 @@ const Colors = {
   blue200: '#366cca',
   blue500: '#4885ed',
   Green50: '#a3da55',
-  Green200: '#19E01D',
+  Green200: '#39E058',
   Magenta50: '#c67eb9',
   Orange50: '#ffa13c',
   Orange200: '#ffc05e',

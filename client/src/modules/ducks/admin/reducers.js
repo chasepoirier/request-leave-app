@@ -5,7 +5,8 @@ const initialState = {
   pendingApprovals: {
     loading: false,
     errors: null,
-    all: []
+    all: [],
+    current: null
   }
 }
 

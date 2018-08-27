@@ -15,7 +15,7 @@ import {
 } from 'views'
 
 import Routes from './utils/Routes'
-import DangerPopup from './components/Popups/DangerPopup'
+import { ApprovalPopup, DangerPopup } from './components/Popups'
 
 const {
   login,
@@ -37,6 +37,8 @@ class App extends React.Component {
       switch (type) {
         case 'danger':
           return <DangerPopup />
+        case 'approval':
+          return <ApprovalPopup />
         default:
           return null
       }
