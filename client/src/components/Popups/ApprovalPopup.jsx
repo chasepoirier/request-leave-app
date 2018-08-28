@@ -3,6 +3,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { RequestPT } from '../../customPTs'
+import { generateID } from '../../utils/calculations'
 import { viewOperations } from '../../modules/ducks/view'
 import { ButtonOutline, ButtonFilled } from '../Styled'
 import {
@@ -16,9 +17,12 @@ import {
   FlexContainer,
   LabelText,
   ValueText,
-  FlexItem
+  FlexItem,
+  InlineItem
 } from './Styled'
 import Colors from '../../design/Colors'
+
+const dateFormat = 'dd. MMM Do'
 
 const ApprovalPopup = ({
   handleApprove,
@@ -31,7 +35,10 @@ const ApprovalPopup = ({
   const {
     name: { fname, lname },
     timestamp,
-    types
+    types,
+    startDate,
+    endDate,
+    reason
   } = request
   return (
     <PopupContainer>
@@ -39,6 +46,7 @@ const ApprovalPopup = ({
         <CloseIcon onClick={closePopup} className="far fa-times-circle" />
         <ContentContainer>
           <Header>{title}</Header>
+          <SubHeader>{desc}</SubHeader>
           <FlexContainer>
             <FlexItem>
               <LabelText>Name</LabelText>
@@ -50,40 +58,57 @@ const ApprovalPopup = ({
             </FlexItem>
           </FlexContainer>
           <FlexContainer>
-            <FlexItem>
+            <InlineItem>
               <LabelText>Types</LabelText>
-              <ValueText>
+              <FlexContainer style={{ marginBottom: 0 }}>
                 {types.map(type => (
-                  <Type name={type.type} amount={type.amount} key={type.type} />
+                  <Type
+                    name={type.type}
+                    amount={type.amount}
+                    key={generateID()}
+                  />
                 ))}
-              </ValueText>
+              </FlexContainer>
+            </InlineItem>
+          </FlexContainer>
+          <FlexContainer>
+            <FlexItem>
+              <LabelText>Start Date</LabelText>
+              <ValueText>{moment(startDate).format(dateFormat)}</ValueText>
             </FlexItem>
             <FlexItem>
-              <LabelText>Request Created</LabelText>
-              <ValueText>{moment(timestamp).fromNow()}</ValueText>
+              <LabelText>End Date</LabelText>
+              <ValueText>{moment(endDate).format(dateFormat)}</ValueText>
             </FlexItem>
           </FlexContainer>
-          <ButtonOutline
-            style={{
-              borderColor: Colors.blue500,
-              color: Colors.blue500,
-              width: '100%',
-              marginBottom: 8
-            }}
-            onClick={handleDisapprove}
-          >
-            Disapprove
-          </ButtonOutline>
+          <FlexContainer>
+            <InlineItem>
+              <LabelText>Reason</LabelText>
+              <ValueText>{reason}</ValueText>
+            </InlineItem>
+          </FlexContainer>
           <ButtonFilled
             style={{
               backgroundColor: Colors.blue500,
               borderColor: Colors.blue500,
-              width: '100%'
+              width: '100%',
+              marginBottom: 8,
+              marginTop: 15
             }}
             onClick={handleApprove}
           >
             Approve
           </ButtonFilled>
+          <ButtonOutline
+            style={{
+              borderColor: Colors.blue500,
+              color: Colors.blue500,
+              width: '100%'
+            }}
+            onClick={handleDisapprove}
+          >
+            Disapprove
+          </ButtonOutline>
         </ContentContainer>
       </PopupWrapper>
       <CloseContainer onClick={closePopup} />
@@ -92,16 +117,16 @@ const ApprovalPopup = ({
 }
 
 const Type = ({ name, amount }) => (
-  <FlexItem>
+  <InlineItem>
     <ValueText>{`${name}: ${amount} hours`}</ValueText>
-  </FlexItem>
+  </InlineItem>
 )
 
-const { func, string, number } = PropTypes
+const { func, string } = PropTypes
 
 Type.propTypes = {
   name: string.isRequired,
-  amount: number.isRequired
+  amount: string.isRequired
 }
 
 ApprovalPopup.propTypes = {

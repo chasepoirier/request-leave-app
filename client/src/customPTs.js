@@ -41,8 +41,8 @@ export const RequestPT = shape({
     })
   ),
   approval: shape({
-    admin: bool,
-    supervisor: bool
+    admin: shape({ pending: bool, approved: bool }),
+    supervisor: shape({ pending: bool, approved: bool })
   }),
   reason: string,
   totalTime: number,

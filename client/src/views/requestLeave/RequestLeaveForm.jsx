@@ -87,8 +87,14 @@ class RequestLeaveForm extends React.Component {
         timestamp: moment(),
         types: requestTypes,
         approval: {
-          admin: false,
-          supervisor: false
+          admin: {
+            pending: true,
+            approved: false
+          },
+          supervisor: {
+            pending: true,
+            approved: false
+          }
         },
         reason,
         totalTime: totalTime * hoursInDay,

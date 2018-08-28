@@ -4,6 +4,7 @@ import { RequestPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { viewOperations } from 'modules/ducks/view'
 import { requestOperations } from 'modules/ducks/requests'
+import { adminOperations } from 'modules/ducks/admin'
 
 import {
   Table,
@@ -15,32 +16,35 @@ import {
 import FullTableRow from './FullTableRow'
 
 class AdminTable extends React.Component {
-  handleApproval = id => {
+  handleApproval = ids => {
     const { showPopup, setCurrentRequest, requests } = this.props
 
-    setCurrentRequest(id, requests.all)
+    setCurrentRequest(ids, requests.all)
     showPopup({
       type: 'approval',
       content: {
         title: 'Confirm Approval.',
         desc: `Are you sure you want to approve`,
-        handleApprove: this.submitRequest.bind({}, id, true),
-        handleDisapprove: this.submitRequest.bind({}, id, false)
+        handleApprove: this.submitRequest.bind({}, ids, true),
+        handleDisapprove: this.submitRequest.bind({}, ids, false)
       }
     })
   }
 
-  submitRequest = (id, approved) => {
-    const { hidePopup } = this.props
-    // deleteRequest({ requestID: id, teamID }).then(success => {
-    //   if (success) {
-    console.log(id, approved)
-    hidePopup()
-    //   }
-    // })
+  submitRequest = (ids, approved) => {
+    const {
+      hidePopup,
+      submitApprovalStatus,
+      fetchAdminPendingApprovals,
+      teamID
+    } = this.props
+    submitApprovalStatus(ids, approved).then(() => {
+      fetchAdminPendingApprovals(teamID)
+      hidePopup()
+    })
   }
 
-  renderRequests = requests =>
+  renderRequests = (requests, teamID) =>
     requests.map(req => (
       <FullTableRow
         name={req.name}
@@ -52,11 +56,14 @@ class AdminTable extends React.Component {
         reason={req.reason}
         totalTime={req.totalTime}
         key={req.timestamp}
+        teamID={teamID}
+        userUid={req.userUid}
+        teamUid={req.teamUid}
       />
     ))
 
   render() {
-    const { requests } = this.props
+    const { requests, teamID } = this.props
     return (
       <TeamsContainer>
         {!requests.loading ? (
@@ -71,7 +78,7 @@ class AdminTable extends React.Component {
                 <TableHeader>Reason</TableHeader>
               </TableRow>
             </thead>
-            <tbody>{this.renderRequests(requests.all)}</tbody>
+            <tbody>{this.renderRequests(requests.all, teamID)}</tbody>
           </Table>
         ) : (
           <LoadingState>Loading...</LoadingState>
@@ -88,7 +95,10 @@ AdminTable.propTypes = {
     .isRequired,
   showPopup: func.isRequired,
   hidePopup: func.isRequired,
-  setCurrentRequest: func.isRequired
+  setCurrentRequest: func.isRequired,
+  teamID: string.isRequired,
+  submitApprovalStatus: func.isRequired,
+  fetchAdminPendingApprovals: func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -101,6 +111,8 @@ export default connect(
   {
     showPopup: viewOperations.showPopup,
     hidePopup: viewOperations.hidePopup,
-    setCurrentRequest: requestOperations.setCurrentRequest
+    setCurrentRequest: requestOperations.setCurrentRequest,
+    submitApprovalStatus: adminOperations.submitApprovalStatus,
+    fetchAdminPendingApprovals: adminOperations.fetchPendingApprovals
   }
 )(AdminTable)

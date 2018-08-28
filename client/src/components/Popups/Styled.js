@@ -4,8 +4,6 @@ import Colors from '../../design/Colors'
 const PopupWrapper = styled.div`
   width: 90%;
   max-width: 620px;
-  height: 80%;
-  max-height: 450px;
   background-color: ${Colors.White1000};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
   z-index: 100;
@@ -15,6 +13,7 @@ const PopupWrapper = styled.div`
   z-index: 2;
   border-radius: 4px;
   position: relative;
+  padding: 75px 0 50px;
 `
 
 const CloseIcon = styled.i`
@@ -43,11 +42,10 @@ const ContentContainer = styled.div`
 
 const Header = styled.header`
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   font-size: 24px;
   text-align: center;
   font-weight: 600;
-  margin-bottom: 25px;
 `
 
 const SubHeader = styled.header`
@@ -91,6 +89,10 @@ const FlexItem = styled.div`
   width: calc(50% - 10px);
 `
 
+const InlineItem = styled.div`
+  margin-right: 25px;
+`
+
 const LabelText = styled.div`
   font-size: 16px;
   font-weight: 600;
@@ -112,5 +114,6 @@ export {
   FlexContainer,
   LabelText,
   ValueText,
-  FlexItem
+  FlexItem,
+  InlineItem
 }

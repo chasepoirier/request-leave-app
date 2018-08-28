@@ -69,10 +69,13 @@ class StatusTable extends React.Component {
     event.target.parentNode.parentNode.parentNode.children[2].innerText
 
   getRequestStatus = status => {
-    if (!status) {
+    if (status.pending) {
       return 'Awaiting approval...'
     }
-    return 'Approved!'
+    if (status.approved) {
+      return 'Approved!'
+    }
+    return 'Disapproved'
   }
 
   renderRequests = requests => {

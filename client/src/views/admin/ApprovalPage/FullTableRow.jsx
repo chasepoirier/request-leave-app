@@ -13,9 +13,15 @@ const FullTableRow = ({
   totalTime,
   reason,
   handleApprove,
-  id
+  id,
+  teamUid,
+  userUid,
+  teamID
 }) => (
-  <TableRow id={id} onClick={() => handleApprove(id, false)}>
+  <TableRow
+    id={id}
+    onClick={() => handleApprove({ id, teamUid, userUid, teamID })}
+  >
     <TableCell>{`${name.lname}, ${name.fname}`}</TableCell>
     <TableCell>
       {types.map(
@@ -45,7 +51,10 @@ FullTableRow.propTypes = {
   totalTime: number.isRequired,
   reason: string.isRequired,
   id: string.isRequired,
-  handleApprove: func.isRequired
+  handleApprove: func.isRequired,
+  teamUid: string.isRequired,
+  teamID: string.isRequired,
+  userUid: string.isRequired
 }
 
 export default FullTableRow

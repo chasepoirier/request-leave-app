@@ -15,4 +15,37 @@ router.post('/get_pending_approvals', (req, res) => {
     .then(requests => res.json({ requests }))
 })
 
+router.post('/set_approval_status', (req, res) => {
+  const {
+    ids: { userUid, teamUid, id, teamID },
+    approved
+  } = req.body
+
+  db.collection('teams')
+    .doc(teamID)
+    .collection('users')
+    .doc(teamUid)
+    .collection('requests')
+    .doc(id)
+    .update({
+      'approval.admin.pending': false,
+      'approval.admin.approved': approved,
+      'approval.admin.timestamp': Date.now()
+    })
+    .then(() => {
+      db.collection('users')
+        .doc(userUid)
+        .collection('requests')
+        .doc(id)
+        .update({
+          'approval.admin.pending': false,
+          'approval.admin.approved': approved,
+          'approval.admin.timestamp': Date.now()
+        })
+        .then(() => res.json({ success: true }))
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
 module.exports = router

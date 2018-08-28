@@ -11,14 +11,15 @@ const getPendingApprovalsByteam = teamRef =>
               teamRef
                 .doc(userRef.id)
                 .collection('requests')
-                .where('approval.admin', '==', false)
+                .where('approval.admin.pending', '==', true)
                 .get()
                 .then(snaps => {
                   const allRequests = []
                   snaps.forEach(snap => {
                     allRequests.push({
                       ...snap.data(),
-                      uid: userRef.id,
+                      teamUid: userRef.id,
+                      userUid: user.data().id,
                       name: user.data().name,
                       id: snap.id
                     })

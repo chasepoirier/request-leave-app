@@ -2,9 +2,9 @@ import * as actions from './actions'
 import * as utils from './utils'
 import api from '../../api'
 
-export const pendingApprovalsRequest = () => actions.pendingApprovalsRequest()
-export const pendingApprovalsFail = error => actions.pendingApprovalsFail(error)
-export const pendingApprovalsSuccess = requests =>
+const pendingApprovalsRequest = () => actions.pendingApprovalsRequest()
+const pendingApprovalsFail = error => actions.pendingApprovalsFail(error)
+const pendingApprovalsSuccess = requests =>
   actions.pendingApprovalsSuccess(requests)
 
 export const fetchPendingApprovals = team => dispatch => {
@@ -13,4 +13,16 @@ export const fetchPendingApprovals = team => dispatch => {
     .getPendingApprovals(team)
     .then(requests => dispatch(pendingApprovalsSuccess(requests)))
     .catch(() => dispatch(pendingApprovalsFail(utils.errors.unknown)))
+}
+
+const setApprovalStatusRequest = () => actions.setApprovalStatusRequest()
+const setApprovalStatusSuccess = () => actions.setApprovalStatusSuccess()
+const setApprovalStatusFail = error => actions.setApprovalStatusFail(error)
+
+export const submitApprovalStatus = (ids, approved) => dispatch => {
+  dispatch(setApprovalStatusRequest())
+  return api.admin
+    .setApprovalStatus(ids, approved)
+    .then(() => dispatch(setApprovalStatusSuccess()))
+    .catch(() => dispatch(setApprovalStatusFail('Error setting status')))
 }
