@@ -36,3 +36,15 @@ export const fetchPendingApprovals = () => dispatch => {
     .then(requests => dispatch(pendingApprovalsSuccess(requests)))
     .catch(() => dispatch(pendingApprovalsFail(utils.errors.unknown)))
 }
+
+const setApprovalStatusRequest = () => actions.setApprovalStatusRequest()
+const setApprovalStatusSuccess = () => actions.setApprovalStatusSuccess()
+const setApprovalStatusFail = error => actions.setApprovalStatusFail(error)
+
+export const submitApprovalStatus = (ids, approved) => dispatch => {
+  dispatch(setApprovalStatusRequest())
+  return api.supervisor
+    .setApprovalStatus(ids, approved)
+    .then(() => dispatch(setApprovalStatusSuccess()))
+    .catch(() => dispatch(setApprovalStatusFail('Error setting status')))
+}

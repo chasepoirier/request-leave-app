@@ -5,6 +5,7 @@ import { Styled } from 'components'
 import { adminOperations } from '../../../modules/ducks/admin'
 import { supervisorOperations } from '../../../modules/ducks/supervisor'
 import AdminTable from './AdminTable'
+import SuperTable from './SuperTable'
 
 class ApprovalPage extends React.Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ class ApprovalPage extends React.Component {
     return (
       <div>
         <Styled.Header>Approval Page</Styled.Header>
-        {status.supervisor ? null : <AdminTable />}
+        {status.supervisor ? <SuperTable /> : <AdminTable />}
       </div>
     )
   }

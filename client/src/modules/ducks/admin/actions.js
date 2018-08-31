@@ -21,14 +21,12 @@ export const pendingApprovalsFail = error => ({
 export const setApprovalStatusRequest = () => ({
   type: types.SET_APPROVAL_STATUS_REQUEST
 })
-
 export const setApprovalStatusFail = error => ({
   type: types.SET_APPROVAL_STATUS_FAIL,
   payload: {
     error
   }
 })
-
 export const setApprovalStatusSuccess = () => ({
   type: types.SET_APPROVAL_STATUS_SUCCESS
 })

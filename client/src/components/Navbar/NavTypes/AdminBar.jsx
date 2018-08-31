@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
 import Link from 'react-router-dom/Link'
-import { connect } from 'react-redux'
-import { userOperations } from 'modules/ducks/user'
 import { StyledLink, LinkContainer, WelcomeText, Button } from '../Styled'
 
-const AdminBar = ({ logUserOut, routes, name }) => (
+const AdminBar = ({ logout, routes, name }) => (
   <PageWrapper flex>
     <LinkContainer>
       <NavItem text={routes.home.text} path={routes.home.path} />
@@ -19,8 +17,11 @@ const AdminBar = ({ logUserOut, routes, name }) => (
         text={routes.leaveHistory.text}
         path={routes.leaveHistory.path}
       />
-      <NavItem text={routes.admin.text} path={routes.admin.path} />
-      <StyledLink onClick={logUserOut}>Logout</StyledLink>
+      <NavItem
+        text={routes.admin.text}
+        path={`${routes.admin.path}/pending-approvals`}
+      />
+      <StyledLink onClick={logout}>Logout</StyledLink>
     </LinkContainer>
     <LinkContainer>
       <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
@@ -50,11 +51,8 @@ AdminBar.defaultProps = {
 
 AdminBar.propTypes = {
   routes: objectOf(objectOf(string)).isRequired,
-  logUserOut: func.isRequired,
+  logout: func.isRequired,
   name: string
 }
 
-export default connect(
-  null,
-  { logUserOut: userOperations.logUserOut }
-)(AdminBar)
+export default AdminBar

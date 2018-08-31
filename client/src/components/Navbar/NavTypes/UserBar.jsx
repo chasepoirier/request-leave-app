@@ -2,12 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
-import { connect } from 'react-redux'
 import Link from 'react-router-dom/Link'
-import { userOperations } from 'modules/ducks/user'
 import { StyledLink, LinkContainer, Button, WelcomeText } from '../Styled'
 
-const UserBar = ({ logUserOut, routes, name }) => (
+const UserBar = ({ logout, routes, name }) => (
   <PageWrapper flex>
     <LinkContainer>
       <NavItem text={routes.home.text} path={routes.home.path} />
@@ -19,7 +17,7 @@ const UserBar = ({ logUserOut, routes, name }) => (
         text={routes.leaveHistory.text}
         path={routes.leaveHistory.path}
       />
-      <StyledLink onClick={logUserOut}>Logout</StyledLink>
+      <StyledLink onClick={logout}>Logout</StyledLink>
     </LinkContainer>
     <LinkContainer>
       <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
@@ -49,11 +47,8 @@ UserBar.defaultProps = {
 
 UserBar.propTypes = {
   routes: objectOf(objectOf(string)).isRequired,
-  logUserOut: func.isRequired,
+  logout: func.isRequired,
   name: string
 }
 
-export default connect(
-  null,
-  { logUserOut: userOperations.logUserOut }
-)(UserBar)
+export default UserBar

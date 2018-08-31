@@ -44,6 +44,7 @@ class StatusTable extends React.Component {
       content: {
         title: 'Confirm delete.',
         desc: `Are you sure you want to delete ${this.getNameFromRow(e)}`,
+        buttonText: `Delete Request`,
         handleSubmit: this.handleDeleteRequest.bind({}, e.target.id)
       }
     })

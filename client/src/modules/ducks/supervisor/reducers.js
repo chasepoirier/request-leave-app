@@ -6,6 +6,10 @@ const initialState = {
     loading: false,
     errors: null,
     all: []
+  },
+  setStatus: {
+    submitting: false,
+    errors: null
   }
 }
 
@@ -90,4 +94,17 @@ const pendingApprovals = (
   }
 }
 
-export default combineReducers({ manageUser, pendingApprovals })
+const setStatus = (state = initialState.setStatus, action = {}) => {
+  switch (action.type) {
+    case types.SET_APPROVAL_STATUS_REQUEST:
+      return { ...state, submitting: true, errors: null }
+    case types.SET_APPROVAL_STATUS_SUCCESS:
+      return { ...state, submitting: false, errors: null }
+    case types.SET_APPROVAL_STATUS_FAIL:
+      return { ...state, submitting: false, errors: action.payload.error }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ manageUser, pendingApprovals, setStatus })

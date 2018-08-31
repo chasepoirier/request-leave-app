@@ -91,4 +91,89 @@ router.post('/delete_user', (req, res) => {
     })
 })
 
+router.get('/get_pending_approvals', (req, res) => {
+  const teams = db.collection('teams')
+
+  teams.get().then(teamRefs => {
+    const pendingApprovals = []
+
+    teamRefs.forEach(team => {
+      pendingApprovals.push(
+        teams
+          .doc(team.id)
+          .collection('users')
+          .get()
+          .then(userRefs => {
+            const allUsers = []
+            userRefs.forEach(user => {
+              allUsers.push(
+                teams
+                  .doc(team.id)
+                  .collection('users')
+                  .doc(user.id)
+                  .collection('requests')
+                  .where('approval.supervisor.pending', '==', true)
+                  .get()
+                  .then(requests => {
+                    const allRequests = []
+                    requests.forEach(request => {
+                      allRequests.push({
+                        ...request.data(),
+                        teamUid: user.id,
+                        userUid: user.data().id,
+                        name: user.data().name,
+                        id: request.id,
+                        team: team.data().name
+                      })
+                    })
+                    return allRequests
+                  })
+              )
+            })
+            return Promise.all(allUsers).then(refs => refs)
+          })
+      )
+    })
+
+    Promise.all(pendingApprovals).then(requests => {
+      const flatRequests = requests.reduce((prev, curr) => prev.concat(curr))
+      const flatTeams = flatRequests.reduce((prev, curr) => prev.concat(curr))
+      res.json({ requests: flatTeams })
+    })
+  })
+})
+
+router.post('/set_approval_status', (req, res) => {
+  const {
+    ids: { userUid, teamUid, id, teamID },
+    approved
+  } = req.body
+
+  db.collection('teams')
+    .doc(teamID)
+    .collection('users')
+    .doc(teamUid)
+    .collection('requests')
+    .doc(id)
+    .update({
+      'approval.supervisor.pending': false,
+      'approval.supervisor.approved': approved,
+      'approval.supervisor.timestamp': Date.now()
+    })
+    .then(() => {
+      db.collection('users')
+        .doc(userUid)
+        .collection('requests')
+        .doc(id)
+        .update({
+          'approval.supervisor.pending': false,
+          'approval.supervisor.approved': approved,
+          'approval.supervisor.timestamp': Date.now()
+        })
+        .then(() => res.json({ success: true }))
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
 module.exports = router

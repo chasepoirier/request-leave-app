@@ -37,6 +37,7 @@ class AllTeamsPage extends React.Component {
       content: {
         title: 'Confirm delete.',
         desc: `Are you sure you want to delete ${this.getNameFromRow(e)}`,
+        buttonText: `Delete User`,
         handleSubmit: this.handleDeleteUser.bind({}, e.target.id)
       }
     })
