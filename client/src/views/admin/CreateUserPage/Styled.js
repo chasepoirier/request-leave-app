@@ -25,4 +25,49 @@ const InputContainer = styled.div`
   align-items: center;
 `
 
-export { FormContainer, InputContainer, FormHeader }
+const InputContainerWrapped = styled.div`
+  width: 80%;
+  margin: 20px auto 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const TypeContainer = styled.div`
+  width: calc((100% / 3) - 16px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+`
+
+const TypeHeader = styled.div`
+  font-size: 16px;
+  margin: 0 auto;
+  font-weight: 500;
+  width: 80%;
+`
+
+const Amount = styled.input`
+  width: 50px;
+  margin-left: 5px;
+  font-size: 14px;
+`
+
+const TypeLabel = styled.div`
+  font-weight: 500;
+  font-size: 13px;
+  color: ${Colors.Black400};
+`
+
+export {
+  FormContainer,
+  InputContainer,
+  FormHeader,
+  InputContainerWrapped,
+  TypeContainer,
+  Amount,
+  TypeLabel,
+  TypeHeader
+}

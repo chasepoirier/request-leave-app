@@ -13,7 +13,8 @@ const getOneUser = (query, value) =>
             uid: user.docs[0].data().uid,
             name: user.docs[0].data().name,
             status: user.docs[0].data().status,
-            team: user.docs[0].data().team
+            team: user.docs[0].data().team,
+            typeAmounts: user.docs[0].data().typeAmounts
           })
         } else {
           reject()
@@ -24,11 +25,19 @@ const getOneUser = (query, value) =>
 
 const createNewUser = user =>
   new Promise((resolve, reject) => {
-    const { email, name, status, uid, team } = user
+    const { email, name, status, uid, team, typeAmounts } = user
     db.collection('users')
-      .add({ uid, email, name, team, status, createdAt: Date.now() })
+      .add({
+        uid,
+        email,
+        name,
+        team,
+        status,
+        typeAmounts,
+        createdAt: Date.now()
+      })
       .then(ref => {
-        resolve({ id: ref.id, email, name, status, team, uid })
+        resolve({ id: ref.id, email, name, status, team, typeAmounts, uid })
       })
       .catch(err => reject(err))
   })

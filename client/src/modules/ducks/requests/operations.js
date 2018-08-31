@@ -51,3 +51,16 @@ export const submitRequestToDeleteRequest = ({
 export const setCurrentRequest = (id, requests) => dispatch => {
   dispatch(actions.currentRequest(getOneRequest(id, requests)))
 }
+
+export const leaveTypesRequest = () => actions.leaveTypesRequest()
+export const leaveTypesFail = error => actions.leaveTypesFail(error)
+export const leaveTypesSuccess = leaveTypes =>
+  actions.leaveTypesSuccess(leaveTypes)
+
+export const fetchAllLeaveTypes = () => dispatch => {
+  dispatch(leaveTypesRequest())
+  return api.requests
+    .fetchAllLeaveTypes()
+    .then(leaveTypes => dispatch(leaveTypesSuccess(leaveTypes)))
+    .catch(() => dispatch(leaveTypesFail('Error getting types')))
+}

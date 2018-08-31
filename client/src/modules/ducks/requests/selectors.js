@@ -10,3 +10,10 @@ export const getOneRequest = (id, requests) =>
     }
     return prev
   })
+
+export const getOnlyTypesWithLimit = types => {
+  if (!types.loading) {
+    return { ...types, all: types.all.filter(type => !type.unlimited) }
+  }
+  return types
+}

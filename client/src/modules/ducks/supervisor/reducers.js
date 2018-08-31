@@ -2,6 +2,14 @@ import { combineReducers } from 'redux'
 import * as types from './types'
 
 const initialState = {
+  pendingApprovals: {
+    loading: false,
+    errors: null,
+    all: []
+  }
+}
+
+const manageUserState = {
   loading: false,
   addUser: {
     submitting: false,
@@ -11,15 +19,10 @@ const initialState = {
     submitting: false,
     errors: null
   },
-  allUsers: [],
-  pendingApprovals: {
-    loading: false,
-    errors: null,
-    all: []
-  }
+  allUsers: []
 }
 
-const supervisor = (state = initialState, action = {}) => {
+const manageUser = (state = manageUserState, action = {}) => {
   switch (action.type) {
     case types.REQUEST_ADD_USER: {
       return {
@@ -87,4 +90,4 @@ const pendingApprovals = (
   }
 }
 
-export default combineReducers({ ...supervisor, pendingApprovals })
+export default combineReducers({ manageUser, pendingApprovals })

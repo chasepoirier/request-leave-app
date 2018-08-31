@@ -4,7 +4,7 @@ import { TeamPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { Styled } from 'components'
 import { viewOperations } from 'modules/ducks/view'
-import { teamOperations } from 'modules/ducks/teams'
+import { teamOperations, teamSelectors } from 'modules/ducks/teams'
 import { supervisorOperations } from 'modules/ducks/supervisor'
 import {
   TeamHeader,
@@ -118,7 +118,7 @@ class AllTeamsPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  teams: state.teams.all
+  teams: teamSelectors.sortTeamsAlphabetically(state.teams.all)
 })
 
 export default connect(

@@ -81,4 +81,15 @@ router.post('/delete_request', (req, res) => {
     })
 })
 
+router.get('/get_all_leave_types', (req, res) => {
+  db.collection('leaveTypes')
+    .get()
+    .then(snaps => {
+      const types = []
+      snaps.forEach(snap => types.push(snap.data()))
+      return types
+    })
+    .then(types => res.json({ types }))
+})
+
 module.exports = router

@@ -5,7 +5,7 @@ import { db, auth } from '../firebase'
 const router = express.Router()
 
 router.post('/add_user', (req, res) => {
-  const { email, fname, lname, status, team } = req.body.user
+  const { email, fname, lname, status, team, typeAmounts } = req.body.user
   const password = 'test1234'
 
   Queries.user
@@ -24,6 +24,7 @@ router.post('/add_user', (req, res) => {
               },
               team,
               status,
+              typeAmounts,
               uid: ref.user.uid
             })
             .then(user => {
@@ -42,17 +43,40 @@ router.post('/delete_user', (req, res) => {
     .doc(req.body.id)
     .get()
     .then(user => {
+      // delete logs sub collection
+      user.ref
+        .collection('logs')
+        .get()
+        .then(logRef => logRef.forEach(log => log.ref.delete()))
+      // delete requests sub collection
+      user.ref
+        .collection('requests')
+        .get()
+        .then(requests => requests.forEach(request => request.ref.delete()))
       user.ref.delete()
       return user.data()
     })
     .then(user => {
       auth.deleteUser(user.uid)
+      // delete user from their team
       db.collection('teams')
         .doc(user.team)
         .collection('users')
         .where('id', '==', req.body.id)
         .get()
-        .then(snap => snap.forEach(ref => ref.ref.delete()))
+        .then(snap =>
+          snap.forEach(ref => {
+            // delete requests from user ref on team
+            db.collection('teams')
+              .doc(user.team)
+              .collection('users')
+              .doc(ref.id)
+              .collection('requests')
+              .get()
+              .then(reqRef => reqRef.forEach(request => request.ref.delete()))
+            ref.ref.delete()
+          })
+        )
         .then(() => res.json({ success: true }))
     })
 })

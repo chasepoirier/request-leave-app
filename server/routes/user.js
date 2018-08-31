@@ -38,7 +38,7 @@ router.post('/get_user_by_uid', (req, res) => {
 
 router.post('/create_user', (req, res) => {
   const { email, fname, lname } = req.body
-  const password = 'test1234'
+  const password = 'placeholder1234'
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -48,6 +48,7 @@ router.post('/create_user', (req, res) => {
           email,
           fname,
           lname,
+          typeAmounts,
           uid: ref.user.uid
         })
         .then(user => {

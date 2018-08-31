@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Switch, Redirect } from 'react-router-dom'
 import { Navbar, RouteTypes, InitialLoadingState, StatusBar } from 'components'
 import { userOperations } from 'modules/ducks/user'
+import { requestOperations } from 'modules/ducks/requests'
 import { connect } from 'react-redux'
 
 import {
@@ -28,8 +29,9 @@ const {
 
 class App extends React.Component {
   componentWillMount() {
-    const { fetchCurrentUser } = this.props
+    const { fetchCurrentUser, fetchAllLeaveTypes } = this.props
     fetchCurrentUser()
+    fetchAllLeaveTypes()
   }
 
   renderPopup = (type, visible) => {
@@ -123,6 +125,7 @@ const { shape, func, bool, string } = PropTypes
 
 App.propTypes = {
   fetchCurrentUser: func.isRequired,
+  fetchAllLeaveTypes: func.isRequired,
   userFetched: bool.isRequired,
   status: shape({
     admin: bool,
@@ -144,5 +147,8 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchCurrentUser: userOperations.fetchCurrentUser }
+  {
+    fetchCurrentUser: userOperations.fetchCurrentUser,
+    fetchAllLeaveTypes: requestOperations.fetchAllLeaveTypes
+  }
 )(App)

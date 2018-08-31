@@ -16,7 +16,30 @@ const initialState = {
     submitting: false,
     errors: null
   },
-  currentRequest: null
+  currentRequest: null,
+  leaveTypes: {
+    loading: false,
+    errors: null,
+    all: []
+  }
+}
+
+const leaveTypes = (state = initialState.leaveTypes, action = {}) => {
+  switch (action.type) {
+    case types.LEAVE_TYPES_REQUEST:
+      return { ...state, errors: null, loading: true }
+    case types.LEAVE_TYPES_SUCCESS:
+      return {
+        ...state,
+        errors: null,
+        loading: false,
+        all: action.payload.types
+      }
+    case types.LEAVE_TYPES_FAIL:
+      return { ...state, loading: false, errors: action.payload.error }
+    default:
+      return state
+  }
 }
 
 const addRequest = (state = initialState.addRequest, action = {}) => {
@@ -104,5 +127,6 @@ export default combineReducers({
   addRequest,
   deleteRequest,
   userRequests,
-  currentRequest
+  currentRequest,
+  leaveTypes
 })

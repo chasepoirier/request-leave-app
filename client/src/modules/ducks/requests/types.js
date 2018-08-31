@@ -11,3 +11,7 @@ export const DELETE_REQUEST_SUCCESS = '@@requests/DELETE_REQUEST_SUCCESS'
 export const DELETE_REQUEST_FAIL = '@@requests/DELETE_REQUEST_FAIL'
 
 export const SET_CURRENT_REQUEST = '@@requests/SET_CURRENT_REQUEST'
+
+export const LEAVE_TYPES_REQUEST = '@@requests/LEAVE_TYPES_REQUEST'
+export const LEAVE_TYPES_SUCCESS = '@@requests/LEAVE_TYPES_SUCCESS'
+export const LEAVE_TYPES_FAIL = '@@requests/LEAVE_TYPES_FAIL'

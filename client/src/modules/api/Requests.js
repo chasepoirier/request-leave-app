@@ -24,7 +24,14 @@ const RequestEndpoints = {
           return true
         }
         return new Error()
-      })
+      }),
+  fetchAllLeaveTypes: () =>
+    axios.get(`${apiBase}/requests/get_all_leave_types`).then(res => {
+      if (res.data.types) {
+        return res.data.types
+      }
+      return new Error()
+    })
 }
 
 export default RequestEndpoints
