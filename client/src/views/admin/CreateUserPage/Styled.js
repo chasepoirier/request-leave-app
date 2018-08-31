@@ -27,7 +27,7 @@ const InputContainer = styled.div`
 
 const InputContainerWrapped = styled.div`
   width: 80%;
-  margin: 20px auto 45px;
+  margin: 20px auto 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -3,6 +3,7 @@ import Colors from '../../design/Colors'
 
 const InputWrapper = styled.div`
   width: ${props => (props.short ? 'calc(50% - 25px)' : '100%')};
+  position: relative;
 `
 
 const CheckboxWrapper = styled.div`
@@ -10,6 +11,14 @@ const CheckboxWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+`
+
+const SubLabel = styled.div`
+  font-size: 13px;
+  font-style: italic;
+  position: absolute;
+  bottom: -22px;
+  left: 0;
 `
 
 const Input = styled.input`
@@ -65,5 +74,6 @@ export {
   CheckboxWrapper,
   SelectContainer,
   Select,
-  Option
+  Option,
+  SubLabel
 }

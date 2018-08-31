@@ -33,7 +33,7 @@ class CreateUserPage extends React.Component {
       team: null,
       typeAmounts: null,
       startDate: null,
-      additionalTime: 0
+      additionalService: 0
     }
   }
 
@@ -222,17 +222,17 @@ class CreateUserPage extends React.Component {
             type="date"
             value={user.startDate}
             onTextChange={this.handleTextChange}
-            name="date"
+            name="startDate"
             required
             short
           />
           <TextInput
-            placeholder="Additional service amount in months"
             type="number"
-            value={user.startDate}
+            value={user.additionalService}
             onTextChange={this.handleTextChange}
-            name="date"
+            name="additionalService"
             required
+            subLabel="Additional service amount in months"
             short
           />
         </InputContainer>

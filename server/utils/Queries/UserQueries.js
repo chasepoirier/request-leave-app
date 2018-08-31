@@ -25,19 +25,13 @@ const getOneUser = (query, value) =>
 
 const createNewUser = user =>
   new Promise((resolve, reject) => {
-    const { email, name, status, uid, team, typeAmounts } = user
     db.collection('users')
       .add({
-        uid,
-        email,
-        name,
-        team,
-        status,
-        typeAmounts,
+        ...user,
         createdAt: Date.now()
       })
       .then(ref => {
-        resolve({ id: ref.id, email, name, status, team, typeAmounts, uid })
+        resolve({ id: ref.id, ...user })
       })
       .catch(err => reject(err))
   })

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InputWrapper, Input } from './Styled'
+import { InputWrapper, Input, SubLabel } from './Styled'
 
 const TextInput = ({
   placeholder,
@@ -9,7 +9,8 @@ const TextInput = ({
   name,
   type,
   required,
-  short
+  short,
+  subLabel
 }) => (
   <InputWrapper short={short}>
     <Input
@@ -20,6 +21,7 @@ const TextInput = ({
       placeholder={placeholder}
       required={required}
     />
+    {subLabel && <SubLabel>{subLabel}</SubLabel>}
   </InputWrapper>
 )
 
@@ -27,7 +29,8 @@ const { string, func, bool } = PropTypes
 
 TextInput.defaultProps = {
   required: false,
-  short: false
+  short: false,
+  subLabel: null
 }
 
 TextInput.propTypes = {
@@ -37,7 +40,8 @@ TextInput.propTypes = {
   type: string.isRequired,
   onTextChange: func.isRequired,
   required: bool,
-  short: bool
+  short: bool,
+  subLabel: string
 }
 
 export default TextInput

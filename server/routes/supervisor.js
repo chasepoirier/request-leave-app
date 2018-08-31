@@ -5,9 +5,17 @@ import { db, auth } from '../firebase'
 const router = express.Router()
 
 router.post('/add_user', (req, res) => {
-  const { email, fname, lname, status, team, typeAmounts } = req.body.user
+  const {
+    email,
+    fname,
+    lname,
+    status,
+    team,
+    typeAmounts,
+    additionalService,
+    startDate
+  } = req.body.user
   const password = 'test1234'
-
   Queries.user
     .getOneUser('email', email)
     .then(() => res.json({ user: null }))
@@ -25,6 +33,8 @@ router.post('/add_user', (req, res) => {
               team,
               status,
               typeAmounts,
+              additionalService,
+              startDate,
               uid: ref.user.uid
             })
             .then(user => {
