@@ -10,9 +10,10 @@ const TextInput = ({
   type,
   required,
   short,
-  subLabel
+  subLabel,
+  style
 }) => (
-  <InputWrapper short={short}>
+  <InputWrapper style={style} short={short}>
     <Input
       value={value}
       onChange={onTextChange}
@@ -25,23 +26,26 @@ const TextInput = ({
   </InputWrapper>
 )
 
-const { string, func, bool } = PropTypes
+const { string, func, bool, objectOf, oneOfType, number } = PropTypes
 
 TextInput.defaultProps = {
   required: false,
   short: false,
-  subLabel: null
+  subLabel: null,
+  style: null,
+  placeholder: ''
 }
 
 TextInput.propTypes = {
-  placeholder: string.isRequired,
-  value: string.isRequired,
+  placeholder: string,
+  value: oneOfType([string, number]).isRequired,
   name: string.isRequired,
   type: string.isRequired,
   onTextChange: func.isRequired,
   required: bool,
   short: bool,
-  subLabel: string
+  subLabel: string,
+  style: objectOf(oneOfType([string, number]))
 }
 
 export default TextInput

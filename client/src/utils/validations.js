@@ -33,6 +33,9 @@ export const validFullDay = diff => {
 }
 
 export const validTotalAmount = amount => {
+  if (Number.isNaN(amount)) {
+    return { message: `You must enter a number`, success: false }
+  }
   if (amount < 0) {
     return {
       message: `You added too much time! ${amount} hours over.`,

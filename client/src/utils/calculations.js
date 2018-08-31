@@ -1,6 +1,5 @@
 export const dateDiff = (start, end, type) => {
   const startTime = start.diff(Date.now(), 'days')
-
   if (startTime < 1) {
     return -1
   }
@@ -35,7 +34,7 @@ export const requestTotalFromDateTotal = (requests, dateTotal) => {
   const hoursInDay = 8
   /* eslint no-param-reassign: off */
   const newTotal = requests.reduce((prev, curr) => {
-    prev += parseInt(curr.amount, 10)
+    prev += parseFloat(curr.amount, 10)
     return prev
   }, 0)
 

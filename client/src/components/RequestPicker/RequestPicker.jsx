@@ -8,6 +8,7 @@ import {
   IconContainer
 } from './Styled'
 import { Select, Option } from '../Inputs/Styled'
+import { TextInput } from '../Inputs'
 
 class RequestPicker extends React.Component {
   componentDidMount() {}
@@ -27,7 +28,6 @@ class RequestPicker extends React.Component {
   render() {
     const {
       requestTypes,
-      timeAmounts,
       handleChangeType,
       handleChangeAmount,
       id,
@@ -50,13 +50,20 @@ class RequestPicker extends React.Component {
             <div>
               <SubHeader>Select an amount of hours</SubHeader>
 
-              <Select
+              {/* <Select
                 value={amountValue}
                 onChange={e => handleChangeAmount(e, id)}
               >
                 <Option value="">--- Select an Option ---</Option>
                 {this.renderTimeAmounts(timeAmounts)}
-              </Select>
+              </Select> */}
+              <TextInput
+                style={{ marginTop: 10 }}
+                value={amountValue}
+                name="amount"
+                type="number"
+                onTextChange={e => handleChangeAmount(e, id)}
+              />
             </div>
           )}
           <IconContainer>
@@ -74,7 +81,6 @@ class RequestPicker extends React.Component {
 const { arrayOf, number, string, shape, func, oneOfType } = PropTypes
 
 RequestPicker.propTypes = {
-  timeAmounts: arrayOf(number).isRequired,
   requestTypes: arrayOf(shape({ name: string, id: string })).isRequired,
   id: string.isRequired,
   handleChangeType: func.isRequired,

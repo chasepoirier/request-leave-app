@@ -123,7 +123,7 @@ class RequestLeaveForm extends React.Component {
 
   handleEndDateChange = endDate => {
     const { startDate, durationType } = this.state
-    const diff = Calculate.dateDiff(startDate, endDate)
+    const diff = Calculate.dateDiff(startDate, endDate, durationType)
     const message = this.checkForError(diff, durationType)
     this.setState({
       endDate,
@@ -147,7 +147,7 @@ class RequestLeaveForm extends React.Component {
     const { requestTypes } = this.state
     const pos = requestTypes.map(el => el.id).indexOf(id)
     const newArr = requestTypes
-    newArr[pos].amount = e.target.value ? e.target.value : 0
+    newArr[pos].amount = e.target.value ? e.target.value : ''
 
     this.updateTotalRequestAmount()
     this.setState({ requestTypes: newArr })

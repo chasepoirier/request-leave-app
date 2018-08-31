@@ -216,7 +216,7 @@ class CreateUserPage extends React.Component {
             {this.renderRequestTypes(requestTypes.all)}
           </InputContainerWrapped>
         )}
-        <InputContainer>
+        <InputContainer style={{ marginTop: 10, marginBottom: 65 }}>
           <TextInput
             placeholder=""
             type="date"
@@ -225,6 +225,7 @@ class CreateUserPage extends React.Component {
             name="startDate"
             required
             short
+            subLabel="Employee Start Date"
           />
           <TextInput
             type="number"
