@@ -11,7 +11,7 @@
     "clean": "rm -rf build && mkdir build",
     "build": "npm run clean && npm run build-server && npm run build-client",
     "build-server": "babel -d ./build ./server -s",
-    "build-client": "cd client && npm install && npm run build",
+    "build-client": "cd client && npm install && cross-env GENERATE_SOURCEMAP=false && npm run build",
     "precommit": "lint-staged"
   },
   "dependencies": {
