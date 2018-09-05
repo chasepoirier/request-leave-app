@@ -1,6 +1,6 @@
 import express from 'express'
 import { toAuthJSON, Queries } from '../utils'
-import { firebase } from '../firebase'
+import { firebase, db } from '../firebase'
 
 const router = express.Router()
 
@@ -36,28 +36,33 @@ router.post('/get_user_by_uid', (req, res) => {
     .catch(() => res.json({ user: null }))
 })
 
-router.post('/create_user', (req, res) => {
-  const { email, fname, lname } = req.body
-  const password = 'placeholder1234'
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(ref => {
-      Queries.user
-        .createNewUser({
-          email,
-          fname,
-          lname,
-          typeAmounts,
-          uid: ref.user.uid
-        })
-        .then(user => {
-          res.json({ user: toAuthJSON(user) })
+router.post('/get_user_by_id', (req, res) => {
+  const userRef = db.collection('users').doc(req.body.id)
+  userRef
+    .get()
+    .then(user => {
+      db.collection('teams')
+        .doc(user.data().team)
+        .get()
+        .then(team => {
+          userRef
+            .collection('requests')
+            .get()
+            .then(snaps => {
+              const requests = []
+              snaps.forEach(snap => requests.push({ ...snap.data() }))
+              res.json({
+                user: {
+                  requests,
+                  ...user.data(),
+                  id: user.id,
+                  team: { name: team.data().name, id: team.id }
+                }
+              })
+            })
         })
     })
-    .catch(err => {
-      res.json({ errors: { code: err.code, message: err.message } })
-    })
+    .catch(() => res.json({ error: true }))
 })
 
 module.exports = router

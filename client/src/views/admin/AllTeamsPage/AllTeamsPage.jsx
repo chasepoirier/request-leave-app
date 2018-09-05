@@ -4,6 +4,7 @@ import { TeamPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { Styled } from 'components'
 import { viewOperations } from 'modules/ducks/view'
+import { userOperations } from 'modules/ducks/user'
 import { teamOperations, teamSelectors } from 'modules/ducks/teams'
 import { supervisorOperations } from 'modules/ducks/supervisor'
 import {
@@ -43,6 +44,19 @@ class AllTeamsPage extends React.Component {
     })
   }
 
+  handleUserPopup = e => {
+    const { showPopup, getUserById, updateUserRequest } = this.props
+    getUserById(e.target.id)
+    showPopup({
+      type: 'user',
+      content: {
+        title: 'Edit User',
+        desc: `Change user permissions, user's team, or adjust their leave hours.`,
+        updateUserRequest
+      }
+    })
+  }
+
   handleDeleteUser = id => {
     const { submitDeleteUser, fetchAllTeams, hidePopup } = this.props
     submitDeleteUser(id).then(success => {
@@ -78,7 +92,11 @@ class AllTeamsPage extends React.Component {
         <TableCell>
           <TablePositioner>
             {this.getUserStatus(user.status)}
-            <EditIcon className="fas fa-user-edit" />
+            <EditIcon
+              id={user.id}
+              onClick={this.handleUserPopup}
+              className="fas fa-user-edit"
+            />
             <TrashIcon
               onClick={this.handleDangerPopup}
               className="fas fa-trash"
@@ -128,6 +146,8 @@ export default connect(
     showPopup: viewOperations.showPopup,
     hidePopup: viewOperations.hidePopup,
     submitDeleteUser: supervisorOperations.submitDeleteUser,
-    fetchAllTeams: teamOperations.fetchAllTeams
+    updateUserRequest: supervisorOperations.updateUserRequest,
+    fetchAllTeams: teamOperations.fetchAllTeams,
+    getUserById: userOperations.getUserByIdRequest
   }
 )(AllTeamsPage)

@@ -17,3 +17,7 @@ export const SET_APPROVAL_STATUS_REQUEST =
 export const SET_APPROVAL_STATUS_FAIL = '@@supervisor/SET_APPROVAL_STATUS_FAIL'
 export const SET_APPROVAL_STATUS_SUCCESS =
   '@@supervisor/SET_APPROVAL_STATUS_SUCCESS'
+
+export const UPDATE_USER_REQUEST = '@@supervisor/UPDATE_USER_REQUEST'
+export const UPDATE_USER_SUCCESS = '@@supervisor/UPDATE_USER_SUCCESS'
+export const UPDATE_USER_FAIL = '@@supervisor/UPDATE_USER_FAIL'

@@ -24,27 +24,28 @@ export const submitDeleteUser = id => dispatch => {
     .catch(() => dispatch(actions.deleteUserFail('error deleting user')))
 }
 
-export const pendingApprovalsRequest = () => actions.pendingApprovalsRequest()
-export const pendingApprovalsFail = error => actions.pendingApprovalsFail(error)
-export const pendingApprovalsSuccess = requests =>
-  actions.pendingApprovalsSuccess(requests)
-
 export const fetchPendingApprovals = () => dispatch => {
-  dispatch(pendingApprovalsRequest())
+  dispatch(actions.pendingApprovalsRequest())
   return api.supervisor
     .getPendingApprovals()
-    .then(requests => dispatch(pendingApprovalsSuccess(requests)))
-    .catch(() => dispatch(pendingApprovalsFail(utils.errors.unknown)))
+    .then(requests => dispatch(actions.pendingApprovalsSuccess(requests)))
+    .catch(() => dispatch(actions.pendingApprovalsFail(utils.errors.unknown)))
 }
 
-const setApprovalStatusRequest = () => actions.setApprovalStatusRequest()
-const setApprovalStatusSuccess = () => actions.setApprovalStatusSuccess()
-const setApprovalStatusFail = error => actions.setApprovalStatusFail(error)
-
 export const submitApprovalStatus = (ids, approved) => dispatch => {
-  dispatch(setApprovalStatusRequest())
+  dispatch(actions.setApprovalStatusRequest())
   return api.supervisor
     .setApprovalStatus(ids, approved)
-    .then(() => dispatch(setApprovalStatusSuccess()))
-    .catch(() => dispatch(setApprovalStatusFail('Error setting status')))
+    .then(() => dispatch(actions.setApprovalStatusSuccess()))
+    .catch(() =>
+      dispatch(actions.setApprovalStatusFail('Error setting status'))
+    )
+}
+
+export const updateUserRequest = data => dispatch => {
+  dispatch(actions.updateUserRequest())
+  return api.supervisor
+    .updateUserInfo(data)
+    .then(() => dispatch(actions.updateUserSuccess()))
+    .catch(() => dispatch(actions.updateUserFail('Error updating user')))
 }

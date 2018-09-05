@@ -9,7 +9,8 @@ const initialState = {
     status: {
       supervisor: false,
       admin: false
-    }
+    },
+    typeAmounts: []
   },
   loading: false,
   login: {
@@ -21,7 +22,12 @@ const initialState = {
     submitting: false,
     errors: null
   },
-  userFetched: false
+  userFetched: false,
+  selectedUser: {
+    loading: false,
+    errors: null,
+    info: null
+  }
 }
 
 const user = (state = initialState, action = {}) => {
@@ -75,6 +81,51 @@ const user = (state = initialState, action = {}) => {
         loading: false,
         userFetched: true,
         login: { ...state.login, loggedIn: false }
+      }
+    }
+    case types.UPDATE_LEAVE_AMOUNT: {
+      const index = state.info.typeAmounts
+        .map(t => t.id)
+        .indexOf(action.payload.id)
+      return {
+        ...state,
+        info: {
+          ...state.info,
+          typeAmounts: [
+            ...state.info.typeAmounts.slice(0, index),
+            {
+              ...state.info.typeAmounts[index],
+              amount: action.payload.amount
+            },
+            ...state.info.typeAmounts.slice(index + 1)
+          ]
+        }
+      }
+    }
+    case types.GET_USER_REQUEST: {
+      return {
+        ...state,
+        selectedUser: { loading: true, errors: null, info: null }
+      }
+    }
+    case types.GET_USER_SUCCESS: {
+      return {
+        ...state,
+        selectedUser: {
+          loading: false,
+          errors: null,
+          info: action.payload.user
+        }
+      }
+    }
+    case types.GET_USER_FAIL: {
+      return {
+        ...state,
+        selectedUser: {
+          loading: false,
+          errors: action.payload.error,
+          info: null
+        }
       }
     }
     default: {

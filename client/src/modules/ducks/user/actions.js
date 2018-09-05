@@ -36,3 +36,27 @@ export const setCurrentUser = user => ({
     user
   }
 })
+
+export const updateLeaveAmount = ({ id, amount }) => ({
+  type: types.UPDATE_LEAVE_AMOUNT,
+  payload: {
+    id,
+    amount
+  }
+})
+
+export const getUserRequest = () => ({
+  type: types.GET_USER_REQUEST
+})
+export const getUserFail = error => ({
+  type: types.GET_USER_FAIL,
+  payload: {
+    error
+  }
+})
+export const getUserSuccess = user => ({
+  type: types.GET_USER_SUCCESS,
+  payload: {
+    user
+  }
+})

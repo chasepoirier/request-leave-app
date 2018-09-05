@@ -18,7 +18,7 @@ import {
 
 const { arrayOf, objectOf, func, string, shape, bool } = PropTypes
 const dateFormat = 'dd. MMM Do'
-class StatusTable extends React.Component {
+class HistoryTable extends React.Component {
   static propTypes = {
     requests: shape({ loading: bool, errors: string, all: arrayOf(RequestPT) })
       .isRequired,
@@ -43,7 +43,7 @@ class StatusTable extends React.Component {
       type: 'danger',
       content: {
         title: 'Confirm delete.',
-        desc: `Are you sure you want to delete ${this.getNameFromRow(e)}`,
+        desc: `Are you sure you want to delete this leave request?`,
         buttonText: `Delete Request`,
         handleSubmit: this.handleDeleteRequest.bind({}, e.target.id)
       }
@@ -122,7 +122,7 @@ class StatusTable extends React.Component {
             </thead>
             <tbody>
               {this.renderRequests(
-                requestSelectors.getPendingRequests(requests.all)
+                requestSelectors.getNonPendingRequests(requests.all)
               )}
             </tbody>
           </Table>
@@ -147,4 +147,4 @@ export default connect(
     fetchAllUserRequests: requestOperations.submitRequestForUserRequests,
     deleteRequest: requestOperations.submitRequestToDeleteRequest
   }
-)(StatusTable)
+)(HistoryTable)

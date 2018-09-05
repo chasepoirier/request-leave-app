@@ -47,3 +47,17 @@ export const submitLoginRequest = googleUser => dispatch => {
     )
     .catch(() => dispatch(actions.userLoginFail(utils.errors.unauthorized)))
 }
+
+export const updateLeaveAmount = ({ id, amount }) =>
+  actions.updateLeaveAmount({ id, amount })
+
+export const getUserByIdRequest = id => dispatch => {
+  dispatch(actions.getUserRequest())
+  return api.user.getUserById(id).then(user => {
+    if (user) {
+      dispatch(actions.getUserSuccess(user))
+    } else {
+      dispatch(actions.getUserFail('Error getting user'))
+    }
+  })
+}

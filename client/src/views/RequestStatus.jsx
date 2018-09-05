@@ -4,7 +4,7 @@ import StatusTable from './requestStatus/StatusTable'
 
 const RequestStatus = () => (
   <Styled.PageWrapper>
-    <Styled.Header style={{ marginTop: 50 }}>Request Status</Styled.Header>
+    <Styled.Header style={{ marginTop: 50 }}>Pending Requests</Styled.Header>
     <StatusTable />
   </Styled.PageWrapper>
 )

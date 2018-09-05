@@ -31,7 +31,14 @@ const SupervisorEndpoints = {
           return true
         }
         throw new Error()
-      })
+      }),
+  updateUserInfo: data =>
+    axios.post(`${apiBase}/supervisor/update_user`, { ...data }).then(res => {
+      if (res.data.success) {
+        return true
+      }
+      throw new Error()
+    })
 }
 
 export default SupervisorEndpoints

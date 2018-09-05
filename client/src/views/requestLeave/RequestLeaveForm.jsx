@@ -145,12 +145,37 @@ class RequestLeaveForm extends React.Component {
 
   handleChangeAmount = (e, id) => {
     const { requestTypes } = this.state
+    const { typeAmounts } = this.props
     const pos = requestTypes.map(el => el.id).indexOf(id)
     const newArr = requestTypes
     newArr[pos].amount = e.target.value ? e.target.value : ''
 
-    this.updateTotalRequestAmount()
-    this.setState({ requestTypes: newArr })
+    if (e.target.value) {
+      const availableAmount = typeAmounts.reduce((prev, curr) => {
+        if (curr.id === newArr[pos].type) {
+          prev = curr.amount
+        }
+        return prev
+      }, {})
+      const validAmount = availableAmount - newArr[pos].amount
+
+      if (validAmount > 0) {
+        console.log('valid', validAmount)
+        this.updateTotalRequestAmount()
+        this.setState({ requestTypes: newArr })
+      } else {
+        console.log('not valid', validAmount)
+        this.setState({
+          requestMessage: `You don't have enough hours for the ${
+            newArr[pos].type
+          } type. Try another type.`,
+          validAmount: false
+        })
+      }
+    } else {
+      this.updateTotalRequestAmount()
+      this.setState({ requestTypes: newArr })
+    }
   }
 
   handleDeleteRequest = id => {

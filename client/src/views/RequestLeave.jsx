@@ -7,7 +7,9 @@ import { Styled } from 'components'
 import { connect } from 'react-redux'
 import { requestOperations } from '../modules/ducks/requests'
 import { viewOperations } from '../modules/ducks/view'
+import { userOperations } from '../modules/ducks/user'
 import RequestLeaveForm from './requestLeave/RequestLeaveForm'
+import LeaveTable from '../components/LeaveTable/LeaveTable'
 
 class RequestLeave extends React.Component {
   static propTypes = {
@@ -19,25 +21,39 @@ class RequestLeave extends React.Component {
   }
 
   handleSubmitForm = request => {
-    const { submitNewRequest, user, showStatusBar, history } = this.props
+    const {
+      submitNewRequest,
+      user,
+      showStatusBar,
+      history,
+      fetchCurrentUser
+    } = this.props
     submitNewRequest(user, request).then(success => {
       if (success) {
         showStatusBar('Successfully created new leave request')
+        fetchCurrentUser()
         history.push('/request-status')
       }
     })
   }
 
   render() {
-    const { submitting } = this.props
+    const {
+      submitting,
+      updateLeaveAmount,
+      user: { typeAmounts }
+    } = this.props
     return (
       <Styled.PageWrapper>
         <Styled.Header style={{ marginTop: 50 }}>
           Create New Leave Request
         </Styled.Header>
+        <LeaveTable />
         <RequestLeaveForm
           submitting={submitting}
           handleSubmitForm={this.handleSubmitForm}
+          updateLeaveAmount={updateLeaveAmount}
+          typeAmounts={typeAmounts}
         />
       </Styled.PageWrapper>
     )
@@ -54,7 +70,9 @@ export default withRouter(
     mapStateToProps,
     {
       submitNewRequest: requestOperations.submitRequestLeave,
-      showStatusBar: viewOperations.showStatusBar
+      showStatusBar: viewOperations.showStatusBar,
+      updateLeaveAmount: userOperations.updateLeaveAmount,
+      fetchCurrentUser: userOperations.fetchCurrentUser
     }
   )(RequestLeave)
 )

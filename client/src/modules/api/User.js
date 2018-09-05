@@ -13,6 +13,11 @@ const UserEndpoints = {
     axios
       .post(`${apiBase}/user/get_user_by_uid`, { uid })
       .then(res => res.data.user)
+      .catch(() => null),
+  getUserById: id =>
+    axios
+      .post(`${apiBase}/user/get_user_by_id`, { id })
+      .then(res => res.data.user)
       .catch(() => null)
 }
 

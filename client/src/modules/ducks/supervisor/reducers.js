@@ -23,6 +23,10 @@ const manageUserState = {
     submitting: false,
     errors: null
   },
+  updateUser: {
+    submitting: false,
+    errors: null
+  },
   allUsers: []
 }
 
@@ -61,6 +65,18 @@ const manageUser = (state = manageUserState, action = {}) => {
       return {
         ...state,
         deleteUser: { submitting: false, errors: action.payload.error }
+      }
+    }
+    case types.UPDATE_USER_REQUEST: {
+      return { ...state, updateUser: { submitting: true, errors: null } }
+    }
+    case types.UPDATE_USER_SUCCESS: {
+      return { ...state, updateUser: { submitting: false, errors: null } }
+    }
+    case types.UPDATE_USER_FAIL: {
+      return {
+        ...state,
+        updateUser: { submitting: false, errors: action.payload.error }
       }
     }
     default: {

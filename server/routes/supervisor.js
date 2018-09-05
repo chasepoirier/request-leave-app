@@ -99,39 +99,7 @@ router.get('/get_pending_approvals', (req, res) => {
 
     teamRefs.forEach(team => {
       pendingApprovals.push(
-        teams
-          .doc(team.id)
-          .collection('users')
-          .get()
-          .then(userRefs => {
-            const allUsers = []
-            userRefs.forEach(user => {
-              allUsers.push(
-                teams
-                  .doc(team.id)
-                  .collection('users')
-                  .doc(user.id)
-                  .collection('requests')
-                  .where('approval.supervisor.pending', '==', true)
-                  .get()
-                  .then(requests => {
-                    const allRequests = []
-                    requests.forEach(request => {
-                      allRequests.push({
-                        ...request.data(),
-                        teamUid: user.id,
-                        userUid: user.data().id,
-                        name: user.data().name,
-                        id: request.id,
-                        team: team.data().name
-                      })
-                    })
-                    return allRequests
-                  })
-              )
-            })
-            return Promise.all(allUsers).then(refs => refs)
-          })
+        Queries.supervisor.findPendingApprovals(teams, team)
       )
     })
 
@@ -174,6 +142,67 @@ router.post('/set_approval_status', (req, res) => {
         .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
+})
+
+router.post('/update_user', (req, res) => {
+  const {
+    updates: { team, status, typeAmounts },
+    user
+  } = req.body
+  const { supervisor } = Queries
+
+  const promises = []
+  if (team.updated) {
+    promises.push(
+      supervisor
+        .updateTeamInUserRef(user)
+        .then(() => {
+          supervisor
+            .migrateUserToNewTeam(user, team)
+            .then(() => true)
+            .catch(() => new Error())
+        })
+        .catch(err => err)
+    )
+  }
+
+  if (typeAmounts.updated) {
+    promises.push(
+      db
+        .collection('users')
+        .doc(user.id)
+        .update({ typeAmounts: user.typeAmounts })
+    )
+  }
+
+  if (status.updated) {
+    promises.push(
+      db
+        .collection('users')
+        .doc(user.id)
+        .update({ status: user.status })
+        .then(() => {
+          db.collection('teams')
+            .doc(team.updated ? team.oldTeam : user.team.id)
+            .collection('users')
+            .where('id', '==', user.id)
+            .get()
+            .then(userRef => {
+              userRef.forEach(ref => {
+                db.collection('teams')
+                  .doc(team.updated ? team.oldTeam : user.team.id)
+                  .collection('users')
+                  .doc(ref.id)
+                  .update({ status: user.status })
+              })
+            })
+        })
+    )
+  }
+
+  Promise.all(promises)
+    .then(() => res.json({ success: true }))
+    .catch(() => res.json({ success: false }))
 })
 
 module.exports = router

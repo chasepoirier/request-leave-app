@@ -20,6 +20,12 @@ const Header = styled.h1`
   padding: 0;
 `
 
+const SubHeader = styled.div`
+  font-size: 21px;
+  margin-bottom: 15px;
+  font-weight: 600;
+`
+
 const ButtonOutline = styled.div`
   padding: 10px 55px;
   color: ${Colors.blue500};
@@ -88,5 +94,6 @@ export {
   SubmitButton,
   ButtonOutline,
   ButtonFilled,
-  SubLabel
+  SubLabel,
+  SubHeader
 }

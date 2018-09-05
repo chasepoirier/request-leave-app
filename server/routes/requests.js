@@ -1,11 +1,26 @@
 import express from 'express'
 import { db } from '../firebase'
+import * as Arrays from '../utils/arrays'
 // import Queries from '../utils/Queries'
 
 const router = express.Router()
 
 router.post('/add_new_request', (req, res) => {
-  const { id, team } = req.body.user
+  const {
+    user: { id, team },
+    request
+  } = req.body
+
+  db.collection('users')
+    .doc(id)
+    .get()
+    .then(ref => {
+      const amounts = ref.data().typeAmounts
+      const newAmounts = Arrays.updateValueInArray(request.types, amounts)
+      db.collection('users')
+        .doc(id)
+        .update({ typeAmounts: newAmounts })
+    })
 
   const logsRef = db
     .collection('users')
@@ -20,9 +35,9 @@ router.post('/add_new_request', (req, res) => {
   db.collection('users')
     .doc(id)
     .collection('requests')
-    .add(req.body.request)
+    .add(request)
     .then(ref => {
-      logsRef.add(req.body.request)
+      logsRef.add(request)
       teamUsersRef
         .where('id', '==', id)
         .get()
@@ -33,7 +48,7 @@ router.post('/add_new_request', (req, res) => {
             .doc(ids[0])
             .collection('requests')
             .doc(ref.id)
-            .set(req.body.request)
+            .set(request)
             .then(() => res.json({ success: true }))
         })
     })

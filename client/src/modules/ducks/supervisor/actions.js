@@ -57,3 +57,16 @@ export const setApprovalStatusFail = error => ({
 export const setApprovalStatusSuccess = () => ({
   type: types.SET_APPROVAL_STATUS_SUCCESS
 })
+
+export const updateUserRequest = () => ({
+  type: types.UPDATE_USER_REQUEST
+})
+export const updateUserSuccess = () => ({
+  type: types.UPDATE_USER_SUCCESS
+})
+export const updateUserFail = error => ({
+  type: types.UPDATE_USER_FAIL,
+  payload: {
+    error
+  }
+})

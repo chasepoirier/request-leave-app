@@ -5,7 +5,13 @@ import { CheckboxWrapper, InputLabel, Check } from './Styled'
 const Checkbox = ({ value, onInputChange, name, label }) => (
   <CheckboxWrapper>
     <InputLabel>{label}</InputLabel>
-    <Check value={value} onChange={onInputChange} name={name} type="checkbox" />
+    <Check
+      value={value}
+      onChange={onInputChange}
+      name={name}
+      type="checkbox"
+      checked={value}
+    />
   </CheckboxWrapper>
 )
 

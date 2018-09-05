@@ -14,6 +14,9 @@ const PopupWrapper = styled.div`
   border-radius: 4px;
   position: relative;
   padding: 75px 0 50px;
+  height: 100%;
+  overflow-y: auto;
+  max-height: 95vh;
 `
 
 const CloseIcon = styled.i`
@@ -65,6 +68,7 @@ const PopupContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 100000;
+  overflow: hidden;
 `
 
 const CloseContainer = styled.div`
@@ -83,6 +87,7 @@ const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
+  flex-wrap: wrap;
 `
 
 const FlexItem = styled.div`
@@ -91,12 +96,51 @@ const FlexItem = styled.div`
 
 const InlineItem = styled.div`
   margin-right: 25px;
+  width: calc(100% / 4);
+  margin-bottom: 8px;
 `
 
 const LabelText = styled.div`
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 6px;
+`
+
+const LabelTextContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const ChangeText = styled.div`
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: ${Colors.blue500};
+  margin-left: 15px;
+  transition: all 0.2s;
+  opacity: 1;
+  &:hover {
+    opacity: 0.65;
+  }
+`
+
+const SmallButton = styled.div`
+  margin-top: 6px;
+  width: 45%;
+  padding: 8px 0px;
+  border: 1px solid ${Colors.blue500};
+  color: ${Colors.blue500};
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  transform: translateY(0px);
+  border-radius: 4px;
+  &:hover {
+    transform: translateY(2px);
+  }
 `
 
 const ValueText = styled.div`
@@ -115,5 +159,8 @@ export {
   LabelText,
   ValueText,
   FlexItem,
-  InlineItem
+  ChangeText,
+  LabelTextContainer,
+  InlineItem,
+  SmallButton
 }
