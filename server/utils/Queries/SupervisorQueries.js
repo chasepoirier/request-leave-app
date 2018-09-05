@@ -61,7 +61,7 @@ export const migrateUserToNewTeam = (user, team) =>
               .then(requests => {
                 const all = []
                 requests.forEach(request => {
-                  all.push(request.data())
+                  all.push({ ...request.data(), id: request.id })
                 })
                 return all
               })
@@ -93,7 +93,8 @@ export const migrateUserToNewTeam = (user, team) =>
                           .collection('users')
                           .doc(newUser.id)
                           .collection('requests')
-                          .add({ ...newRequest })
+                          .doc(newRequest.id)
+                          .set(newRequest)
                       )
                     })
                   })
