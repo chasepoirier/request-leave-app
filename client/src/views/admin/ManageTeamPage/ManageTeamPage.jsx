@@ -1,25 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { Styled } from 'components'
 import { viewOperations } from 'modules/ducks/view'
 import { userOperations } from 'modules/ducks/user'
-import { teamOperations, teamSelectors } from 'modules/ducks/teams'
-import { supervisorOperations } from 'modules/ducks/supervisor'
+import { teamSelectors } from 'modules/ducks/teams'
 import {
-  TeamHeader,
   Table,
   TableCell,
   TableHeader,
   TableRow,
   TeamsContainer,
-  TrashIcon,
-  TablePositioner,
-  EditIcon
+  TablePositioner
 } from './Styled'
-
-const { arrayOf, func } = PropTypes
 
 class AllTeamsPage extends React.Component {
   handleDangerPopup = e => {
@@ -37,7 +30,7 @@ class AllTeamsPage extends React.Component {
   }
 
   handleUserPopup = user => {
-    const { showPopup, getUserById, updateUserRequest } = this.props
+    const { showPopup, getUserById } = this.props
     getUserById(user.id)
     showPopup({
       type: 'user-admin',

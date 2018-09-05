@@ -32,6 +32,7 @@ import {
 import { Checkbox } from '../Inputs/'
 import { generateID } from '../../utils/calculations'
 import * as arrays from '../../utils/arrays'
+import { userSelectors } from '../../modules/ducks/user'
 
 // const dateFormat = 'dd. MMM Do'
 
@@ -111,7 +112,7 @@ class UserPopup extends React.Component {
       )
 
       this.setState({
-        userInfo: this.props.user.info,
+        userInfo: { ...this.props.user.info, typeAmounts: this.props.types },
         familyLeave: { ...this.state.familyLeave, active: fmlIsActive },
         militaryLeave: { ...this.state.militaryLeave, active: mlIsActive }
       })
@@ -316,7 +317,6 @@ class UserPopup extends React.Component {
       allRequests
     } = this.state
 
-    console.log(familyLeave)
     return (
       <PopupContainer>
         <PopupWrapper style={{ overflow: allRequests.open && 'visible' }}>
@@ -530,7 +530,8 @@ const mapStateToProps = state => ({
   title: state.view.popup.content.title,
   desc: state.view.popup.content.desc,
   updateUserRequest: state.view.popup.content.updateUserRequest,
-  user: state.user.selectedUser
+  user: state.user.selectedUser,
+  types: userSelectors.sortLeaveAmountsByOrder(state)
 })
 
 export default connect(

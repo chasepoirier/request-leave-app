@@ -15,10 +15,8 @@ import {
   ValueText,
   FlexItem,
   InlineItem,
-  LabelTextContainer,
-  ChangeText
+  LabelTextContainer
 } from './Styled'
-import { AllRequests } from './userPopupComponents'
 import { generateID } from '../../utils/calculations'
 import RequestTable from '../RequestTable'
 

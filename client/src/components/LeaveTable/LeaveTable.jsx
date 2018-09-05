@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { userSelectors } from '../../modules/ducks/user'
 import { Table, TableRow, TableCell, TableHeader, TableLabel } from './Styled'
 
 class LeaveTable extends React.Component {
@@ -7,19 +8,7 @@ class LeaveTable extends React.Component {
     amounts.map(type => <TableCell key={type.id}>{type.amount}</TableCell>)
 
   renderTableHeaders = amounts =>
-    amounts.map(type => (
-      <TableHeader key={type.id}>{this.getNameFromType(type.id)}</TableHeader>
-    ))
-
-  getNameFromType = id => {
-    const { types } = this.props
-    return types.all.reduce((prev, curr) => {
-      if (curr.id === id) {
-        prev = curr.name
-      }
-      return prev
-    }, null)
-  }
+    amounts.map(type => <TableHeader key={type.id}>{type.name}</TableHeader>)
 
   render() {
     // console.log(this.props.amounts)
@@ -42,7 +31,7 @@ class LeaveTable extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  amounts: state.user.info.typeAmounts,
+  amounts: userSelectors.sortLeaveAmountsByOrder(state),
   types: state.requests.leaveTypes
 })
 
