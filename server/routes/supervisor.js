@@ -167,11 +167,16 @@ router.post('/update_user', (req, res) => {
   }
 
   if (typeAmounts.updated) {
+    const lowerCaseIds = user.typeAmounts.map(t => ({
+      ...t,
+      id: t.id.toLowerCase()
+    }))
+
     promises.push(
       db
         .collection('users')
         .doc(user.id)
-        .update({ typeAmounts: user.typeAmounts })
+        .update({ typeAmounts: lowerCaseIds })
     )
   }
 

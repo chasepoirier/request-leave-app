@@ -30,9 +30,9 @@ class CreateUserPage extends React.Component {
         supervisor: false
       },
       email: '',
-      team: null,
-      typeAmounts: null,
-      startDate: null,
+      team: '',
+      typeAmounts: '',
+      startDate: '',
       additionalService: 0
     }
   }

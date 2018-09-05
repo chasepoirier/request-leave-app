@@ -21,7 +21,7 @@ export const getOnlyTypesWithLimit = types => {
 export const getNonPendingRequests = requests =>
   requests.filter(request => {
     const { admin, supervisor } = request.approval
-    if (!admin.pending && !supervisor.pender) {
+    if (!admin.pending && !supervisor.pending) {
       return true
     }
     return false
