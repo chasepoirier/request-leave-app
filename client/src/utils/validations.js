@@ -1,7 +1,7 @@
 export const validMultiDay = diff => {
   if (diff < 0) {
     return {
-      message: 'Your end time must be after your start time and a future date.',
+      message: `Your end date must be after your start date`,
       success: false
     }
   }
@@ -22,8 +22,8 @@ export const validMultiDay = diff => {
 export const validFullDay = diff => {
   if (diff < 0) {
     return {
-      message: `You must select a date that's at least 1 day in the future.`,
-      success: false
+      message: `Heads up, you are creating a request in the past`,
+      success: true
     }
   }
   return {

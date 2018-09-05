@@ -1,9 +1,9 @@
 export const dateDiff = (start, end, type) => {
-  const startTime = start.diff(Date.now(), 'days')
+  // const startTime = start.diff(Date.now(), 'days')
 
-  if (startTime < 1) {
-    return -1
-  }
+  // if (startTime < 1) {
+  //   return -1
+  // }
 
   if (type === 'md') {
     const diff = end.diff(start, 'days')
