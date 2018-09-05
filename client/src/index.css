@@ -34,6 +34,10 @@ body {
 	font-family: 'Avenir', sans-serif;
 }
 
+.react-datepicker__time-list {
+	padding: 0 !important;
+}
+
 .google-btn {
 	display: block;
 	-webkit-appearance: none;

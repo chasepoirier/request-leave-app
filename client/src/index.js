@@ -8,6 +8,7 @@ import store from 'modules/store'
 import App from 'App'
 
 import 'index.css'
+import './design/date.css'
 
 /* eslint-disable react/jsx-filename-extension */
 const Index = () => (
