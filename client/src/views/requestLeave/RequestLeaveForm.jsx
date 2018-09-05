@@ -145,7 +145,7 @@ class RequestLeaveForm extends React.Component {
 
   handleChangeAmount = (e, id) => {
     const { requestTypes } = this.state
-    const { typeAmounts } = this.props
+    const { typeAmounts, allLeaveTypes } = this.props
     const pos = requestTypes.map(el => el.id).indexOf(id)
     const newArr = requestTypes
     newArr[pos].amount = e.target.value ? e.target.value : ''
@@ -159,12 +159,14 @@ class RequestLeaveForm extends React.Component {
       }, {})
       const validAmount = availableAmount - newArr[pos].amount
 
-      if (validAmount > 0) {
-        console.log('valid', validAmount)
+      const selectedType = allLeaveTypes.all
+        .map(t => t.id)
+        .indexOf(newArr[pos].type)
+
+      if (validAmount > 0 || allLeaveTypes.all[selectedType].unlimited) {
         this.updateTotalRequestAmount()
         this.setState({ requestTypes: newArr })
       } else {
-        console.log('not valid', validAmount)
         this.setState({
           requestMessage: `You don't have enough hours for the ${
             newArr[pos].type
@@ -283,7 +285,7 @@ class RequestLeaveForm extends React.Component {
       <RequestPicker
         key={type.id}
         id={type.id}
-        requestTypes={Types.leaveTypes}
+        requestTypes={this.props.allLeaveTypes.all}
         timeAmounts={Calculate.convertTotalTimeToHalfHours(totalTime)}
         typeValue={type.type}
         amountValue={type.amount}
