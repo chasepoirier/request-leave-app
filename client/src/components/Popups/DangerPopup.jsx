@@ -15,7 +15,7 @@ import Colors from '../../design/Colors'
 
 const DangerPopup = ({ handleSubmit, title, desc, closePopup, buttonText }) => (
   <PopupContainer>
-    <PopupWrapper>
+    <PopupWrapper style={{ height: 'auto' }}>
       <ContentContainer>
         <Header>{title}</Header>
         <SubHeader>{desc}</SubHeader>

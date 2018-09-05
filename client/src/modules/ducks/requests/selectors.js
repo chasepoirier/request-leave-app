@@ -5,7 +5,7 @@ export function getUsername(user) {
 /* eslint-disable no-param-reassign */
 export const getOneRequest = (id, requests) =>
   requests.reduce((prev, curr) => {
-    if (curr.id === id) {
+    if (curr.id === id.id) {
       prev = curr
     }
     return prev
@@ -34,4 +34,13 @@ export const getPendingRequests = requests =>
       return true
     }
     return false
+  })
+
+export const sortByDateCreated = requests =>
+  requests.sort((a, b) => {
+    const nameA = a.timestamp
+    const nameB = b.timestamp
+    if (nameA < nameB) return 1
+    if (nameA > nameB) return -1
+    return 0
   })

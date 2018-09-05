@@ -58,7 +58,7 @@ const ApprovalPopup = ({
             </FlexItem>
           </FlexContainer>
           <FlexContainer>
-            <InlineItem>
+            <InlineItem style={{ width: '100%' }}>
               <LabelText>Types</LabelText>
               <FlexContainer style={{ marginBottom: 0 }}>
                 {types.map(type => (

@@ -14,9 +14,9 @@ const PopupWrapper = styled.div`
   border-radius: 4px;
   position: relative;
   padding: 75px 0 50px;
-  height: 100%;
   overflow-y: auto;
   max-height: 95vh;
+  height: 100%;
 `
 
 const CloseIcon = styled.i`
@@ -37,10 +37,11 @@ const CloseIcon = styled.i`
 
 const ContentContainer = styled.div`
   width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  // display: flex;
+  // justify-content: center;
+  // align-items: flex-start;
+  // flex-wrap: wrap;
+  height: 100%;
 `
 
 const Header = styled.header`
@@ -130,8 +131,8 @@ const SmallButton = styled.div`
   margin-top: 6px;
   width: 45%;
   padding: 8px 0px;
-  border: 1px solid ${Colors.blue500};
-  color: ${Colors.blue500};
+  border: 1px solid ${props => (props.active ? Colors.Red200 : Colors.blue500)};
+  color: ${props => (props.active ? Colors.Red200 : Colors.blue500)};
   font-size: 14px;
   text-align: center;
   cursor: pointer;

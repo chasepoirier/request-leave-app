@@ -45,7 +45,9 @@ class RequestLeaveForm extends React.Component {
         id: Calculate.generateID()
       }
     ],
-    reason: ''
+    reason: '',
+    startTime: moment(),
+    endTime: moment()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -97,7 +99,7 @@ class RequestLeaveForm extends React.Component {
           }
         },
         reason,
-        totalTime: totalTime * hoursInDay,
+        totalTime: durationType === 'p' ? totalTime : totalTime * hoursInDay,
         startDate,
         endDate: durationType === 'md' ? endDate : startDate
       }
@@ -133,37 +135,86 @@ class RequestLeaveForm extends React.Component {
     })
   }
 
+  handleStartTimeChange = time => {
+    const diff = Calculate.timeDiff(time, this.state.endTime)
+    const message = this.checkForError(diff, 'p')
+
+    this.setState({
+      startTime: time,
+      totalTime: diff,
+      validDate: message.success,
+      dateMessage: message.message
+    })
+  }
+
+  handleEndTimeChange = time => {
+    const diff = Calculate.timeDiff(this.state.startTime, time)
+    const message = this.checkForError(diff, 'p')
+
+    this.setState({
+      endTime: time,
+      totalTime: diff,
+      validDate: message.success,
+      dateMessage: message.message
+    })
+  }
+
+  calculateIfHasEnough = type => {
+    const { typeAmounts, allLeaveTypes } = this.props
+
+    const availableAmount = typeAmounts.reduce((prev, curr) => {
+      if (curr.id === type.type) {
+        prev = curr.amount
+      }
+      return prev
+    }, {})
+    const validAmount = availableAmount - type.amount
+
+    const selectedType = allLeaveTypes.all.map(t => t.id).indexOf(type.type)
+
+    if (validAmount > 0 || allLeaveTypes.all[selectedType].unlimited) {
+      return true
+    }
+    return false
+  }
+
   handleChangeType = (e, id) => {
     if (e.target.value) {
       const { requestTypes } = this.state
       const pos = requestTypes.map(el => el.id).indexOf(id)
       const newArr = requestTypes
       newArr[pos].type = e.target.value
-      this.setState({ requestTypes: newArr })
+
+      const typeHasEnough = this.calculateIfHasEnough(newArr[pos])
+
+      if (typeHasEnough) {
+        this.setState({
+          requestMessage: 'Select an amount',
+          validAmount: false,
+          requestTypes: newArr
+        })
+      } else {
+        this.setState({
+          requestMessage: `You don't have enough hours for the ${
+            newArr[pos].type
+          } type. Try another type.`,
+          validAmount: false,
+          requestTypes: newArr
+        })
+      }
     }
   }
 
   handleChangeAmount = (e, id) => {
     const { requestTypes } = this.state
-    const { typeAmounts, allLeaveTypes } = this.props
     const pos = requestTypes.map(el => el.id).indexOf(id)
     const newArr = requestTypes
     newArr[pos].amount = e.target.value ? e.target.value : ''
 
     if (e.target.value) {
-      const availableAmount = typeAmounts.reduce((prev, curr) => {
-        if (curr.id === newArr[pos].type) {
-          prev = curr.amount
-        }
-        return prev
-      }, {})
-      const validAmount = availableAmount - newArr[pos].amount
+      const typeHasEnough = this.calculateIfHasEnough(newArr[pos])
 
-      const selectedType = allLeaveTypes.all
-        .map(t => t.id)
-        .indexOf(newArr[pos].type)
-
-      if (validAmount > 0 || allLeaveTypes.all[selectedType].unlimited) {
+      if (typeHasEnough) {
         this.updateTotalRequestAmount()
         this.setState({ requestTypes: newArr })
       } else {
@@ -194,10 +245,11 @@ class RequestLeaveForm extends React.Component {
   }
 
   updateTotalRequestAmount = () => {
-    const { requestTypes, totalTime } = this.state
+    const { requestTypes, totalTime, durationType } = this.state
     const totalDiff = Calculate.requestTotalFromDateTotal(
       requestTypes,
-      totalTime
+      totalTime,
+      durationType
     )
     const message = Validate.validTotalAmount(totalDiff)
     this.setState({
@@ -226,6 +278,8 @@ class RequestLeaveForm extends React.Component {
         return Validate.validFullDay(diff)
       case 'md':
         return Validate.validMultiDay(diff)
+      case 'p':
+        return Validate.validPartialDay(diff)
       default:
         return { success: true, message: '' }
     }
@@ -243,7 +297,15 @@ class RequestLeaveForm extends React.Component {
     ))
 
   renderFormType = type => {
-    const { startDate, endDate, totalTime, dateMessage, validDate } = this.state
+    const {
+      startDate,
+      endDate,
+      totalTime,
+      dateMessage,
+      validDate,
+      startTime,
+      endTime
+    } = this.state
     switch (type) {
       case 'ad':
         return (
@@ -271,6 +333,12 @@ class RequestLeaveForm extends React.Component {
           <Partial
             startDate={startDate}
             handleDateChange={this.handleStartDateChange}
+            handleStartTimeChange={this.handleStartTimeChange}
+            handleEndTimeChange={this.handleEndTimeChange}
+            endTime={endTime}
+            startTime={startTime}
+            dateMessage={dateMessage}
+            validDate={validDate}
           />
         )
       default:

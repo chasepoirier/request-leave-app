@@ -22,7 +22,13 @@ import {
   SmallButton
 } from './Styled'
 import Colors from '../../design/Colors'
-import { TeamSelect, ChangeTypeAmount } from './userPopupComponents'
+import {
+  TeamSelect,
+  ChangeTypeAmount,
+  FamilyLeave,
+  MilitaryLeave,
+  AllRequests
+} from './userPopupComponents'
 import { Checkbox } from '../Inputs/'
 import { generateID } from '../../utils/calculations'
 import * as arrays from '../../utils/arrays'
@@ -45,10 +51,21 @@ class UserPopup extends React.Component {
       subtractFromAmount: {
         open: false
       },
+      familyLeave: {
+        open: false,
+        active: false
+      },
+      militaryLeave: {
+        open: false,
+        active: false
+      },
       updated: {
         team: false,
         status: false,
         typeAmounts: false
+      },
+      allRequests: {
+        open: false
       },
       submitting: false
     }
@@ -74,7 +91,30 @@ class UserPopup extends React.Component {
       !this.props.user.loading &&
       prevProps.user.loading !== this.props.user.loading
     ) {
-      this.setState({ userInfo: this.props.user.info })
+      const fmlIsActive = this.props.user.info.typeAmounts.reduce(
+        (prev, curr) => {
+          if (curr.id === 'fml' && curr.amount > 0) {
+            prev = true
+          }
+          return prev
+        },
+        false
+      )
+      const mlIsActive = this.props.user.info.typeAmounts.reduce(
+        (prev, curr) => {
+          if (curr.id === 'ml' && curr.amount > 0) {
+            prev = true
+          }
+          return prev
+        },
+        false
+      )
+
+      this.setState({
+        userInfo: this.props.user.info,
+        familyLeave: { ...this.state.familyLeave, active: fmlIsActive },
+        militaryLeave: { ...this.state.militaryLeave, active: mlIsActive }
+      })
     }
   }
 
@@ -88,6 +128,89 @@ class UserPopup extends React.Component {
 
   toggleSubtractFromAmount = toggle => {
     this.setState({ subtractFromAmount: { open: toggle } })
+  }
+
+  toggleFamilyLeave = toggle => {
+    this.setState({ familyLeave: { ...this.state.familyLeave, open: toggle } })
+  }
+
+  toggleMilitaryLeave = toggle => {
+    this.setState({
+      militaryLeave: { ...this.state.militaryLeave, open: toggle }
+    })
+  }
+
+  toggleAllRequests = toggle => {
+    this.setState({
+      allRequests: { ...this.state.allRequests, open: toggle }
+    })
+  }
+
+  handleFamilyLeaveChange = () => {
+    const {
+      familyLeave: { active },
+      userInfo: { typeAmounts },
+      userInfo,
+      familyLeave
+    } = this.state
+
+    if (!active) {
+      const index = typeAmounts.map(t => t.id).indexOf('fml')
+      const newTypes = [
+        ...typeAmounts.slice(0, index),
+        { id: 'fml', amount: 320 },
+        ...typeAmounts.slice(index + 1)
+      ]
+      this.setState({
+        userInfo: { ...userInfo, typeAmounts: newTypes },
+        familyLeave: { ...familyLeave, active: true, open: false }
+      })
+    } else {
+      const index = typeAmounts.map(t => t.id).indexOf('fml')
+      const newTypes = [
+        ...typeAmounts.slice(0, index),
+        { id: 'fml', amount: 0 },
+        ...typeAmounts.slice(index + 1)
+      ]
+      this.setState({
+        userInfo: { ...userInfo, typeAmounts: newTypes },
+        familyLeave: { ...familyLeave, active: false, open: false }
+      })
+    }
+  }
+
+  handleMilitaryLeaveChange = amount => {
+    const {
+      militaryLeave: { active },
+      userInfo: { typeAmounts },
+      userInfo,
+      militaryLeave
+    } = this.state
+
+    if (!active) {
+      const index = typeAmounts.map(t => t.id).indexOf('ml')
+      const newTypes = [
+        ...typeAmounts.slice(0, index),
+        { id: 'ml', amount: typeAmounts[index].amount + amount },
+        ...typeAmounts.slice(index + 1)
+      ]
+
+      this.setState({
+        userInfo: { ...userInfo, typeAmounts: newTypes },
+        militaryLeave: { ...militaryLeave, active: true, open: false }
+      })
+    } else {
+      const index = typeAmounts.map(t => t.id).indexOf('ml')
+      const newTypes = [
+        ...typeAmounts.slice(0, index),
+        { id: 'ml', amount: 0 },
+        ...typeAmounts.slice(index + 1)
+      ]
+      this.setState({
+        userInfo: { ...userInfo, typeAmounts: newTypes },
+        militaryLeave: { ...militaryLeave, active: false, open: false }
+      })
+    }
   }
 
   onTeamChange = e => {
@@ -187,12 +310,33 @@ class UserPopup extends React.Component {
       teamSelect,
       submitting,
       addToAmount,
-      subtractFromAmount
+      subtractFromAmount,
+      familyLeave,
+      militaryLeave,
+      allRequests
     } = this.state
 
+    console.log(familyLeave)
     return (
       <PopupContainer>
-        <PopupWrapper>
+        <PopupWrapper style={{ overflow: allRequests.open && 'visible' }}>
+          {allRequests.open && (
+            <AllRequests closePopup={this.toggleAllRequests} />
+          )}
+          {familyLeave.open && (
+            <FamilyLeave
+              handleSubmit={this.handleFamilyLeaveChange}
+              closePopup={this.toggleFamilyLeave}
+              active={familyLeave.active}
+            />
+          )}
+          {militaryLeave.open && (
+            <MilitaryLeave
+              handleSubmit={this.handleMilitaryLeaveChange}
+              closePopup={this.toggleMilitaryLeave}
+              active={militaryLeave.active}
+            />
+          )}
           {teamSelect.open && (
             <TeamSelect
               teams={teamSelect.teams}
@@ -266,13 +410,23 @@ class UserPopup extends React.Component {
                   <LabelText>Amounts By Type</LabelText>
                 </LabelTextContainer>
                 <FlexContainer style={{ marginBottom: 10 }}>
-                  <SmallButton onClick={() => this.toggleAddToAmount(true)}>
-                    Add Time To Type
+                  <SmallButton
+                    style={{ width: '30%' }}
+                    onClick={() => this.toggleAddToAmount(true)}
+                  >
+                    Add Time
                   </SmallButton>
                   <SmallButton
+                    style={{ width: '30%' }}
                     onClick={() => this.toggleSubtractFromAmount(true)}
                   >
-                    Subtract Time From Type
+                    Subtract Time
+                  </SmallButton>
+                  <SmallButton
+                    style={{ width: '30%' }}
+                    onClick={() => this.toggleAllRequests(true)}
+                  >
+                    View All Requests
                   </SmallButton>
                 </FlexContainer>
                 <FlexContainer style={{ marginBottom: 0, marginTop: 8 }}>
@@ -286,10 +440,24 @@ class UserPopup extends React.Component {
                 </FlexContainer>
               </FlexContainer>
               <FlexContainer>
-                <LabelText>Activate Special Leave Types</LabelText>
+                <LabelText>Special Leave Types</LabelText>
                 <FlexContainer style={{ marginBottom: 0 }}>
-                  <SmallButton>Family Leave</SmallButton>
-                  <SmallButton>Military Leave</SmallButton>
+                  <SmallButton
+                    active={familyLeave.active}
+                    onClick={() => this.toggleFamilyLeave(true)}
+                  >
+                    {familyLeave.active
+                      ? 'Deactivate Family Leave'
+                      : 'Activate Family Leave'}
+                  </SmallButton>
+                  <SmallButton
+                    active={militaryLeave.active}
+                    onClick={() => this.toggleMilitaryLeave(true)}
+                  >
+                    {militaryLeave.active
+                      ? 'Deactivate Military Leave'
+                      : 'Activate Military Leave'}
+                  </SmallButton>
                 </FlexContainer>
               </FlexContainer>
               {/* 

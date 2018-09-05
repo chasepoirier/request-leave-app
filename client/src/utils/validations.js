@@ -32,6 +32,19 @@ export const validFullDay = diff => {
   }
 }
 
+export const validPartialDay = diff => {
+  if (diff < 0) {
+    return {
+      message: `You must select a time that's after your start time and pick a date at least 1 day in the future.`,
+      success: false
+    }
+  }
+  return {
+    message: `You will be out for ${diff} hours.`,
+    success: true
+  }
+}
+
 export const validTotalAmount = amount => {
   if (Number.isNaN(amount)) {
     return { message: `You must enter a number`, success: false }

@@ -16,7 +16,12 @@ import {
 } from 'views'
 
 import Routes from './utils/Routes'
-import { ApprovalPopup, DangerPopup, UserPopup } from './components/Popups'
+import {
+  ApprovalPopup,
+  DangerPopup,
+  UserPopup,
+  UserAdminPopup
+} from './components/Popups'
 
 const {
   login,
@@ -43,6 +48,8 @@ class App extends React.Component {
           return <ApprovalPopup />
         case 'user':
           return <UserPopup />
+        case 'user-admin':
+          return <UserAdminPopup />
         default:
           return null
       }

@@ -1,5 +1,6 @@
 export const dateDiff = (start, end, type) => {
   const startTime = start.diff(Date.now(), 'days')
+
   if (startTime < 1) {
     return -1
   }
@@ -12,6 +13,13 @@ export const dateDiff = (start, end, type) => {
     return end.businessDiff(start, 'days') + 1
   }
   return 1
+}
+
+export const timeDiff = (start, end) => {
+  const diff = end.diff(start, 'minutes')
+  const convertToHours = diff / 60
+  const rounded = (Math.round(convertToHours * 2) / 2).toFixed(1)
+  return parseFloat(rounded)
 }
 
 export const isWeekday = date => {
@@ -30,7 +38,7 @@ export const convertTotalTimeToHalfHours = total => {
   return result
 }
 
-export const requestTotalFromDateTotal = (requests, dateTotal) => {
+export const requestTotalFromDateTotal = (requests, dateTotal, type) => {
   const hoursInDay = 8
   /* eslint no-param-reassign: off */
   const newTotal = requests.reduce((prev, curr) => {
@@ -38,7 +46,9 @@ export const requestTotalFromDateTotal = (requests, dateTotal) => {
     return prev
   }, 0)
 
-  return dateTotal * hoursInDay - newTotal
+  const final =
+    type === 'p' ? dateTotal - newTotal : dateTotal * hoursInDay - newTotal
+  return final
 }
 
 export const generateID = () =>

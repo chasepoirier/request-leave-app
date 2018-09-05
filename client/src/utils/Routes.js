@@ -30,9 +30,13 @@ const Routes = {
       path: '/add-user',
       text: 'Add A User'
     },
+    manageTeam: {
+      path: '/manage-team',
+      text: 'Manage Team'
+    },
     allTeams: {
       path: '/all-teams',
-      text: 'Manage Teams'
+      text: 'Manage All Teams'
     },
     approval: {
       path: '/pending-approvals',

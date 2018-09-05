@@ -84,6 +84,9 @@ class StatusTable extends React.Component {
     return requests.map(request => (
       <TableRow key={request.id}>
         <TableCell>{`${name.lname}, ${name.fname}`}</TableCell>
+        <TableCell>{`${moment(request.timestamp).fromNow(
+          'minutes'
+        )} ago`}</TableCell>
         <TableCell>{moment(request.startDate).format(dateFormat)}</TableCell>
         <TableCell>{moment(request.endDate).format(dateFormat)}</TableCell>
         <TableCell>{request.totalTime}</TableCell>
@@ -105,6 +108,7 @@ class StatusTable extends React.Component {
 
   render() {
     const { requests } = this.props
+    const { getPendingRequests, sortByDateCreated } = requestSelectors
     return (
       <TeamsContainer>
         {!requests.loading && (
@@ -112,6 +116,7 @@ class StatusTable extends React.Component {
             <thead>
               <TableRow>
                 <TableHeader>Name</TableHeader>
+                <TableHeader>Created</TableHeader>
                 <TableHeader>Start Date</TableHeader>
                 <TableHeader>End Date</TableHeader>
                 <TableHeader>Total Time</TableHeader>
@@ -122,7 +127,7 @@ class StatusTable extends React.Component {
             </thead>
             <tbody>
               {this.renderRequests(
-                requestSelectors.getPendingRequests(requests.all)
+                sortByDateCreated(getPendingRequests(requests.all))
               )}
             </tbody>
           </Table>

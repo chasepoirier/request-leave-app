@@ -5,7 +5,8 @@ import {
   SaveButton,
   CancelButton,
   FullOverlay,
-  ContentContainer
+  ContentContainer,
+  SelectLabel
 } from './Styled'
 import { CloseIcon } from '../Styled'
 import { Dropdown, TextInput } from '../../Inputs'
@@ -39,7 +40,7 @@ export default class ChangeTypeAmount extends React.Component {
   }
 
   render() {
-    const { types, btnText, closePopup } = this.props
+    const { types, btnText, closePopup, adding } = this.props
 
     const options = types.map(i => i.id.toUpperCase())
 
@@ -52,7 +53,9 @@ export default class ChangeTypeAmount extends React.Component {
             className="far fa-times-circle"
           />
           <ContentContainer>
-            <div>Change Amount</div>
+            <SelectLabel style={{ marginTop: 30 }}>
+              {`${adding ? 'Add Amount' : 'Subtract Amount'}`}
+            </SelectLabel>
             <FlexContainer>
               <Dropdown
                 label="Select type"

@@ -10,7 +10,7 @@ import AdminNav from './admin/AdminNav'
 import * as Pages from './admin/'
 import SupervisorNav from './admin/SupervisorNav'
 
-const { addUser, allTeams, approval } = Routes.adminRoutes
+const { addUser, allTeams, approval, manageTeam } = Routes.adminRoutes
 
 class Admin extends React.Component {
   componentDidMount() {
@@ -35,6 +35,14 @@ class Admin extends React.Component {
             path={match.url + approval.path}
             render={history => (
               <Pages.ApprovalPage match={match} history={history} />
+            )}
+          />
+          <RouteTypes.Admin
+            status={status}
+            loggedIn={loggedIn}
+            path={match.url + manageTeam.path}
+            render={history => (
+              <Pages.ManageTeamsPage match={match} history={history} />
             )}
           />
           <RouteTypes.Supervisor

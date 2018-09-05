@@ -41,6 +41,18 @@ const AmountContainer = styled.div`
   left: calc(50% - 45%);
 `
 
+const RequestsContainer = styled.div`
+  width: 80%;
+  position: absolute;
+  top: 75px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
+  padding: 25px 0;
+  z-index: 1000;
+  left: calc(50% - 40%);
+`
+
 const FlexContainer = styled.div`
   width: 100%;
   margin: 25px auto;
@@ -95,6 +107,30 @@ const FullOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
 `
 
+const FullOverlayFixed = styled.div`
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1000000;
+  background-color: rgba(0, 0, 0, 0.4);
+`
+
+const SubHeader = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  text-align: center;
+`
+
+const Header = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+`
+
 export {
   FullOverlay,
   SelectContainer,
@@ -103,5 +139,9 @@ export {
   AmountContainer,
   SaveButton,
   CancelButton,
-  FlexContainer
+  FlexContainer,
+  Header,
+  SubHeader,
+  RequestsContainer,
+  FullOverlayFixed
 }
