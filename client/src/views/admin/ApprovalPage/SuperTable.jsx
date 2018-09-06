@@ -56,7 +56,7 @@ class SuperTable extends React.Component {
         reason={req.reason}
         totalTime={req.totalTime}
         key={req.timestamp}
-        teamID={teamID}
+        teamID={req.teamId}
         userUid={req.userUid}
         teamUid={req.teamUid}
         team={req.team}

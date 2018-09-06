@@ -25,7 +25,8 @@ export const findPendingApprovals = (teams, team) =>
                   userUid: user.data().id,
                   name: user.data().name,
                   id: request.id,
-                  team: team.data().name
+                  team: team.data().name,
+                  teamId: team.id
                 })
               })
               return allRequests

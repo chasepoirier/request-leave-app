@@ -117,6 +117,8 @@ router.post('/set_approval_status', (req, res) => {
     approved
   } = req.body
 
+  console.log(req.body.ids)
+
   db.collection('teams')
     .doc(teamID)
     .collection('users')
