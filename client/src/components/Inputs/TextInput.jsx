@@ -11,7 +11,8 @@ const TextInput = ({
   required,
   short,
   subLabel,
-  style
+  style,
+  onClick
 }) => (
   <InputWrapper style={style} short={short}>
     <Input
@@ -21,6 +22,7 @@ const TextInput = ({
       type={type}
       placeholder={placeholder}
       required={required}
+      onClick={onClick}
     />
     {subLabel && <SubLabel>{subLabel}</SubLabel>}
   </InputWrapper>

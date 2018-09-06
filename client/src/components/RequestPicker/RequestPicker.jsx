@@ -62,6 +62,7 @@ class RequestPicker extends React.Component {
                 value={amountValue}
                 name="amount"
                 type="number"
+                onClick={() => handleChangeAmount({ target: { value: 0 } }, id)}
                 onTextChange={e => handleChangeAmount(e, id)}
               />
             </div>
