@@ -77,7 +77,7 @@ class App extends React.Component {
                     <Login match={match} history={history} />
                   )}
                 />
-                <RouteTypes.Admin
+                <RouteTypes.BasicRoute
                   exact
                   path={home.path}
                   status={status}
@@ -94,7 +94,7 @@ class App extends React.Component {
                     <Admin match={match} history={history} />
                   )}
                 />
-                <RouteTypes.Admin
+                <RouteTypes.BasicRoute
                   path={leaveHistory.path}
                   status={status}
                   loggedIn={loggedIn}
@@ -102,7 +102,7 @@ class App extends React.Component {
                     <LeaveHistory match={match} history={history} />
                   )}
                 />
-                <RouteTypes.Admin
+                <RouteTypes.BasicRoute
                   path={requestLeave.path}
                   status={status}
                   loggedIn={loggedIn}
@@ -110,7 +110,7 @@ class App extends React.Component {
                     <RequestLeave match={match} history={history} />
                   )}
                 />
-                <RouteTypes.Admin
+                <RouteTypes.BasicRoute
                   path={requestStatus.path}
                   status={status}
                   loggedIn={loggedIn}
