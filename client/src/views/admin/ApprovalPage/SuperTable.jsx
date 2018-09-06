@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { RequestPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { viewOperations } from 'modules/ducks/view'
-import { requestOperations } from 'modules/ducks/requests'
+import { requestOperations, requestSelectors } from 'modules/ducks/requests'
 import { supervisorOperations } from 'modules/ducks/supervisor'
 
 import {
@@ -84,7 +84,11 @@ class SuperTable extends React.Component {
                     <TableHeader>Reason</TableHeader>
                   </TableRow>
                 </thead>
-                <tbody>{this.renderRequests(requests.all)}</tbody>
+                <tbody>
+                  {this.renderRequests(
+                    requestSelectors.sortByDateCreated(requests.all)
+                  )}
+                </tbody>
               </Table>
             )}
           </div>

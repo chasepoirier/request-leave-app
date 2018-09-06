@@ -1,4 +1,4 @@
-const getPendingApprovalsByteam = teamRef =>
+const getPendingApprovalsByteam = (teamRef, teamId) =>
   new Promise(resolve => {
     teamRef.get().then(users => {
       const requests = []
@@ -20,6 +20,7 @@ const getPendingApprovalsByteam = teamRef =>
                       ...snap.data(),
                       teamUid: userRef.id,
                       userUid: user.data().id,
+                      teamId,
                       name: user.data().name,
                       id: snap.id
                     })

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { RequestPT } from 'customPTs'
 import { connect } from 'react-redux'
 import { viewOperations } from 'modules/ducks/view'
-import { requestOperations } from 'modules/ducks/requests'
+import { requestOperations, requestSelectors } from 'modules/ducks/requests'
 import { adminOperations } from 'modules/ducks/admin'
 
 import {
@@ -44,7 +44,7 @@ class AdminTable extends React.Component {
     })
   }
 
-  renderRequests = (requests, teamID) =>
+  renderRequests = requests =>
     requests.map(req => (
       <FullTableRow
         name={req.name}
@@ -56,14 +56,14 @@ class AdminTable extends React.Component {
         reason={req.reason}
         totalTime={req.totalTime}
         key={req.timestamp}
-        teamID={teamID}
+        teamID={req.teamId}
         userUid={req.userUid}
         teamUid={req.teamUid}
       />
     ))
 
   render() {
-    const { requests, teamID } = this.props
+    const { requests } = this.props
     return (
       <TeamsContainer>
         {!requests.loading ? (
@@ -82,7 +82,11 @@ class AdminTable extends React.Component {
                     <TableHeader>Reason</TableHeader>
                   </TableRow>
                 </thead>
-                <tbody>{this.renderRequests(requests.all, teamID)}</tbody>
+                <tbody>
+                  {this.renderRequests(
+                    requestSelectors.sortByDateCreated(requests.all)
+                  )}
+                </tbody>
               </Table>
             )}
           </div>
@@ -102,14 +106,12 @@ AdminTable.propTypes = {
   showPopup: func.isRequired,
   hidePopup: func.isRequired,
   setCurrentRequest: func.isRequired,
-  teamID: string.isRequired,
   submitApprovalStatus: func.isRequired,
   fetchAdminPendingApprovals: func.isRequired
 }
 
 const mapStateToProps = state => ({
-  requests: state.admin.pendingApprovals,
-  teamID: state.user.info.team
+  requests: state.admin.pendingApprovals
 })
 
 export default connect(

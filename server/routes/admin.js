@@ -11,7 +11,7 @@ router.post('/get_pending_approvals', (req, res) => {
     .collection('users')
 
   Queries.admin
-    .getPendingApprovalsByteam(teamRef)
+    .getPendingApprovalsByteam(teamRef, req.body.team)
     .then(requests => res.json({ requests }))
 })
 

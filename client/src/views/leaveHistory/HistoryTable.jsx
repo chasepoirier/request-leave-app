@@ -11,9 +11,7 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-  TeamsContainer,
-  TrashIcon,
-  TablePositioner
+  TeamsContainer
 } from './Styled'
 
 const { arrayOf, objectOf, func, string, shape, bool } = PropTypes
@@ -34,36 +32,6 @@ class HistoryTable extends React.Component {
   componentDidMount() {
     const { fetchAllUserRequests, userID } = this.props
     fetchAllUserRequests(userID)
-  }
-
-  handleDangerPopup = e => {
-    const { showPopup } = this.props
-
-    showPopup({
-      type: 'danger',
-      content: {
-        title: 'Confirm delete.',
-        desc: `Are you sure you want to delete this leave request?`,
-        buttonText: `Delete Request`,
-        handleSubmit: this.handleDeleteRequest.bind({}, e.target.id)
-      }
-    })
-  }
-
-  handleDeleteRequest = id => {
-    const {
-      hidePopup,
-      deleteRequest,
-      fetchAllUserRequests,
-      userID,
-      teamID
-    } = this.props
-    deleteRequest({ userID, requestID: id, teamID }).then(success => {
-      if (success) {
-        fetchAllUserRequests(userID)
-        hidePopup()
-      }
-    })
   }
 
   getNameFromRow = event =>
@@ -90,14 +58,7 @@ class HistoryTable extends React.Component {
         <TableCell>{request.reason}</TableCell>
         <TableCell>{this.getRequestStatus(request.approval.admin)}</TableCell>
         <TableCell>
-          <TablePositioner>
-            {this.getRequestStatus(request.approval.supervisor)}
-            <TrashIcon
-              onClick={this.handleDangerPopup}
-              className="fas fa-trash"
-              id={request.id}
-            />
-          </TablePositioner>
+          {this.getRequestStatus(request.approval.supervisor)}
         </TableCell>
       </TableRow>
     ))
