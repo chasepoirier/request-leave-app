@@ -65,4 +65,17 @@ router.post('/get_user_by_id', (req, res) => {
     .catch(() => res.json({ error: true }))
 })
 
+router.post('/get_user_logs', (req, res) => {
+  db.collection('users')
+    .doc(req.body.id)
+    .collection('logs')
+    .get()
+    .then(snaps => {
+      const logs = []
+      snaps.forEach(snap => logs.push({ ...snap.data() }))
+
+      res.json({ logs })
+    })
+})
+
 module.exports = router

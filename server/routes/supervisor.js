@@ -140,6 +140,16 @@ router.post('/set_approval_status', (req, res) => {
         })
         .then(() => res.json({ success: true }))
         .catch(err => console.log(err))
+
+      db.collection('users')
+        .doc(userUid)
+        .collection('logs')
+        .add({
+          logType: `SUPERVISOR_APPROVE_REQUEST: Supervisor ${
+            approved ? 'approved' : 'denied'
+          } request ID#: ${id}`,
+          timestamp: Date.now()
+        })
     })
     .catch(err => console.log(err))
 })
@@ -153,6 +163,14 @@ router.post('/update_user', (req, res) => {
 
   const promises = []
   if (team.updated) {
+    db.collection('users')
+      .doc(user.id)
+      .collection('logs')
+      .add({
+        logType: `USER_CHANGE_TEAMS: User moved to team ID#${user.team.id}`,
+        timestamp: Date.now()
+      })
+
     promises.push(
       supervisor
         .updateTeamInUserRef(user)
@@ -172,6 +190,16 @@ router.post('/update_user', (req, res) => {
       id: t.id.toLowerCase()
     }))
 
+    db.collection('users')
+      .doc(user.id)
+      .collection('logs')
+      .add({
+        logType: `TIME_ADDED_TO_AMOUNTS: User type amounts updated: ${lowerCaseIds.map(
+          t => `${t.id}: ${t.amount} `
+        )}`,
+        timestamp: Date.now()
+      })
+
     promises.push(
       db
         .collection('users')
@@ -181,6 +209,16 @@ router.post('/update_user', (req, res) => {
   }
 
   if (status.updated) {
+    db.collection('users')
+      .doc(user.id)
+      .collection('logs')
+      .add({
+        logType: `USER_PERMISSIONS_CHANGED: User permissions now: admin: ${
+          user.status.admin
+        }, supevisor: ${user.status.supervisor}`,
+        timestamp: Date.now()
+      })
+
     promises.push(
       db
         .collection('users')

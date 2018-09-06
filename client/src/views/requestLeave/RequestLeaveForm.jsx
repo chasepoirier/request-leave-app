@@ -172,7 +172,7 @@ class RequestLeaveForm extends React.Component {
 
     const selectedType = allLeaveTypes.all.map(t => t.id).indexOf(type.type)
 
-    if (validAmount > 0 || allLeaveTypes.all[selectedType].unlimited) {
+    if (validAmount >= 0 || allLeaveTypes.all[selectedType].unlimited) {
       return true
     }
     return false

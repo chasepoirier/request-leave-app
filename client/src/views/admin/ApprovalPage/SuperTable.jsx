@@ -68,20 +68,26 @@ class SuperTable extends React.Component {
     return (
       <TeamsContainer>
         {!requests.loading ? (
-          <Table>
-            <thead>
-              <TableRow>
-                <TableHeader>Name</TableHeader>
-                <TableHeader>Team</TableHeader>
-                <TableHeader>Type</TableHeader>
-                <TableHeader>Start Date</TableHeader>
-                <TableHeader>End Date</TableHeader>
-                <TableHeader>Total Time</TableHeader>
-                <TableHeader>Reason</TableHeader>
-              </TableRow>
-            </thead>
-            <tbody>{this.renderRequests(requests.all, teamID)}</tbody>
-          </Table>
+          <div>
+            {requests.all.length === 0 ? (
+              <LoadingState>No pending leave requests</LoadingState>
+            ) : (
+              <Table>
+                <thead>
+                  <TableRow>
+                    <TableHeader>Name</TableHeader>
+                    <TableHeader>Team</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Start Date</TableHeader>
+                    <TableHeader>End Date</TableHeader>
+                    <TableHeader>Total Time</TableHeader>
+                    <TableHeader>Reason</TableHeader>
+                  </TableRow>
+                </thead>
+                <tbody>{this.renderRequests(requests.all, teamID)}</tbody>
+              </Table>
+            )}
+          </div>
         ) : (
           <LoadingState>Loading...</LoadingState>
         )}

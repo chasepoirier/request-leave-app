@@ -27,6 +27,11 @@ const initialState = {
     loading: false,
     errors: null,
     info: null
+  },
+  logs: {
+    loading: true,
+    errors: null,
+    all: null
   }
 }
 
@@ -40,10 +45,7 @@ const user = (state = initialState, action = {}) => {
       }
     }
     case types.REQUEST_USER: {
-      return {
-        ...state,
-        loading: true
-      }
+      return { ...state, loading: true }
     }
     case types.USER_LOGIN_SUCCESS: {
       return {
@@ -61,10 +63,7 @@ const user = (state = initialState, action = {}) => {
       }
     }
     case types.LOG_USER_OUT: {
-      return {
-        ...state,
-        info: initialState.info
-      }
+      return { ...state, info: initialState.info }
     }
     case types.SET_CURRENT_USER: {
       return {
@@ -93,10 +92,7 @@ const user = (state = initialState, action = {}) => {
           ...state.info,
           typeAmounts: [
             ...state.info.typeAmounts.slice(0, index),
-            {
-              ...state.info.typeAmounts[index],
-              amount: action.payload.amount
-            },
+            { ...state.info.typeAmounts[index], amount: action.payload.amount },
             ...state.info.typeAmounts.slice(index + 1)
           ]
         }
@@ -126,6 +122,21 @@ const user = (state = initialState, action = {}) => {
           errors: action.payload.error,
           info: null
         }
+      }
+    }
+    case types.GET_USER_LOGS_REQUEST: {
+      return { ...state, logs: { loading: true, errors: null, all: null } }
+    }
+    case types.GET_USER_LOGS_SUCCESS: {
+      return {
+        ...state,
+        logs: { loading: false, errors: null, all: action.payload.logs }
+      }
+    }
+    case types.GET_USER_LOGS_FAIL: {
+      return {
+        ...state,
+        logs: { loading: false, errors: action.payload.error, all: null }
       }
     }
     default: {

@@ -60,3 +60,19 @@ export const getUserSuccess = user => ({
     user
   }
 })
+
+export const getUserLogsRequest = () => ({
+  type: types.GET_USER_LOGS_REQUEST
+})
+export const getUserLogsSuccess = logs => ({
+  type: types.GET_USER_LOGS_SUCCESS,
+  payload: {
+    logs
+  }
+})
+export const getUserLogsFail = error => ({
+  type: types.GET_USER_LOGS_FAIL,
+  payload: {
+    error
+  }
+})

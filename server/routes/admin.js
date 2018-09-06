@@ -44,6 +44,16 @@ router.post('/set_approval_status', (req, res) => {
         })
         .then(() => res.json({ success: true }))
         .catch(err => console.log(err))
+
+      db.collection('users')
+        .doc(userUid)
+        .collection('logs')
+        .add({
+          logType: `ADMIN_APPROVE_REQUEST: Admin ${
+            approved ? 'approved' : 'denied'
+          } request ID#: ${id}`,
+          timestamp: Date.now()
+        })
     })
     .catch(err => console.log(err))
 })

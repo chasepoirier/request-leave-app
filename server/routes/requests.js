@@ -37,7 +37,11 @@ router.post('/add_new_request', (req, res) => {
     .collection('requests')
     .add(request)
     .then(ref => {
-      logsRef.add(request)
+      logsRef.add({
+        ...request,
+        logType: `ADD_REQUEST: User created new leave request, ID#: ${ref.id}`,
+        timestamp: Date.now()
+      })
       teamUsersRef
         .where('id', '==', id)
         .get()
@@ -73,6 +77,16 @@ router.post('/delete_request', (req, res) => {
     .collection('teams')
     .doc(req.body.teamID)
     .collection('users')
+
+  db.collection('users')
+    .doc(req.body.userID)
+    .collection('logs')
+    .add({
+      logType: `DELETE_REQUEST: User deleted request ID#: ${
+        req.body.requestID
+      }`,
+      timestamp: Date.now()
+    })
 
   db.collection('users')
     .doc(req.body.userID)

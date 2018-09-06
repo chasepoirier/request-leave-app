@@ -22,3 +22,12 @@ export const sortLeaveAmountsByOrder = state => {
     return 1
   })
 }
+
+export const sortLogsByDate = logs =>
+  logs.sort((a, b) => {
+    const nameA = a.timestamp
+    const nameB = b.timestamp
+    if (nameA < nameB) return 1
+    if (nameA > nameB) return -1
+    return 0
+  })

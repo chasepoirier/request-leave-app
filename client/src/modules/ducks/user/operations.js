@@ -61,3 +61,14 @@ export const getUserByIdRequest = id => dispatch => {
     }
   })
 }
+
+export const getUserLogsRequest = id => dispatch => {
+  dispatch(actions.getUserLogsRequest())
+  return api.user.getUserLogs(id).then(logs => {
+    if (logs) {
+      dispatch(actions.getUserLogsSuccess(logs))
+    } else {
+      dispatch(actions.getUserLogsFail('Error getting logs'))
+    }
+  })
+}

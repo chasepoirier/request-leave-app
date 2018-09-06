@@ -15,14 +15,20 @@ import {
   ValueText,
   FlexItem,
   InlineItem,
-  LabelTextContainer
+  LabelTextContainer,
+  SmallButton
 } from './Styled'
 import { generateID } from '../../utils/calculations'
 import RequestTable from '../RequestTable'
+import { LogsPopup } from '.'
 
 // const dateFormat = 'dd. MMM Do'
 
 class UserAdminPopup extends React.Component {
+  state = {
+    logsOpen: false
+  }
+
   componentDidMount() {
     const body = document.querySelector('body')
     body.style.overflow = 'hidden'
@@ -33,10 +39,17 @@ class UserAdminPopup extends React.Component {
     body.style.overflow = 'auto'
   }
 
+  toggleLogs = toggle => {
+    this.setState({ logsOpen: toggle })
+  }
+
   render() {
     const { title, desc, closePopup, user } = this.props
     return (
       <PopupContainer>
+        {this.state.logsOpen && (
+          <LogsPopup id={user.info.id} closePopup={this.toggleLogs} />
+        )}
         <PopupWrapper style={{ maxWidth: 960 }}>
           <CloseIcon onClick={closePopup} className="far fa-times-circle" />
           {user.loading ? (
@@ -46,17 +59,22 @@ class UserAdminPopup extends React.Component {
               <Header>{title}</Header>
               <SubHeader>{desc}</SubHeader>
               <FlexContainer>
-                <FlexItem>
+                <FlexItem style={{ width: '30%' }}>
                   <LabelText>Name</LabelText>
                   <ValueText>{`${user.info.name.lname}, ${
                     user.info.name.fname
                   }`}</ValueText>
                 </FlexItem>
-                <FlexItem>
+                <FlexItem style={{ width: '30%' }}>
                   <LabelTextContainer>
                     <LabelText>Email</LabelText>
                   </LabelTextContainer>
                   <ValueText>{user.info.email}</ValueText>
+                </FlexItem>
+                <FlexItem style={{ width: '30%' }}>
+                  <SmallButton onClick={() => this.toggleLogs(true)}>
+                    View Logs
+                  </SmallButton>
                 </FlexItem>
               </FlexContainer>
               <FlexContainer>

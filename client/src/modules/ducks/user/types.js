@@ -11,3 +11,7 @@ export const UPDATE_LEAVE_AMOUNT = '@@user/UPDATE_LEAVE_AMOUNT'
 export const GET_USER_REQUEST = '@@user/GET_USER_REQUEST'
 export const GET_USER_SUCCESS = '@@user/GET_USER_SUCCESS'
 export const GET_USER_FAIL = '@@user/GET_USER_FAIL'
+
+export const GET_USER_LOGS_REQUEST = '@@user/GET_USER_LOGS_REQUEST'
+export const GET_USER_LOGS_SUCCESS = '@@user/GET_USER_LOGS_SUCCESS'
+export const GET_USER_LOGS_FAIL = '@@user/GET_USER_LOGS_FAIL'

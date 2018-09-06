@@ -27,7 +27,9 @@
     "firebase": "^5.3.1",
     "firebase-admin": "^6.0.0",
     "jsonwebtoken": "^8.3.0",
-    "morgan": "~1.9.0"
+    "moment": "^2.22.2",
+    "morgan": "~1.9.0",
+    "node-cron": "^1.2.1"
   },
   "devDependencies": {
     "eslint": "^5.5.0",

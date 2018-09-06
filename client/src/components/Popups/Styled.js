@@ -3,7 +3,7 @@ import Colors from '../../design/Colors'
 
 const PopupWrapper = styled.div`
   width: 90%;
-  max-width: 620px;
+  max-width: 740px;
   background-color: ${Colors.White1000};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
   z-index: 100;
@@ -148,7 +148,43 @@ const ValueText = styled.div`
   font-size: 16px;
 `
 
+const LogsContainer = styled.div`
+  max-height: 300px;
+  height: 80%;
+  padding: 12px;
+  overflow-y: scroll;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+`
+
+const Log = styled.div`
+  width: 100%;
+  margin: 12px 0;
+`
+
+const LogHeader = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 10px;
+  margin-top: 2px;
+`
+
+const LogTimestamp = styled.div`
+  font-size: 14px;
+  margin-top: 2px;
+`
+
+const LogSubheader = styled.div`
+  font-size: 13px;
+  margin-top: 1px;
+`
+
 export {
+  LogsContainer,
+  LogSubheader,
+  Log,
+  LogHeader,
+  LogTimestamp,
   PopupWrapper,
   PopupContainer,
   ContentContainer,

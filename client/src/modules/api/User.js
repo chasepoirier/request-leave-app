@@ -18,7 +18,14 @@ const UserEndpoints = {
     axios
       .post(`${apiBase}/user/get_user_by_id`, { id })
       .then(res => res.data.user)
-      .catch(() => null)
+      .catch(() => null),
+  getUserLogs: id =>
+    axios.post(`${apiBase}/user/get_user_logs`, { id }).then(res => {
+      if (res.data.logs) {
+        return res.data.logs
+      }
+      return new Error()
+    })
 }
 
 export default UserEndpoints

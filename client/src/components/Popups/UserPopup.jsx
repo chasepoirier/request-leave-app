@@ -33,6 +33,7 @@ import { Checkbox } from '../Inputs/'
 import { generateID } from '../../utils/calculations'
 import * as arrays from '../../utils/arrays'
 import { userSelectors } from '../../modules/ducks/user'
+import { LogsPopup } from '.'
 
 // const dateFormat = 'dd. MMM Do'
 
@@ -66,6 +67,9 @@ class UserPopup extends React.Component {
         typeAmounts: false
       },
       allRequests: {
+        open: false
+      },
+      userLogs: {
         open: false
       },
       submitting: false
@@ -144,6 +148,12 @@ class UserPopup extends React.Component {
   toggleAllRequests = toggle => {
     this.setState({
       allRequests: { ...this.state.allRequests, open: toggle }
+    })
+  }
+
+  toggleLogs = toggle => {
+    this.setState({
+      userLogs: { open: toggle }
     })
   }
 
@@ -314,12 +324,16 @@ class UserPopup extends React.Component {
       subtractFromAmount,
       familyLeave,
       militaryLeave,
-      allRequests
+      allRequests,
+      userLogs
     } = this.state
 
     return (
       <PopupContainer>
-        <PopupWrapper style={{ overflow: allRequests.open && 'visible' }}>
+        <PopupWrapper style={{ overflow: userLogs.open && 'visible' }}>
+          {userLogs.open && (
+            <LogsPopup id={userInfo.id} closePopup={this.toggleLogs} />
+          )}
           {allRequests.open && (
             <AllRequests closePopup={this.toggleAllRequests} />
           )}
@@ -411,22 +425,29 @@ class UserPopup extends React.Component {
                 </LabelTextContainer>
                 <FlexContainer style={{ marginBottom: 10 }}>
                   <SmallButton
-                    style={{ width: '30%' }}
+                    style={{ width: '23%' }}
                     onClick={() => this.toggleAddToAmount(true)}
                   >
                     Add Time
                   </SmallButton>
                   <SmallButton
-                    style={{ width: '30%' }}
+                    style={{ width: '23%' }}
                     onClick={() => this.toggleSubtractFromAmount(true)}
                   >
                     Subtract Time
                   </SmallButton>
                   <SmallButton
-                    style={{ width: '30%' }}
+                    style={{ width: '23%' }}
                     onClick={() => this.toggleAllRequests(true)}
                   >
                     View All Requests
+                  </SmallButton>
+
+                  <SmallButton
+                    style={{ width: '23%' }}
+                    onClick={() => this.toggleLogs(true)}
+                  >
+                    View Logs
                   </SmallButton>
                 </FlexContainer>
                 <FlexContainer style={{ marginBottom: 0, marginTop: 8 }}>
