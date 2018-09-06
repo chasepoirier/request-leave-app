@@ -2,9 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { viewOperations } from '../../modules/ducks/view'
 import { userOperations, userSelectors } from '../../modules/ducks/user'
-import { ButtonOutline, ButtonFilled } from '../Styled'
 import {
   PopupWrapper,
   PopupContainer,
@@ -19,7 +17,6 @@ import {
   LogTimestamp,
   LogSubheader
 } from './Styled'
-import Colors from '../../design/Colors'
 
 class LogsPopup extends React.Component {
   componentWillMount() {
@@ -75,7 +72,7 @@ const LogItem = ({ desc, timestamp }) => {
   )
 }
 
-const { func, string } = PropTypes
+const { func } = PropTypes
 
 LogsPopup.defaultProps = {
   handleSubmit: null
