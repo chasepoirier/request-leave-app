@@ -330,7 +330,7 @@ class UserPopup extends React.Component {
 
     return (
       <PopupContainer>
-        <PopupWrapper style={{ overflow: userLogs.open && 'visible' }}>
+        <PopupWrapper style={{ overflow: allRequests.open && 'visible' }}>
           {userLogs.open && (
             <LogsPopup id={userInfo.id} closePopup={this.toggleLogs} />
           )}
@@ -552,7 +552,7 @@ const mapStateToProps = state => ({
   desc: state.view.popup.content.desc,
   updateUserRequest: state.view.popup.content.updateUserRequest,
   user: state.user.selectedUser,
-  types: userSelectors.sortLeaveAmountsByOrder(state)
+  types: userSelectors.sortSelectedLeaveAmountsByOrder(state)
 })
 
 export default connect(

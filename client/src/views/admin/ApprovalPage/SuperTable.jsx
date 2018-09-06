@@ -44,7 +44,7 @@ class SuperTable extends React.Component {
     })
   }
 
-  renderRequests = (requests, teamID) =>
+  renderRequests = requests =>
     requests.map(req => (
       <FullTableRow
         name={req.name}
@@ -64,7 +64,7 @@ class SuperTable extends React.Component {
     ))
 
   render() {
-    const { requests, teamID } = this.props
+    const { requests } = this.props
     return (
       <TeamsContainer>
         {!requests.loading ? (
@@ -84,7 +84,7 @@ class SuperTable extends React.Component {
                     <TableHeader>Reason</TableHeader>
                   </TableRow>
                 </thead>
-                <tbody>{this.renderRequests(requests.all, teamID)}</tbody>
+                <tbody>{this.renderRequests(requests.all)}</tbody>
               </Table>
             )}
           </div>
@@ -104,14 +104,12 @@ SuperTable.propTypes = {
   showPopup: func.isRequired,
   hidePopup: func.isRequired,
   setCurrentRequest: func.isRequired,
-  teamID: string.isRequired,
   submitApprovalStatus: func.isRequired,
   fetchPendingApprovals: func.isRequired
 }
 
 const mapStateToProps = state => ({
-  requests: state.supervisor.pendingApprovals,
-  teamID: state.user.info.team
+  requests: state.supervisor.pendingApprovals
 })
 
 export default connect(
