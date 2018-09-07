@@ -59,6 +59,8 @@ class AdminTable extends React.Component {
         teamID={req.teamId}
         userUid={req.userUid}
         teamUid={req.teamUid}
+        startTime={req.startTime}
+        endTime={req.endTime}
       />
     ))
 

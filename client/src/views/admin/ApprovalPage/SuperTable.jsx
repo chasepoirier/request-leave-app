@@ -60,6 +60,8 @@ class SuperTable extends React.Component {
         userUid={req.userUid}
         teamUid={req.teamUid}
         team={req.team}
+        startTime={req.startTime}
+        endTime={req.endTime}
       />
     ))
 

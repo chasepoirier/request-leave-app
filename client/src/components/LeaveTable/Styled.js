@@ -8,7 +8,6 @@ const Table = styled.table`
 
 const TableRow = styled.tr`
   transition: all 0.2s;
-  cursor: pointer;
   &:nth-child(even) {
     background-color: ${Colors.White600};
   }

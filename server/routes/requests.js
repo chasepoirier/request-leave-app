@@ -7,10 +7,14 @@ const router = express.Router()
 
 router.post('/add_new_request', (req, res) => {
   const {
-    user: { id, team },
+    user: { id, team, status },
     request
   } = req.body
 
+  if (status.admin) {
+    request.approval.admin.pending = false
+    request.approval.admin.approved = true
+  }
   db.collection('users')
     .doc(id)
     .get()
@@ -78,6 +82,9 @@ router.post('/delete_request', (req, res) => {
     .doc(req.body.teamID)
     .collection('users')
 
+  const userRef = db.collection('users').doc(req.body.userID)
+
+  const { typeAmounts } = req.body
   db.collection('users')
     .doc(req.body.userID)
     .collection('logs')
@@ -88,11 +95,24 @@ router.post('/delete_request', (req, res) => {
       timestamp: Date.now()
     })
 
-  db.collection('users')
-    .doc(req.body.userID)
+  userRef
     .collection('requests')
     .doc(req.body.requestID)
     .delete()
+
+  userRef
+    .get()
+    .then(user => {
+      const newAmounts = user.data().typeAmounts
+      typeAmounts.forEach(type => {
+        const index = newAmounts.map(a => a.id).indexOf(type.type)
+        newAmounts[index].amount += parseFloat(type.amount)
+      })
+      return newAmounts
+    })
+    .then(amounts => {
+      userRef.update({ typeAmounts: amounts })
+    })
 
   teamRef
     .where('id', '==', req.body.userID)

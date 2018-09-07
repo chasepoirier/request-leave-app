@@ -43,6 +43,13 @@ const ButtonOutline = styled.div`
   padding-top: 12px;
 `
 
+const FlexBetween = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const ButtonFilled = styled.div`
   padding: 10px 55px;
   background-color: ${Colors.blue500}
@@ -88,12 +95,49 @@ const SubLabel = styled.div`
   ${props => props.color && `color: ${props.color}`};
 `
 
+const ApprovalContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const ApprovalText = styled.div`
+  margin-left: 10px;
+`
+
+const ApprovalType = styled.div`
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: ${props =>
+    props.pending
+      ? Colors.Orange200
+      : props.approved
+        ? Colors.Green200
+        : Colors.Red200};
+`
+
+const TimeTotal = styled.div`
+  margin-right: 10px;
+`
+
+const TimeText = styled.div`
+  font-size: 13px;
+`
+
 export {
+  TimeTotal,
+  TimeText,
+  ApprovalContainer,
+  ApprovalText,
+  ApprovalType,
   PageWrapper,
   Header,
   SubmitButton,
   ButtonOutline,
   ButtonFilled,
   SubLabel,
-  SubHeader
+  SubHeader,
+  FlexBetween
 }

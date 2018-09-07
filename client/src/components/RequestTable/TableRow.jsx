@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import { TableCell, Row } from './Styled'
+import ApprovalMessage from '../ApprovalMessage'
+import TotalTimeCell from '../TotalTimeCell'
 
 const dateFormat = 'dd. MMM Do'
 
@@ -11,7 +13,10 @@ const TableRow = ({
   reason,
   id,
   supervisor,
-  admin
+  admin,
+  totalTime,
+  startTime,
+  endTime
 }) => (
   <Row id={id}>
     <TableCell>
@@ -22,20 +27,17 @@ const TableRow = ({
     </TableCell>
     <TableCell>{moment(startDate).format(dateFormat)}</TableCell>
     <TableCell>{moment(endDate).format(dateFormat)}</TableCell>
+    <TableCell>
+      <TotalTimeCell total={totalTime} start={startTime} end={endTime} />
+    </TableCell>
     <TableCell>{!reason ? 'No reason provided..' : reason}</TableCell>
-    <TableCell>{getRequestStatus(admin)}</TableCell>
-    <TableCell>{getRequestStatus(supervisor)}</TableCell>
+    <TableCell>
+      <ApprovalMessage status={admin} />
+    </TableCell>
+    <TableCell>
+      <ApprovalMessage status={supervisor} />
+    </TableCell>
   </Row>
 )
-
-const getRequestStatus = status => {
-  if (status.pending) {
-    return 'Awaiting approval...'
-  }
-  if (status.approved) {
-    return 'Approved!'
-  }
-  return 'Disapproved'
-}
 
 export default TableRow

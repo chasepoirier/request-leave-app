@@ -13,6 +13,8 @@ import {
   TableRow,
   TeamsContainer
 } from './Styled'
+import ApprovalMessage from '../../components/ApprovalMessage'
+import TotalTimeCell from '../../components/TotalTimeCell'
 
 const { arrayOf, objectOf, func, string, shape, bool } = PropTypes
 const dateFormat = 'dd. MMM Do'
@@ -37,28 +39,32 @@ class HistoryTable extends React.Component {
   getNameFromRow = event =>
     event.target.parentNode.parentNode.parentNode.children[2].innerText
 
-  getRequestStatus = status => {
-    if (status.pending) {
-      return 'Awaiting approval...'
-    }
-    if (status.approved) {
-      return 'Approved!'
-    }
-    return 'Disapproved'
-  }
-
   renderRequests = requests => {
     const { name } = this.props
     return requests.map(request => (
       <TableRow key={request.id}>
         <TableCell>{`${name.lname}, ${name.fname}`}</TableCell>
+        <TableCell>
+          {request.types.map(
+            (type, index) =>
+              index === request.types.length - 1 ? type.type : `${type.type}, `
+          )}
+        </TableCell>
         <TableCell>{moment(request.startDate).format(dateFormat)}</TableCell>
         <TableCell>{moment(request.endDate).format(dateFormat)}</TableCell>
-        <TableCell>{request.totalTime}</TableCell>
-        <TableCell>{request.reason}</TableCell>
-        <TableCell>{this.getRequestStatus(request.approval.admin)}</TableCell>
         <TableCell>
-          {this.getRequestStatus(request.approval.supervisor)}
+          <TotalTimeCell
+            total={request.totalTime}
+            start={request.startTime}
+            end={request.endTime}
+          />
+        </TableCell>
+        <TableCell>{request.reason}</TableCell>
+        <TableCell>
+          <ApprovalMessage status={request.approval.admin} />
+        </TableCell>
+        <TableCell>
+          <ApprovalMessage status={request.approval.supervisor} />
         </TableCell>
       </TableRow>
     ))
@@ -73,12 +79,13 @@ class HistoryTable extends React.Component {
             <thead>
               <TableRow>
                 <TableHeader>Name</TableHeader>
+                <TableHeader>Type</TableHeader>
                 <TableHeader>Start Date</TableHeader>
                 <TableHeader>End Date</TableHeader>
                 <TableHeader>Total Time</TableHeader>
                 <TableHeader>Reason</TableHeader>
                 <TableHeader>Admin</TableHeader>
-                <TableHeader>Supervisor</TableHeader>
+                <TableHeader>Clerk</TableHeader>
               </TableRow>
             </thead>
             <tbody>

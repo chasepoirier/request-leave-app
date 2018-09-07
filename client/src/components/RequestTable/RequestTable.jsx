@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import { Table, TableHeader, Row, TeamsContainer, LoadingState } from './Styled'
-
 import TableRow from './TableRow'
 
 class RequestTable extends React.Component {
@@ -17,6 +15,9 @@ class RequestTable extends React.Component {
         key={req.timestamp}
         supervisor={req.approval.supervisor}
         admin={req.approval.admin}
+        totalTime={req.totalTime}
+        endTime={req.endTime}
+        startTime={req.startTime}
       />
     ))
 
@@ -31,9 +32,10 @@ class RequestTable extends React.Component {
                 <TableHeader>Type</TableHeader>
                 <TableHeader>Start Date</TableHeader>
                 <TableHeader>End Date</TableHeader>
+                <TableHeader>Total Time</TableHeader>
                 <TableHeader>Reason</TableHeader>
                 <TableHeader>Admin</TableHeader>
-                <TableHeader>Supervisor</TableHeader>
+                <TableHeader>Clerk</TableHeader>
               </Row>
             </thead>
             <tbody>{this.renderRequests(requests)}</tbody>

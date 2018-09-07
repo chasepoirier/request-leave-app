@@ -80,7 +80,9 @@ class RequestLeaveForm extends React.Component {
       endDate,
       totalTime,
       requestTypes,
-      reason
+      reason,
+      startTime,
+      endTime
     } = this.state
     const { handleSubmitForm } = this.props
     const hoursInDay = 8
@@ -101,7 +103,9 @@ class RequestLeaveForm extends React.Component {
         reason,
         totalTime: durationType === 'p' ? totalTime : totalTime * hoursInDay,
         startDate,
-        endDate: durationType === 'md' ? endDate : startDate
+        endDate: durationType === 'md' ? endDate : startDate,
+        startTime: durationType === 'p' ? startTime : null,
+        endTime: durationType === 'p' ? endTime : null
       }
       handleSubmitForm(request)
     }

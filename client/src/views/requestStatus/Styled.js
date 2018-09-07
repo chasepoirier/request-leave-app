@@ -16,7 +16,7 @@ const TrashIcon = styled.i`
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  right: 15px;
+  right: -35px;
   top: 0;
   bottom: 0;
   transition: all 0.2s;

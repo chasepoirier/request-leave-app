@@ -11,47 +11,10 @@ const Table = styled.table`
   margin: 25px 0 50px;
 `
 
-const TrashIcon = styled.i`
-  color: ${Colors.Red200};
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  right: 15px;
-  top: 0;
-  bottom: 0;
-  transition: all 0.2s;
-`
-
-const EditIcon = styled.i`
-  color: ${Colors.Green200};
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  right: 45px;
-  top: 0;
-  bottom: 0;
-  transition: all 0.2s;
-`
-
 const TableRow = styled.tr`
   transition: all 0.2s;
-  cursor: pointer;
   &:nth-child(even) {
     background-color: ${Colors.White600};
-  }
-  &:hover ${TrashIcon} {
-    opacity: 1;
-    visibility: visible;
-  }
-  &:hover ${TrashIcon}:hover {
-    opacity: 0.7;
-  }
-  &:hover ${EditIcon} {
-    opacity: 1;
-    visibility: visible;
-  }
-  &:hover ${EditIcon}:hover {
-    opacity: 0.7;
   }
 `
 
@@ -85,13 +48,11 @@ const TeamHeader = styled.div`
 `
 
 export {
-  EditIcon,
   TeamsContainer,
   Table,
   TableRow,
   TableCell,
   TableHeader,
   TeamHeader,
-  TrashIcon,
   TablePositioner
 }

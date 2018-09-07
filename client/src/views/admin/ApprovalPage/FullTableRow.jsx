@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { TableCell, TableRow, TrashIcon, TablePositioner } from './Styled'
+import TotalTimeCell from '../../../components/TotalTimeCell'
 
 const dateFormat = 'dd. MMM Do'
 
@@ -17,7 +18,9 @@ const FullTableRow = ({
   teamUid,
   userUid,
   teamID,
-  team
+  team,
+  startTime,
+  endTime
 }) => (
   <TableRow
     id={id}
@@ -33,7 +36,9 @@ const FullTableRow = ({
     </TableCell>
     <TableCell>{moment(startDate).format(dateFormat)}</TableCell>
     <TableCell>{moment(endDate).format(dateFormat)}</TableCell>
-    <TableCell>{totalTime}</TableCell>
+    <TableCell>
+      <TotalTimeCell total={totalTime} start={startTime} end={endTime} />
+    </TableCell>
     <TableCell>
       <TablePositioner>
         <TrashIcon className="fas fa-check-circle" id={id} />

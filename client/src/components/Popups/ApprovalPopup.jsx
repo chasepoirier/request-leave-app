@@ -23,6 +23,7 @@ import {
 import Colors from '../../design/Colors'
 
 const dateFormat = 'dd. MMM Do'
+const timeFormat = 'LT'
 
 const ApprovalPopup = ({
   handleApprove,
@@ -38,7 +39,9 @@ const ApprovalPopup = ({
     types,
     startDate,
     endDate,
-    reason
+    reason,
+    startTime,
+    endTime
   } = request
   return (
     <PopupContainer>
@@ -81,8 +84,20 @@ const ApprovalPopup = ({
               <ValueText>{moment(endDate).format(dateFormat)}</ValueText>
             </FlexItem>
           </FlexContainer>
+          {startTime && (
+            <FlexContainer>
+              <FlexItem>
+                <LabelText>Start Time</LabelText>
+                <ValueText>{moment(startTime).format(timeFormat)}</ValueText>
+              </FlexItem>
+              <FlexItem>
+                <LabelText>End Time</LabelText>
+                <ValueText>{moment(endTime).format(timeFormat)}</ValueText>
+              </FlexItem>
+            </FlexContainer>
+          )}
           <FlexContainer>
-            <InlineItem>
+            <InlineItem style={{ width: '100%' }}>
               <LabelText>Reason</LabelText>
               <ValueText>{reason}</ValueText>
             </InlineItem>

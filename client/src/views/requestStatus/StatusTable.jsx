@@ -15,6 +15,8 @@ import {
   TrashIcon,
   TablePositioner
 } from './Styled'
+import ApprovalMessage from '../../components/ApprovalMessage'
+import TotalTimeCell from '../../components/TotalTimeCell'
 
 const { arrayOf, objectOf, func, string, shape, bool } = PropTypes
 const dateFormat = 'dd. MMM Do'
@@ -51,33 +53,24 @@ class StatusTable extends React.Component {
   }
 
   handleDeleteRequest = id => {
-    const {
-      hidePopup,
-      deleteRequest,
-      fetchAllUserRequests,
+    const { deleteRequest, userID, teamID, requests } = this.props
+
+    const request = requestSelectors.getOneRequest({ id }, requests.all)
+
+    deleteRequest({
       userID,
-      teamID
-    } = this.props
-    deleteRequest({ userID, requestID: id, teamID }).then(success => {
+      requestID: id,
+      teamID,
+      typeAmounts: request.types
+    }).then(success => {
       if (success) {
-        fetchAllUserRequests(userID)
-        hidePopup()
+        window.location.reload()
       }
     })
   }
 
   getNameFromRow = event =>
     event.target.parentNode.parentNode.parentNode.children[2].innerText
-
-  getRequestStatus = status => {
-    if (status.pending) {
-      return 'Awaiting approval...'
-    }
-    if (status.approved) {
-      return 'Approved!'
-    }
-    return 'Disapproved'
-  }
 
   renderRequests = requests => {
     const { name } = this.props
@@ -87,14 +80,28 @@ class StatusTable extends React.Component {
         <TableCell>{`${moment(request.timestamp).fromNow(
           'minutes'
         )} ago`}</TableCell>
+        <TableCell>
+          {request.types.map(
+            (type, index) =>
+              index === request.types.length - 1 ? type.type : `${type.type}, `
+          )}
+        </TableCell>
         <TableCell>{moment(request.startDate).format(dateFormat)}</TableCell>
         <TableCell>{moment(request.endDate).format(dateFormat)}</TableCell>
-        <TableCell>{request.totalTime}</TableCell>
+        <TableCell>
+          <TotalTimeCell
+            total={request.totalTime}
+            start={request.startTime}
+            end={request.endTime}
+          />
+        </TableCell>
         <TableCell>{request.reason}</TableCell>
-        <TableCell>{this.getRequestStatus(request.approval.admin)}</TableCell>
+        <TableCell>
+          <ApprovalMessage status={request.approval.admin} />
+        </TableCell>
         <TableCell>
           <TablePositioner>
-            {this.getRequestStatus(request.approval.supervisor)}
+            <ApprovalMessage status={request.approval.supervisor} />
             <TrashIcon
               onClick={this.handleDangerPopup}
               className="fas fa-trash"
@@ -117,12 +124,13 @@ class StatusTable extends React.Component {
               <TableRow>
                 <TableHeader>Name</TableHeader>
                 <TableHeader>Created</TableHeader>
+                <TableHeader>Type</TableHeader>
                 <TableHeader>Start Date</TableHeader>
                 <TableHeader>End Date</TableHeader>
                 <TableHeader>Total Time</TableHeader>
                 <TableHeader>Reason</TableHeader>
                 <TableHeader>Admin</TableHeader>
-                <TableHeader>Supervisor</TableHeader>
+                <TableHeader>Clerk</TableHeader>
               </TableRow>
             </thead>
             <tbody>

@@ -60,17 +60,13 @@ class LogsPopup extends React.Component {
 
 const parseStart = str => str.substring(0, str.indexOf(':'))
 const parseEnd = str => str.substring(str.indexOf(':') + 1)
-// desc.substring(0, desc.indexOf(':'))
-const LogItem = ({ desc, timestamp }) => {
-  console.log(desc)
-  return (
-    <Log>
-      <LogHeader>{parseStart(desc)}</LogHeader>
-      <LogSubheader>{parseEnd(desc)}</LogSubheader>
-      <LogTimestamp>{moment(timestamp).format('MMMM Do YYYY')}</LogTimestamp>
-    </Log>
-  )
-}
+const LogItem = ({ desc, timestamp }) => (
+  <Log>
+    <LogHeader>{parseStart(desc)}</LogHeader>
+    <LogSubheader>{parseEnd(desc)}</LogSubheader>
+    <LogTimestamp>{moment(timestamp).format('MMMM Do YYYY')}</LogTimestamp>
+  </Log>
+)
 
 const { func } = PropTypes
 
