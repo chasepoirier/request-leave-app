@@ -24,7 +24,7 @@ class ApprovalPage extends React.Component {
     }
   }
 
-  handleApprovalAll = () => {
+  handleApproveAll = () => {
     const { status, pendingAdmin, pendingSupervisor, showPopup } = this.props
 
     if (status.supervisor) {
@@ -87,9 +87,9 @@ class ApprovalPage extends React.Component {
     return (
       <div>
         <Styled.FlexBetween>
-          <Styled.Header>Approval Page</Styled.Header>
+          <Styled.Header>Approve Page</Styled.Header>
           <Styled.ButtonFilled
-            onClick={this.handleApprovalAll}
+            onClick={this.handleApproveAll}
             style={{ margin: 0 }}
           >
             Approval All
