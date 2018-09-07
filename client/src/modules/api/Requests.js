@@ -16,13 +16,13 @@ const RequestEndpoints = {
       .post(`${apiBase}/requests/fetch_all_requests`, { id })
       .then(res => res.data.requests)
       .catch(err => err),
-  deleteRequest: ({ userID, requestID, teamID, typeAmounts }) =>
+  deleteRequest: ({ userID, requestID, teamID, request }) =>
     axios
       .post(`${apiBase}/requests/delete_request`, {
         userID,
         requestID,
         teamID,
-        typeAmounts
+        request
       })
       .then(res => {
         if (res.data.success) {

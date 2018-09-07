@@ -271,7 +271,7 @@ class UserPopup extends React.Component {
   handleUpdateUser = () => {
     const { userInfo, submitting } = this.state
     if (!submitting) {
-      const { updateUserRequest } = this.props
+      const { updateUserRequest, superEmail } = this.props
       const {
         info: { team, status, typeAmounts }
       } = this.props.user
@@ -307,7 +307,7 @@ class UserPopup extends React.Component {
       }
 
       this.setState({ submitting: true })
-      updateUserRequest({ updates, user: userInfo }).then(() => {
+      updateUserRequest({ updates, user: userInfo, superEmail }).then(() => {
         window.location.reload()
       })
     }
@@ -552,7 +552,8 @@ const mapStateToProps = state => ({
   desc: state.view.popup.content.desc,
   updateUserRequest: state.view.popup.content.updateUserRequest,
   user: state.user.selectedUser,
-  types: userSelectors.sortSelectedLeaveAmountsByOrder(state)
+  types: userSelectors.sortSelectedLeaveAmountsByOrder(state),
+  superEmail: state.user.info.email
 })
 
 export default connect(

@@ -40,11 +40,11 @@ export const submitRequestToDeleteRequest = ({
   userID,
   requestID,
   teamID,
-  typeAmounts
+  request
 }) => dispatch => {
   dispatch(deleteRequestSuccess())
   return api.requests
-    .deleteRequest({ userID, requestID, teamID, typeAmounts })
+    .deleteRequest({ userID, requestID, teamID, request })
     .then(() => dispatch(deleteRequestSuccess()))
     .catch(() => dispatch(deleteRequestFail('Error deleting request')))
 }

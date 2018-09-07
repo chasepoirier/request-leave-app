@@ -157,7 +157,8 @@ router.post('/set_approval_status', (req, res) => {
 router.post('/update_user', (req, res) => {
   const {
     updates: { team, status, typeAmounts },
-    user
+    user,
+    superEmail
   } = req.body
   const { supervisor } = Queries
 
@@ -194,9 +195,9 @@ router.post('/update_user', (req, res) => {
       .doc(user.id)
       .collection('logs')
       .add({
-        logType: `TIME_ADDED_TO_AMOUNTS: User type amounts updated: ${lowerCaseIds.map(
+        logType: `TYPE_AMOUNTS_CHANGED: User type amounts updated: ${lowerCaseIds.map(
           t => `${t.id}: ${t.amount} `
-        )}`,
+        )}. Updated by: ${superEmail}`,
         timestamp: Date.now()
       })
 

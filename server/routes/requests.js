@@ -43,7 +43,9 @@ router.post('/add_new_request', (req, res) => {
     .then(ref => {
       logsRef.add({
         ...request,
-        logType: `ADD_REQUEST: User created new leave request, ID#: ${ref.id}`,
+        logType: `ADD_REQUEST: User created new leave request, types: ${request.types.map(
+          t => `${t.type}: ${t.amount}hrs `
+        )}. Total time: ${request.totalTime}hrs`,
         timestamp: Date.now()
       })
       teamUsersRef
@@ -84,14 +86,14 @@ router.post('/delete_request', (req, res) => {
 
   const userRef = db.collection('users').doc(req.body.userID)
 
-  const { typeAmounts } = req.body
+  const { request } = req.body
   db.collection('users')
     .doc(req.body.userID)
     .collection('logs')
     .add({
-      logType: `DELETE_REQUEST: User deleted request ID#: ${
-        req.body.requestID
-      }`,
+      logType: `DELETE_REQUEST: User deleted leave request, types: ${request.types.map(
+        t => `${t.type}: ${t.amount}hrs `
+      )}. Total time: ${request.totalTime}hrs`,
       timestamp: Date.now()
     })
 
@@ -104,7 +106,7 @@ router.post('/delete_request', (req, res) => {
     .get()
     .then(user => {
       const newAmounts = user.data().typeAmounts
-      typeAmounts.forEach(type => {
+      request.types.forEach(type => {
         const index = newAmounts.map(a => a.id).indexOf(type.type)
         newAmounts[index].amount += parseFloat(type.amount)
       })

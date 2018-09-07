@@ -35,11 +35,10 @@ class AdminTable extends React.Component {
     const {
       hidePopup,
       submitApprovalStatus,
-      fetchAdminPendingApprovals,
-      teamID
+      fetchAdminPendingApprovals
     } = this.props
     submitApprovalStatus(ids, approved).then(() => {
-      fetchAdminPendingApprovals(teamID)
+      fetchAdminPendingApprovals(ids.teamID)
       hidePopup()
     })
   }

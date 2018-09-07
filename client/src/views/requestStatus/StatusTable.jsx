@@ -61,7 +61,7 @@ class StatusTable extends React.Component {
       userID,
       requestID: id,
       teamID,
-      typeAmounts: request.types
+      request
     }).then(success => {
       if (success) {
         window.location.reload()
