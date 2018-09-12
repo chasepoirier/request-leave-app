@@ -12,7 +12,8 @@ import {
   LeaveHistory,
   RequestLeave,
   RequestStatus,
-  Login
+  Login,
+  Calendar
 } from 'views'
 
 import Routes from './utils/Routes'
@@ -29,7 +30,8 @@ const {
   admin,
   leaveHistory,
   requestLeave,
-  requestStatus
+  requestStatus,
+  calendar
 } = Routes.primary
 
 class App extends React.Component {
@@ -116,6 +118,14 @@ class App extends React.Component {
                   loggedIn={loggedIn}
                   render={(match, history) => (
                     <RequestStatus match={match} history={history} />
+                  )}
+                />
+                <RouteTypes.BasicRoute
+                  path={calendar.path}
+                  status={status}
+                  loggedIn={loggedIn}
+                  render={(match, history) => (
+                    <Calendar match={match} history={history} />
                   )}
                 />
                 <Redirect to="/" />

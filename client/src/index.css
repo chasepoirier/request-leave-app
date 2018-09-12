@@ -28,6 +28,24 @@
 	font-weight: 700;
 }
 
+.rbc-calendar {
+	height: 620px;
+	margin-top: 30px;
+	margin-bottom: 100px;
+}
+
+.category-self {
+	background-color: rgb(248, 177, 46)
+}
+
+.category-team {
+	background-color: #4885ed
+}
+
+.category-all {
+	background-color: rgb(58, 216, 71)
+}
+
 body {
 	margin: 0;
 	padding: 0;

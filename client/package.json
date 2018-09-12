@@ -10,6 +10,7 @@
     "moment-business-days": "^1.0.6",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
+    "react-big-calendar": "^0.19.2",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
     "react-google-login": "^3.2.1",

@@ -23,6 +23,10 @@ const Routes = {
     leaveHistory: {
       path: '/leave-history',
       text: 'Leave History'
+    },
+    calendar: {
+      path: '/calendar',
+      text: 'Calendar'
     }
   },
   adminRoutes: {
@@ -41,6 +45,10 @@ const Routes = {
     approval: {
       path: '/pending-approvals',
       text: 'Pending Approvals'
+    },
+    reports: {
+      path: '/reports',
+      text: 'Reports'
     }
   }
 }

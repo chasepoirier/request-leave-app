@@ -17,6 +17,7 @@ const AdminBar = ({ logout, routes, name }) => (
         text={routes.leaveHistory.text}
         path={routes.leaveHistory.path}
       />
+      <NavItem text={routes.calendar.text} path={routes.calendar.path} />
       <NavItem
         text={routes.admin.text}
         path={`${routes.admin.path}/pending-approvals`}

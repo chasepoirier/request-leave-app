@@ -4,13 +4,13 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
-
 import index from './routes/index'
 import user from './routes/user'
 import supervisor from './routes/supervisor'
 import team from './routes/team'
 import requests from './routes/requests'
 import admin from './routes/admin'
+import calendar from './routes/calendar'
 import UserTasks from './cron'
 
 dotenv.config()
@@ -41,6 +41,7 @@ app.use('/api/supervisor', supervisor)
 app.use('/api/team', team)
 app.use('/api/requests', requests)
 app.use('/api/admin', admin)
+app.use('/api/calendar', calendar)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

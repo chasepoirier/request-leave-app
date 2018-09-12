@@ -17,6 +17,7 @@ const UserBar = ({ logout, routes, name }) => (
         text={routes.leaveHistory.text}
         path={routes.leaveHistory.path}
       />
+      <NavItem text={routes.calendar.text} path={routes.calendar.path} />
       <StyledLink onClick={logout}>Logout</StyledLink>
     </LinkContainer>
     <LinkContainer>
