@@ -15,6 +15,10 @@ const StyledLink = styled.div`
   margin-right: 45px;
   color: ${Colors.blue200};
   font-weight: 500;
+  @media (max-width: 700px) {
+    margin: 10px 0;
+    margin-right: 45px;
+  }
 `
 
 const LinkContainer = styled.div`
@@ -22,6 +26,10 @@ const LinkContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   height: 100%;
+  @media (max-width: 700px) {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 `
 
 export { NavContainer, LinkContainer, StyledLink }
