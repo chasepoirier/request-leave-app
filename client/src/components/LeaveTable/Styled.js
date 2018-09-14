@@ -6,6 +6,13 @@ const Table = styled.table`
   width: 100%;
 `
 
+const TableWrapper = styled.div`
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  margin-top: 40px;
+`
+
 const TableRow = styled.tr`
   transition: all 0.2s;
   &:nth-child(even) {
@@ -34,4 +41,4 @@ const TableLabel = styled.div`
   font-weight: 600;
 `
 
-export { Table, TableRow, TableCell, TableHeader, TableLabel }
+export { Table, TableRow, TableCell, TableHeader, TableLabel, TableWrapper }

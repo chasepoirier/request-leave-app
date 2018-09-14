@@ -82,6 +82,7 @@ const Button = styled.div`
 const Hamburger = styled.div`
   width: 30px;
   height: 100%;
+  margin-right: 15px;
 `
 
 const Patty = styled.div`

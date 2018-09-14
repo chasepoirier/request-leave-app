@@ -1,7 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { userSelectors } from '../../modules/ducks/user'
-import { Table, TableRow, TableCell, TableHeader, TableLabel } from './Styled'
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHeader,
+  TableLabel,
+  TableWrapper
+} from './Styled'
 
 class LeaveTable extends React.Component {
   renderTableRows = amounts =>
@@ -13,7 +20,7 @@ class LeaveTable extends React.Component {
   render() {
     // console.log(this.props.amounts)
     return (
-      <div style={{ marginTop: 40 }}>
+      <TableWrapper>
         <TableLabel>Available Leave Amounts</TableLabel>
         {!this.props.types.loading && (
           <Table>
@@ -25,7 +32,7 @@ class LeaveTable extends React.Component {
             </tbody>
           </Table>
         )}
-      </div>
+      </TableWrapper>
     )
   }
 }

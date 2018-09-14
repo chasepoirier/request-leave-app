@@ -3,6 +3,8 @@ import Colors from '../../design/Colors'
 
 const TeamsContainer = styled.div`
   width: 100%;
+  overflow: auto;
+  max-width: 100%;
 `
 
 const Table = styled.table`
