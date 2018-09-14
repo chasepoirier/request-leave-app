@@ -76,3 +76,19 @@ export const getUserLogsFail = error => ({
     error
   }
 })
+
+export const getAllUsersRequest = () => ({
+  type: types.GET_ALL_USERS_REQUEST
+})
+export const getAllUsersFail = error => ({
+  type: types.GET_ALL_USERS_FAIL,
+  payload: {
+    error
+  }
+})
+export const getAllUsersSuccess = users => ({
+  type: types.GET_ALL_USERS_SUCCESS,
+  payload: {
+    users
+  }
+})

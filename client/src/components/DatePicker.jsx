@@ -14,7 +14,7 @@ const DatePickerUI = ({ date, onChange }) => (
 )
 
 DatePickerUI.propTypes = {
-  date: momentObj.isRequired,
+  date: momentObj,
   onChange: PropTypes.func.isRequired
 }
 

@@ -5,8 +5,18 @@ import { userOperations } from 'modules/ducks/user'
 import { viewOperations } from 'modules/ducks/view'
 import { NavContainer } from './Styled'
 import { AdminBar, UserBar, NonUserBar } from './NavTypes'
+import MobileAdminBar from './NavTypes/MobileAdminBar'
+import MobileUserBar from './NavTypes/MobileUserBar'
 
 class Navbar extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      mobile: false
+    }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+  }
+
   handleLogoutPopup = () => {
     const { showPopup } = this.props
 
@@ -21,6 +31,23 @@ class Navbar extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    if (window.innerWidth < 920) {
+      this.setState({ mobile: true })
+    } else {
+      this.setState({ mobile: false })
+    }
+  }
+
   handleLogUserOut = () => {
     const { hidePopup, logUserOut } = this.props
     hidePopup()
@@ -29,9 +56,19 @@ class Navbar extends React.Component {
 
   renderNavType = () => {
     const { routes, status, name, loggedIn } = this.props
+    const { mobile } = this.state
 
     if (loggedIn) {
       if (status.supervisor || status.admin) {
+        if (mobile)
+          return (
+            <MobileAdminBar
+              name={name.fname}
+              logout={this.handleLogoutPopup}
+              routes={routes}
+            />
+          )
+
         return (
           <AdminBar
             logout={this.handleLogoutPopup}
@@ -40,6 +77,14 @@ class Navbar extends React.Component {
           />
         )
       }
+      if (mobile)
+        return (
+          <MobileUserBar
+            name={name.fname}
+            logout={this.handleLogoutPopup}
+            routes={routes}
+          />
+        )
       return (
         <UserBar
           logout={this.handleLogoutPopup}

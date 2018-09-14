@@ -21,6 +21,10 @@ class Navbar extends React.Component {
             text={routes.manageTeam.text}
             path={matchUrl + routes.manageTeam.path}
           />
+          <NavItem
+            text={routes.reports.text}
+            path={matchUrl + routes.reports.path}
+          />
         </LinkContainer>
       </NavContainer>
     )

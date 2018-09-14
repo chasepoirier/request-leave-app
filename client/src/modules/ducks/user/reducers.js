@@ -32,11 +32,31 @@ const initialState = {
     loading: true,
     errors: null,
     all: null
+  },
+  allUsers: {
+    loading: true,
+    errors: null,
+    all: []
   }
 }
 
 const user = (state = initialState, action = {}) => {
   switch (action.type) {
+    case types.GET_ALL_USERS_REQUEST: {
+      return { ...state, allUsers: { loading: true, errors: null, all: [] } }
+    }
+    case types.GET_ALL_USERS_SUCCESS: {
+      return {
+        ...state,
+        allUsers: { loading: false, all: action.payload.users }
+      }
+    }
+    case types.GET_ALL_USERS_FAIL: {
+      return {
+        ...state,
+        allUsers: { loading: false, errors: action.payload.error }
+      }
+    }
     case types.REQUEST_LOGIN: {
       return {
         ...state,

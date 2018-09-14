@@ -72,3 +72,11 @@ export const getUserLogsRequest = id => dispatch => {
     }
   })
 }
+
+export const getAllUsers = () => dispatch => {
+  dispatch(actions.getAllUsersRequest())
+  return api.user
+    .getAllUsers()
+    .then(users => dispatch(actions.getAllUsersSuccess(users)))
+    .catch(() => actions.getAllUsersFail('Error getting all users'))
+}

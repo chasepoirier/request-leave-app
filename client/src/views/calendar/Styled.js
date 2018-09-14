@@ -4,6 +4,11 @@ const FlexWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  @media (max-width: 820px) {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 8px;
+  }
 `
 
 const Label = styled.div`
@@ -14,6 +19,9 @@ const Label = styled.div`
   margin-right: 8px;
   margin-top: -2px;
   margin-left: 40px;
+  @media (max-width: 820px) {
+    margin-left: 10;
+  }
 `
 
 export { FlexWrapper, Label }

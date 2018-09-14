@@ -15,3 +15,7 @@ export const GET_USER_FAIL = '@@user/GET_USER_FAIL'
 export const GET_USER_LOGS_REQUEST = '@@user/GET_USER_LOGS_REQUEST'
 export const GET_USER_LOGS_SUCCESS = '@@user/GET_USER_LOGS_SUCCESS'
 export const GET_USER_LOGS_FAIL = '@@user/GET_USER_LOGS_FAIL'
+
+export const GET_ALL_USERS_REQUEST = '@@user/GET_ALL_USERS_REQUEST'
+export const GET_ALL_USERS_SUCCESS = '@@user/GET_ALL_USERS_SUCCESS'
+export const GET_ALL_USERS_FAIL = '@@user/GET_ALL_USERS_FAIL'

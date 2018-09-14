@@ -26,3 +26,11 @@ export const submitApprovalStatus = (ids, approved) => dispatch => {
     .then(() => dispatch(setApprovalStatusSuccess()))
     .catch(() => dispatch(setApprovalStatusFail('Error setting status')))
 }
+
+export const submitQueryRequests = data => dispatch => {
+  dispatch(actions.queryRequests())
+  return api.admin
+    .getRequestsByQuery(data)
+    .then(requests => dispatch(actions.queryRequestsSuccess(requests)))
+    .catch(() => dispatch(actions.queryRequestsFail('Error')))
+}

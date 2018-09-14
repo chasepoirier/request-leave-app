@@ -8,4 +8,12 @@ const InitialLoadingWrapper = styled.div`
   align-items: center;
 `
 
-export { InitialLoadingWrapper }
+const TableLoadingWrapper = styled.div`
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export { InitialLoadingWrapper, TableLoadingWrapper }

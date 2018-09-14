@@ -17,8 +17,22 @@ export default class Calendar extends React.Component {
           startAccessor="startDate"
           endAccessor="endDate"
           elementProps={{ style: { height: 400 } }}
+          components={{ event: Event }}
         />
       </div>
     )
   }
 }
+
+const Event = ({ event }) => (
+  <div>
+    <div style={{ fontWeight: '500', fontSize: 15, padding: '2px 0' }}>{`${
+      event.name.lname
+    }, ${event.name.fname}`}</div>
+    <div style={{ fontSize: 13 }}>
+      {event.types.map(type => `${type.type} `)}
+
+      {` - ${event.reason}`}
+    </div>
+  </div>
+)

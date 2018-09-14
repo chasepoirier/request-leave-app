@@ -17,7 +17,14 @@ const AdminEndpoints = {
           return true
         }
         throw new Error()
-      })
+      }),
+  getRequestsByQuery: data =>
+    axios.post(`${apiBase}/admin/get_requests`, { data }).then(res => {
+      if (res.data.requests) {
+        return res.data.requests
+      }
+      throw new Error()
+    })
 }
 
 export default AdminEndpoints

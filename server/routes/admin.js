@@ -1,5 +1,5 @@
 import express from 'express'
-import { Queries } from '../utils'
+import { admin, report } from '../utils/Queries'
 import { db } from '../firebase'
 
 const router = express.Router()
@@ -10,7 +10,7 @@ router.post('/get_pending_approvals', (req, res) => {
     .doc(req.body.team)
     .collection('users')
 
-  Queries.admin
+  admin
     .getPendingApprovalsByteam(teamRef, req.body.team)
     .then(requests => res.json({ requests }))
 })
@@ -56,6 +56,65 @@ router.post('/set_approval_status', (req, res) => {
         })
     })
     .catch(err => console.log(err))
+})
+
+router.post('/get_requests', (req, res) => {
+  db.collection('users')
+    .get()
+    .then(userRefs => {
+      const promises = []
+      userRefs.forEach(user => {
+        promises.push(
+          db
+            .collection('users')
+            .doc(user.id)
+            .collection('requests')
+            .get()
+            .then(requests => {
+              const data = []
+              requests.forEach(request =>
+                data.push({
+                  ...request.data(),
+                  name: user.data().name,
+                  email: user.data().email,
+                  userID: user.id,
+                  teamID: user.data().team
+                })
+              )
+              return data
+            })
+        )
+      })
+      Promise.all(promises).then(requests => {
+        const { users, types, teams, startDate, endDate } = req.body.data
+
+        const flattenDeep = reqs =>
+          reqs.reduce(
+            (acc, val) =>
+              Array.isArray(val)
+                ? acc.concat(flattenDeep(val))
+                : acc.concat(val),
+            []
+          )
+        flattenDeep(requests)
+
+        const merged = [].concat(...requests)
+        let filtered = merged
+        if (users.length !== 0) {
+          filtered = report.filterBySelectedUsers(merged, users)
+        }
+        if (types.length !== 0) {
+          filtered = report.filterBySelectedTypes(filtered, types)
+        }
+        if (teams.length !== 0) {
+          filtered = report.filterByTeam(filtered, teams)
+        }
+        if (startDate && endDate) {
+          filtered = report.filterByDateRange(filtered, startDate, endDate)
+        }
+        res.json({ requests: filtered })
+      })
+    })
 })
 
 module.exports = router

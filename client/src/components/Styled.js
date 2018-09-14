@@ -48,6 +48,9 @@ const FlexBetween = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 820px) {
+    flex-wrap: wrap;
+  }
 `
 
 const ButtonFilled = styled.div`
@@ -61,11 +64,14 @@ const ButtonFilled = styled.div`
   cursor: pointer;
   transition: all 0.2s;
   &:hover {
-    transform: translateY(2px);
+    transform: ${props =>
+      props.disabled ? 'translateY(0px)' : 'translateY(2px)'};
   }
   margin: 0px auto;
   display: block;
   padding-top: 12px;
+  opacity: ${props => (props.disabled ? 0.6 : 1)}
+  pointer-events: ${props => (props.disabled ? 'none' : '')}
 `
 
 const SubmitButton = styled.input`

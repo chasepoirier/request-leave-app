@@ -25,6 +25,13 @@ const UserEndpoints = {
         return res.data.logs
       }
       return new Error()
+    }),
+  getAllUsers: () =>
+    axios.get(`${apiBase}/user/get_all_users`).then(res => {
+      if (res.data.users) {
+        return res.data.users
+      }
+      return new Error()
     })
 }
 

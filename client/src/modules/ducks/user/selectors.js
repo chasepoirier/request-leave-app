@@ -53,3 +53,11 @@ export const sortLogsByDate = logs =>
     if (nameA > nameB) return -1
     return 0
   })
+
+export const listOfNamesWithIds = users => {
+  return users.map(user => ({
+    id: user.id,
+    fname: user.name.fname.toLowerCase(),
+    lname: user.name.lname.toLowerCase()
+  }))
+}

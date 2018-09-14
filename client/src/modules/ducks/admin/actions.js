@@ -30,3 +30,19 @@ export const setApprovalStatusFail = error => ({
 export const setApprovalStatusSuccess = () => ({
   type: types.SET_APPROVAL_STATUS_SUCCESS
 })
+
+export const queryRequests = () => ({
+  type: types.QUERY_REQUESTS_REQUEST
+})
+export const queryRequestsSuccess = requests => ({
+  type: types.QUERY_REQUESTS_SUCCESS,
+  payload: {
+    requests
+  }
+})
+export const queryRequestsFail = error => ({
+  type: types.QUERY_REQUESTS_FAIL,
+  payload: {
+    error
+  }
+})

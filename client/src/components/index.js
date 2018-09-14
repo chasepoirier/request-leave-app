@@ -2,7 +2,7 @@ import * as Styled from './Styled'
 import * as RouteTypes from './Routes'
 import Navbar from './Navbar'
 import { TextInput, Checkbox, Dropdown, RadioButton } from './Inputs'
-import { InitialLoadingState } from './LoadingStates'
+import { InitialLoadingState, TableLoadingState } from './LoadingStates'
 import StatusBar from './StatusBar'
 import DatePickerUI from './DatePicker'
 import RequestPicker from './RequestPicker/RequestPicker'
@@ -14,6 +14,7 @@ export {
   TextInput,
   RouteTypes,
   InitialLoadingState,
+  TableLoadingState,
   Checkbox,
   StatusBar,
   Dropdown,

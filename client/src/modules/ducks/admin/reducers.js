@@ -11,6 +11,11 @@ const initialState = {
   setStatus: {
     submitting: false,
     errors: null
+  },
+  reports: {
+    submitting: false,
+    errors: null,
+    all: []
   }
 }
 
@@ -52,4 +57,17 @@ const setStatus = (state = initialState.setStatus, action = {}) => {
   }
 }
 
-export default combineReducers({ pendingApprovals, setStatus })
+const reports = (state = initialState.reports, action = {}) => {
+  switch (action.type) {
+    case types.QUERY_REQUESTS_REQUEST:
+      return { ...state, submitting: true, errors: null, all: [] }
+    case types.QUERY_REQUESTS_SUCCESS:
+      return { ...state, submitting: false, all: action.payload.requests }
+    case types.QUERY_REQUESTS_FAIL:
+      return { ...state, submitting: false, errors: action.payload.errors }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({ pendingApprovals, setStatus, reports })
