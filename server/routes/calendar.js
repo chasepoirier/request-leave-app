@@ -1,57 +1,33 @@
 import express from 'express'
-// import moment from 'moment'
-import { db } from '../firebase'
+import { google } from 'googleapis'
+import { calendar } from '../utils/Queries'
+import authorize from '../gcalendar'
 
 const router = express.Router()
 
 router.get('/get_all_approved_requests', (req, res) => {
-  db.collection('users')
-    .get()
-    .then(users => {
-      const promises = []
-      users.forEach(snap => {
-        promises.push(
-          db
-            .collection('users')
-            .doc(snap.id)
-            .collection('requests')
-            .where('approval.admin.pending', '==', false)
-            .where('approval.supervisor.pending', '==', false)
-            .where('approval.admin.approved', '==', true)
-            .where('approval.supervisor.approved', '==', true)
-            .get()
-            .then(requests => {
-              const all = []
-              requests.forEach(request =>
-                all.push({
-                  ...request.data(),
-                  uId: snap.id,
-                  teamId: snap.data().team,
-                  name: snap.data().name,
-                  email: snap.data().email
-                })
-              )
-              return all
-            })
+  calendar.getAllApprovedRequests().then(requests => res.json({ requests }))
+})
+
+router.get('/sync_requests_to_calendar', (req, res) => {
+  calendar.getAllApprovedRequests().then(requests => {
+    authorize().then(auth => {
+      const gCal = google.calendar({ version: 'v3', auth })
+      gCal.events.list({ calendarId: 'primary' }, (err, response) => {
+        const { items } = response.data
+        const newEvents = calendar.returnListOfNewEvents(items, requests)
+
+        const promises = []
+
+        newEvents.forEach(event =>
+          promises.push(calendar.createNewEvent(gCal, event))
         )
-      })
-
-      Promise.all(promises).then(requests => {
-        const flattenDeep = reqs =>
-          reqs.reduce(
-            (acc, val) =>
-              Array.isArray(val)
-                ? acc.concat(flattenDeep(val))
-                : acc.concat(val),
-            []
-          )
-        flattenDeep(requests)
-
-        const merged = [].concat(...requests)
-
-        res.json({ requests: [].concat(merged) })
+        Promise.all(promises).then(refs => {
+          res.json({ eventsAdded: refs.length })
+        })
       })
     })
+  })
 })
 
 module.exports = router

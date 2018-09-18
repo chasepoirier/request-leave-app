@@ -11,7 +11,7 @@ import team from './routes/team'
 import requests from './routes/requests'
 import admin from './routes/admin'
 import calendar from './routes/calendar'
-import UserTasks from './cron'
+import Tasks from './cron'
 
 dotenv.config()
 
@@ -26,8 +26,9 @@ if (process.env.NODE_ENV !== 'dev') {
   })
 }
 
-UserTasks.annualTasks.start()
-UserTasks.biWeeklyTasks.start()
+Tasks.user.annualTasks.start()
+Tasks.user.biWeeklyTasks.start()
+Tasks.calendar.dailyTasks.start()
 
 app.use(logger('dev'))
 app.use(bodyParser.json())

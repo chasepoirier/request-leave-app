@@ -1,3 +1,9 @@
-import * as UserTasks from './userTasks'
+import * as user from './userTasks'
+import * as calendar from './calendarTasks'
 
-export default UserTasks
+const Tasks = {
+  user,
+  calendar
+}
+
+export default Tasks

@@ -19,6 +19,8 @@
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "base32": "0.0.6",
+    "base32-encode": "^1.1.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -28,6 +30,7 @@
     "firebase-admin": "^6.0.0",
     "googleapis": "^27.0.0",
     "jsonwebtoken": "^8.3.0",
+    "md5": "^2.2.1",
     "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "node-cron": "^1.2.1"
