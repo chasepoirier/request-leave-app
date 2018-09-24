@@ -89,10 +89,11 @@ export const getAllApprovedRequests = () =>
               .collection('users')
               .doc(snap.id)
               .collection('requests')
-              .where('approval.admin.pending', '==', false)
-              .where('approval.supervisor.pending', '==', false)
-              .where('approval.admin.approved', '==', true)
-              .where('approval.supervisor.approved', '==', true)
+              // --- Reimplement if want to filter to only approved requests ---
+              // .where('approval.admin.pending', '==', false)
+              // .where('approval.supervisor.pending', '==', false)
+              // .where('approval.admin.approved', '==', true)
+              // .where('approval.supervisor.approved', '==', true)
               .get()
               .then(requests => {
                 const all = []

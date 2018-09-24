@@ -13,7 +13,7 @@ const {
 
 const Filters = ({ toggleFilter, value }) => (
   <FilterContainer>
-    <div>Filter Results</div>
+    <div style={{ marginBottom: 10 }}>Filter Results</div>
     <select value={value} onChange={toggleFilter}>
       <option value="">--- No Filters ---</option>
       <option value={nameUp}>By Name (asc)</option>
