@@ -9,7 +9,7 @@ const TeamsContainer = styled.div`
 
 const Table = styled.table`
   border-collapse: collapse;
-  width: 100%;
+  width: calc(100% - 50px);
   margin: 25px 0 50px;
 `
 
@@ -61,6 +61,9 @@ const TableCell = styled.td`
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  &:last-of-type {
+    padding-right: 50px;
+  }
 `
 
 const TablePositioner = styled.div`

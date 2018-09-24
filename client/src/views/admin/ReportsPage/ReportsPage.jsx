@@ -2,18 +2,20 @@ import React from 'react'
 import ReactToPrint from 'react-to-print'
 import { connect } from 'react-redux'
 import { Styled } from 'components'
-import { adminOperations } from 'modules/ducks/admin'
+import { adminOperations, adminSelectors } from 'modules/ducks/admin'
 import { userOperations, userSelectors } from 'modules/ducks/user'
 import { TeamsContainer, FlexWrapper } from './Styled'
 import ResultRow from './ResultRow'
 import TableLoadingState from '../../../components/LoadingStates/TableLoadingState'
 import SearchParameters from './SearchParameters'
 import PrintedComponent from './PrintedComponent'
+import Filters from './Filters'
 
 class ReportsPage extends React.Component {
   state = {
     searchInitiated: false,
     users: [],
+    filterType: '',
     queries: {
       users: [],
       types: [],
@@ -46,6 +48,10 @@ class ReportsPage extends React.Component {
 
   renderResults = results =>
     results.map(result => <ResultRow data={result} key={result.timestamp} />)
+
+  handleFilterChange = e => {
+    this.setState({ filterType: e.target.value })
+  }
 
   render() {
     const { requests, leaveTypes, teams } = this.props
@@ -83,10 +89,19 @@ class ReportsPage extends React.Component {
         {this.state.searchInitiated ? (
           <div>
             {!requests.submitting ? (
-              <PrintedComponent
-                ref={el => (this.componentRef = el)}
-                requests={requests.all}
-              />
+              <div>
+                <Filters
+                  value={this.state.filterType}
+                  toggleFilter={this.handleFilterChange}
+                />
+                <PrintedComponent
+                  ref={el => (this.componentRef = el)}
+                  requests={adminSelectors.filterRequests(
+                    this.state.filterType,
+                    requests.all
+                  )}
+                />
+              </div>
             ) : (
               <TableLoadingState>Fetching results...</TableLoadingState>
             )}

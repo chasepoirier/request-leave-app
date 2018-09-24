@@ -13,8 +13,8 @@ const Routes = {
       text: 'Request Leave'
     },
     requestStatus: {
-      path: '/request-status',
-      text: 'Status'
+      path: '/pending-requests',
+      text: 'Pending Requests'
     },
     login: {
       path: '/login',

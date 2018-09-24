@@ -79,6 +79,22 @@ const Button = styled.div`
   }
 `
 
+const DangerButton = styled.div`
+  padding: 7px 15px 4px;
+  background-color: ${Colors.Red200};
+  color: ${Colors.White1000};
+  font-size: 15px;
+  text-align: center;
+  border-radius: 4px;
+  border-bottom: 2px solid ${Colors.Red50};
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s;
+  &:hover {
+    transform: translateY(2px);
+  }
+`
+
 const Hamburger = styled.div`
   width: 30px;
   height: 100%;
@@ -148,5 +164,6 @@ export {
   Button,
   Patty,
   Hamburger,
-  StyledLinkMobile
+  StyledLinkMobile,
+  DangerButton
 }

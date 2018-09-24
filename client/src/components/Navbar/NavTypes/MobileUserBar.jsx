@@ -9,7 +9,8 @@ import {
   Sidebar,
   ContentContainer,
   Patty,
-  CloseButton
+  CloseButton,
+  DangerButton
 } from '../Styled'
 
 export default class MobileUserBar extends React.Component {
@@ -76,14 +77,13 @@ const LinkSidebar = ({ routes, logout, toggle }) => (
         text={routes.calendar.text}
         path={routes.calendar.path}
       />
-      <StyledLinkMobile onClick={logout}>Logout</StyledLinkMobile>
-      <Link
-        onClick={toggle}
-        to={routes.requestLeave.path}
-        style={{ marginRight: 20 }}
-      >
+      <Link onClick={toggle} to={routes.requestLeave.path}>
         <Button>Request Leave</Button>
       </Link>
+
+      <DangerButton style={{ margin: '10px 0 0 0' }} onClick={logout}>
+        Logout
+      </DangerButton>
     </ContentContainer>
   </Sidebar>
 )

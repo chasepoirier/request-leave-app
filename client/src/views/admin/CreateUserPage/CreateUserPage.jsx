@@ -210,7 +210,7 @@ class CreateUserPage extends React.Component {
             onSelectChange={this.handleSelectChange}
           />
         </InputContainer>
-        <TypeHeader>Add Leave Amounts</TypeHeader>
+        <TypeHeader>Add Leave Amounts (In Hours)</TypeHeader>
         {!requestTypes.loading && (
           <InputContainerWrapped>
             {this.renderRequestTypes(requestTypes.all)}

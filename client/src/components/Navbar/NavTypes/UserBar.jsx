@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { PageWrapper } from 'components/Styled'
 import Link from 'react-router-dom/Link'
-import { StyledLink, LinkContainer, Button, WelcomeText } from '../Styled'
+import {
+  StyledLink,
+  LinkContainer,
+  Button,
+  WelcomeText,
+  DangerButton
+} from '../Styled'
 
 const UserBar = ({ logout, routes, name }) => (
   <PageWrapper flex>
@@ -18,13 +24,13 @@ const UserBar = ({ logout, routes, name }) => (
         path={routes.leaveHistory.path}
       />
       <NavItem text={routes.calendar.text} path={routes.calendar.path} />
-      <StyledLink onClick={logout}>Logout</StyledLink>
     </LinkContainer>
     <LinkContainer>
       <WelcomeText>{`Welcome, ${name}`}</WelcomeText>
       <Link to={routes.requestLeave.path} style={{ marginRight: 20 }}>
         <Button>Request Leave</Button>
       </Link>
+      <DangerButton onClick={logout}>Logout</DangerButton>
     </LinkContainer>
   </PageWrapper>
 )
