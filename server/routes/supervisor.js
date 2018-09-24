@@ -191,13 +191,20 @@ router.post('/update_user', (req, res) => {
       id: t.id.toLowerCase()
     }))
 
+    const typesToSave = user.typeAmounts.map(t => ({
+      id: t.id.toLowerCase(),
+      amount: t.amount
+    }))
+
     db.collection('users')
       .doc(user.id)
       .collection('logs')
       .add({
-        logType: `TYPE_AMOUNTS_CHANGED: User type amounts updated: ${lowerCaseIds.map(
+        logType: `TYPE_AMOUNTS_CHANGED: NEW_AMOUNTS: ${lowerCaseIds.map(
           t => `${t.id}: ${t.amount} `
-        )}. Updated by: ${superEmail}`,
+        )}. ${lowerCaseIds.map(
+          t => (t.reason ? ` REASON: ${t.reason}` : '')
+        )} UPDATED_BY: ${superEmail}`,
         timestamp: Date.now()
       })
 
@@ -205,7 +212,7 @@ router.post('/update_user', (req, res) => {
       db
         .collection('users')
         .doc(user.id)
-        .update({ typeAmounts: lowerCaseIds })
+        .update({ typeAmounts: typesToSave })
     )
   }
 

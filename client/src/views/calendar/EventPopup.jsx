@@ -5,7 +5,6 @@ import {
   PopupWrapper,
   PopupContainer,
   Header,
-  SubHeader,
   FlexContainer,
   ContentContainer,
   CloseIcon,

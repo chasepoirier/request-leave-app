@@ -15,7 +15,8 @@ export default class ChangeTypeAmount extends React.Component {
   state = {
     selectedType: '',
     amount: 0,
-    error: null
+    error: null,
+    reason: ''
   }
 
   handleSelectChange = e => {
@@ -23,16 +24,22 @@ export default class ChangeTypeAmount extends React.Component {
   }
 
   handleTextChange = e => {
-    const amount = e.target.value ? parseFloat(e.target.value) : ''
-    this.setState({ amount })
+    if (e.target.name === 'amount') {
+      const amount = e.target.value ? parseFloat(e.target.value) : ''
+      this.setState({ ...this.state, amount })
+    }
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    })
   }
 
   handleSubmitChange = () => {
-    const { selectedType, amount } = this.state
+    const { selectedType, amount, reason } = this.state
     const { handleSubmit, adding, closePopup } = this.props
 
-    if (selectedType && amount) {
-      handleSubmit({ id: selectedType, amount }, adding)
+    if (selectedType && amount && reason) {
+      handleSubmit({ id: selectedType, amount, reason }, adding)
       closePopup(false)
     } else {
       this.setState({ error: 'Please fill out all fields' })
@@ -44,7 +51,8 @@ export default class ChangeTypeAmount extends React.Component {
 
     const options = types.map(i => i.id.toUpperCase())
 
-    const { selectedType, amount, error } = this.state
+    const { selectedType, amount, error, reason } = this.state
+
     return (
       <FullOverlay>
         <AmountContainer>
@@ -71,6 +79,15 @@ export default class ChangeTypeAmount extends React.Component {
                 onTextChange={this.handleTextChange}
                 type="number"
                 name="amount"
+              />
+            </FlexContainer>
+            <SelectLabel style={{ marginBottom: 5 }}>Reason</SelectLabel>
+            <FlexContainer style={{ marginTop: 5 }}>
+              <TextInput
+                value={reason}
+                onTextChange={this.handleTextChange}
+                name="reason"
+                type="string"
               />
             </FlexContainer>
             {error && <div>{error}</div>}

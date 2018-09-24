@@ -121,12 +121,6 @@ const LabelText = styled.div`
   margin-bottom: 6px;
 `
 
-const LabelTextContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
-
 export {
   ValueText,
   InlineItem,

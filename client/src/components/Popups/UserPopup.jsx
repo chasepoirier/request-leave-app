@@ -259,10 +259,12 @@ class UserPopup extends React.Component {
       .map(t => t.id.toUpperCase())
       .indexOf(type.id.toUpperCase())
     const oldAmount = typeAmounts[index].amount
-    const amount = adding ? oldAmount + type.amount : oldAmount - type.amount
+    const amount = adding
+      ? oldAmount + parseFloat(type.amount)
+      : oldAmount - parseFloat(type.amount)
     const newTypes = [
       ...typeAmounts.slice(0, index),
-      { id: type.id, amount },
+      { id: type.id, amount, reason: type.reason },
       ...typeAmounts.slice(index + 1)
     ]
     this.setState({ userInfo: { ...userInfo, typeAmounts: newTypes } })
@@ -327,7 +329,6 @@ class UserPopup extends React.Component {
       allRequests,
       userLogs
     } = this.state
-
     return (
       <PopupContainer>
         <PopupWrapper style={{ overflow: allRequests.open && 'visible' }}>
