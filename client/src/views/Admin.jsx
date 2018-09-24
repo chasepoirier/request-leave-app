@@ -76,7 +76,7 @@ class Admin extends React.Component {
               <Pages.ReportsPage match={match} history={history} />
             )}
           />
-          <RouteTypes.Admin
+          <RouteTypes.Supervisor
             status={status}
             loggedIn={loggedIn}
             path={match.url + holidays.path}

@@ -25,10 +25,6 @@ class Navbar extends React.Component {
             text={routes.reports.text}
             path={matchUrl + routes.reports.path}
           />
-          <NavItem
-            text={routes.holidays.text}
-            path={matchUrl + routes.holidays.path}
-          />
         </LinkContainer>
       </NavContainer>
     )
