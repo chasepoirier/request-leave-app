@@ -49,6 +49,10 @@ const Routes = {
     reports: {
       path: '/reports',
       text: 'Reports'
+    },
+    holidays: {
+      path: '/manage-holidays',
+      text: 'Manage Holidays'
     }
   }
 }

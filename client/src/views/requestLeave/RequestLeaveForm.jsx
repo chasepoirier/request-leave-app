@@ -117,7 +117,13 @@ class RequestLeaveForm extends React.Component {
 
   handleStartDateChange = startDate => {
     const { endDate, durationType } = this.state
-    const diff = Calculate.dateDiff(startDate, endDate, durationType)
+    const { excludedDates } = this.props
+    const diff = Calculate.dateDiff(
+      startDate,
+      endDate,
+      durationType,
+      excludedDates
+    )
     const message = this.checkForError(diff, durationType)
     this.setState({
       startDate,
@@ -129,7 +135,13 @@ class RequestLeaveForm extends React.Component {
 
   handleEndDateChange = endDate => {
     const { startDate, durationType } = this.state
-    const diff = Calculate.dateDiff(startDate, endDate, durationType)
+    const { excludedDates } = this.props
+    const diff = Calculate.dateDiff(
+      startDate,
+      endDate,
+      durationType,
+      excludedDates
+    )
     const message = this.checkForError(diff, durationType)
     this.setState({
       endDate,

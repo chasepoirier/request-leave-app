@@ -4,6 +4,7 @@ import { Switch, Redirect } from 'react-router-dom'
 import { Navbar, RouteTypes, InitialLoadingState, StatusBar } from 'components'
 import { userOperations } from 'modules/ducks/user'
 import { requestOperations } from 'modules/ducks/requests'
+import { calendarOperations } from 'modules/ducks/calendar'
 import { connect } from 'react-redux'
 
 import {
@@ -36,9 +37,14 @@ const {
 
 class App extends React.Component {
   componentWillMount() {
-    const { fetchCurrentUser, fetchAllLeaveTypes } = this.props
+    const {
+      fetchCurrentUser,
+      fetchAllLeaveTypes,
+      fetchExcludedDates
+    } = this.props
     fetchCurrentUser()
     fetchAllLeaveTypes()
+    fetchExcludedDates()
   }
 
   renderPopup = (type, visible) => {
@@ -168,6 +174,7 @@ export default connect(
   mapStateToProps,
   {
     fetchCurrentUser: userOperations.fetchCurrentUser,
-    fetchAllLeaveTypes: requestOperations.fetchAllLeaveTypes
+    fetchAllLeaveTypes: requestOperations.fetchAllLeaveTypes,
+    fetchExcludedDates: calendarOperations.fetchExcludedDates
   }
 )(App)

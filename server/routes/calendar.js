@@ -2,6 +2,7 @@ import express from 'express'
 import { google } from 'googleapis'
 import { calendar } from '../utils/Queries'
 import authorize from '../gcalendar'
+import { db } from '../firebase'
 
 const router = express.Router()
 
@@ -28,6 +29,32 @@ router.get('/sync_requests_to_calendar', (req, res) => {
       })
     })
   })
+})
+
+router.get('/get_excluded_dates', (req, res) => {
+  db.collection('excludedDates')
+    .get()
+    .then(snaps => {
+      const dates = []
+      snaps.forEach(snap => dates.push({ ...snap.data(), id: snap.id }))
+      res.json({ dates })
+    })
+    .catch(error => res.json({ error }))
+})
+
+router.post('/add_excluded_date', (req, res) => {
+  db.collection('excludedDates')
+    .add({ date: req.body.date })
+    .then(() => res.json({ success: true }))
+    .catch(() => res.json({ success: false }))
+})
+
+router.post('/delete_excluded_date', (req, res) => {
+  db.collection('excludedDates')
+    .doc(req.body.id)
+    .delete()
+    .then(() => res.json({ success: true }))
+    .catch(() => res.json({ success: false }))
 })
 
 module.exports = router

@@ -1,4 +1,6 @@
-export const dateDiff = (start, end, type) => {
+import moment from 'moment'
+
+export const dateDiff = (start, end, type, excludedDates) => {
   // const startTime = start.diff(Date.now(), 'days')
 
   // if (startTime < 1) {
@@ -10,7 +12,7 @@ export const dateDiff = (start, end, type) => {
     if (diff < 0 || diff === 0) {
       return diff
     }
-    return end.businessDiff(start, 'days') + 1
+    return addValidDates(start, end, excludedDates)
   }
   return 1
 }
@@ -20,6 +22,27 @@ export const timeDiff = (start, end) => {
   const convertToHours = diff / 60
   const rounded = (Math.round(convertToHours * 2) / 2).toFixed(1)
   return parseFloat(rounded)
+}
+
+const addValidDates = (start, end, excludedDates) => {
+  const diff = end.diff(start, 'days') + 1
+  let finalCount = 0
+  for (let i = 0; i < diff + 1; i += 1) {
+    const date = moment(start).add(i, 'days')
+    if (date.isoWeekday() !== 6 && date.isoWeekday() !== 7) {
+      const moments = excludedDates.map(d => moment(d.date))
+      const valid = moments.reduce((prev, curr) => {
+        if (date.isSame(curr, 'day')) {
+          prev = false
+        }
+        return prev
+      }, true)
+      if (valid) {
+        finalCount += 1
+      }
+    }
+  }
+  return finalCount
 }
 
 export const isWeekday = date => {

@@ -42,7 +42,8 @@ class RequestLeave extends React.Component {
       submitting,
       updateLeaveAmount,
       user: { typeAmounts },
-      allLeaveTypes
+      allLeaveTypes,
+      excludedDates
     } = this.props
     return (
       <Styled.PageWrapper>
@@ -56,6 +57,7 @@ class RequestLeave extends React.Component {
           updateLeaveAmount={updateLeaveAmount}
           typeAmounts={typeAmounts}
           allLeaveTypes={allLeaveTypes}
+          excludedDates={excludedDates}
         />
       </Styled.PageWrapper>
     )
@@ -65,7 +67,8 @@ class RequestLeave extends React.Component {
 const mapStateToProps = state => ({
   user: state.user.info,
   submitting: state.requests.addRequest.submitting,
-  allLeaveTypes: state.requests.leaveTypes
+  allLeaveTypes: state.requests.leaveTypes,
+  excludedDates: state.calendar.excludedDates.dates.all
 })
 
 export default withRouter(
