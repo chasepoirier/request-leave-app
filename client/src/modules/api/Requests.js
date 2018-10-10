@@ -3,35 +3,48 @@ import { apiBase } from 'config'
 
 const RequestEndpoints = {
   createNewRequest: (user, request) =>
-    axios
-      .post(`${apiBase}/requests/add_new_request`, { user, request })
-      .then(res => {
-        if (res.data.success) {
-          return true
-        }
-        return new Error()
-      }),
+    axios({
+      url: `${apiBase}/requests/add_new_request`,
+      data: { user, request },
+      method: 'post',
+      baseURL: '/'
+    }).then(res => {
+      if (res.data.success) {
+        return true
+      }
+      return new Error()
+    }),
   fetchAllUserRequests: id =>
-    axios
-      .post(`${apiBase}/requests/fetch_all_requests`, { id })
+    axios({
+      url: `${apiBase}/requests/fetch_all_requests`,
+      data: { id },
+      method: 'post',
+      baseURL: '/'
+    })
       .then(res => res.data.requests)
       .catch(err => err),
   deleteRequest: ({ userID, requestID, teamID, request }) =>
-    axios
-      .post(`${apiBase}/requests/delete_request`, {
+    axios({
+      url: `${apiBase}/requests/delete_request`,
+      data: {
         userID,
         requestID,
         teamID,
         request
-      })
-      .then(res => {
-        if (res.data.success) {
-          return true
-        }
-        return new Error()
-      }),
+      },
+      baseURL: '/',
+      method: 'post'
+    }).then(res => {
+      if (res.data.success) {
+        return true
+      }
+      return new Error()
+    }),
   fetchAllLeaveTypes: () =>
-    axios.get(`${apiBase}/requests/get_all_leave_types`).then(res => {
+    axios({
+      url: `${apiBase}/requests/get_all_leave_types`,
+      baseURL: '/'
+    }).then(res => {
       if (res.data.types) {
         return res.data.types
       }

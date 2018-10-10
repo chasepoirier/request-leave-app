@@ -1,4 +1,4 @@
-import { db, firebase } from '../../firebase'
+import { db, auth } from '../../firebase'
 
 const getOneUser = (query, value) =>
   new Promise((resolve, reject) => {
@@ -39,9 +39,8 @@ const createNewUser = user =>
 const signUserIn = credentials =>
   new Promise((resolve, reject) => {
     const { email, password } = credentials
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
+    auth
+      .createUser({ email, password })
       .then(ref => {
         resolve(ref)
       })

@@ -17,10 +17,7 @@ const config = {
 
 firebase.initializeApp(config)
 
-const apiBase =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/api'
-    : 'https://request-leave-app.herokuapp.com/api'
+const apiBase = 'api'
 
 const auth = firebase.auth()
 const db = firebase.firestore()

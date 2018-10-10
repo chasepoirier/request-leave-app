@@ -3,26 +3,41 @@ import { apiBase } from 'config'
 
 const RequestEndpoints = {
   getAllApprovedRequests: () =>
-    axios.get(`${apiBase}/calendar/get_all_approved_requests`).then(res => {
+    axios({
+      url: `${apiBase}/calendar/get_all_approved_requests`,
+      baseURL: '/'
+    }).then(res => {
       if (res.data.requests) {
         return res.data.requests
       }
       return new Error()
     }),
   getAllExcludedDates: () =>
-    axios.get(`${apiBase}/calendar/get_excluded_dates`).then(res => {
-      if (res.data.dates) {
-        return res.data.dates
+    axios({ url: `${apiBase}/calendar/get_excluded_dates`, baseURL: '/' }).then(
+      res => {
+        if (res.data.dates) {
+          return res.data.dates
+        }
+        return new Error()
       }
-      return new Error()
-    }),
+    ),
   addExcludedDate: date =>
-    axios.post(`${apiBase}/calendar/add_excluded_date`, { date }).then(res => {
+    axios({
+      url: `${apiBase}/calendar/add_excluded_date`,
+      data: { date },
+      baseURL: '/',
+      method: 'post'
+    }).then(res => {
       if (res.data.success) return true
       return new Error()
     }),
   deleteExcludedDate: id =>
-    axios.post(`${apiBase}/calendar/delete_excluded_date`, { id }).then(res => {
+    axios({
+      url: `${apiBase}/calendar/delete_excluded_date`,
+      data: { id },
+      baseURL: '/',
+      method: 'post'
+    }).then(res => {
       if (res.data.success) return true
       return new Error()
     })

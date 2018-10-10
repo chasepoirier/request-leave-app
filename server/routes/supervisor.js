@@ -35,7 +35,7 @@ router.post('/add_user', (req, res) => {
               typeAmounts,
               additionalService,
               startDate,
-              uid: ref.user.uid
+              uid: ref.uid
             })
             .then(user => {
               Queries.team.addUserToTeam(user.team, user)

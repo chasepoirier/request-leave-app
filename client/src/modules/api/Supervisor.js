@@ -3,37 +3,58 @@ import { apiBase } from 'config'
 
 const SupervisorEndpoints = {
   addUserToDB: user =>
-    axios.post(`${apiBase}/supervisor/add_user`, { user }).then(res => {
+    axios({
+      url: `${apiBase}/supervisor/add_user`,
+      data: { user },
+      method: 'post',
+      baseURL: '/'
+    }).then(res => {
       if (res.data.user) {
         return res.data.user
       }
       throw new Error()
     }),
   deleteUserFromDB: id =>
-    axios.post(`${apiBase}/supervisor/delete_user`, { id }).then(res => {
+    axios({
+      url: `${apiBase}/supervisor/delete_user`,
+      data: { id },
+      method: 'post',
+      baseURL: '/'
+    }).then(res => {
       if (res.data.success) {
         return true
       }
       throw new Error()
     }),
   getPendingApprovals: () =>
-    axios.get(`${apiBase}/supervisor/get_pending_approvals`).then(res => {
+    axios({
+      url: `${apiBase}/supervisor/get_pending_approvals`,
+      baseURL: '/'
+    }).then(res => {
       if (res.data.requests) {
         return res.data.requests
       }
       throw new Error()
     }),
   setApprovalStatus: (ids, approved) =>
-    axios
-      .post(`${apiBase}/supervisor/set_approval_status`, { ids, approved })
-      .then(res => {
-        if (res.data.success) {
-          return true
-        }
-        throw new Error()
-      }),
+    axios({
+      url: `${apiBase}/supervisor/set_approval_status`,
+      data: { ids, approved },
+      method: 'post',
+      baseURL: '/'
+    }).then(res => {
+      if (res.data.success) {
+        return true
+      }
+      throw new Error()
+    }),
   updateUserInfo: data =>
-    axios.post(`${apiBase}/supervisor/update_user`, { ...data }).then(res => {
+    axios({
+      url: `${apiBase}/supervisor/update_user`,
+      data: { ...data },
+      method: 'post',
+      baseURL: '/'
+    }).then(res => {
       if (res.data.success) {
         return true
       }
